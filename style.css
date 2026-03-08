@@ -1,1 +1,62 @@
+/* Grunddesign */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
 
+nav {
+    display: flex;
+    justify-content: space-between; /* Schiebt Produkte nach links, Logo nach rechts */
+    align-items: center;
+    padding: 20px 50px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Dropdown Container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Der Produkte-Button */
+.dropbtn {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Das versteckte Fenster */
+.dropdown-content {
+    display: none; /* Standardmäßig unsichtbar */
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links im Dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Zeige das Fenster beim Drüberfahren (Hover) */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
