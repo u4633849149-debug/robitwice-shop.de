@@ -12,6 +12,7 @@
         .nav-left, .nav-right { display: flex; gap: 10px; align-items: center; }
         .logo-nav { font-size: 24px; font-weight: bold; cursor: pointer; text-transform: lowercase; position: absolute; left: 50%; transform: translateX(-50%); }
         
+        /* Dropdowns */
         .dropdown { position: relative; display: inline-block; }
         .dropdown-content { 
             display: block; position: absolute; background-color: #1a1a1a; min-width: 150px; 
@@ -19,33 +20,39 @@
             opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease-in-out; pointer-events: none;
         }
         .dropdown:hover .dropdown-content { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
-        .dropdown-content::before { content: ""; position: absolute; top: -15px; left: 0; width: 100%; height: 15px; }
-        .dropdown-content button { color: white; padding: 12px 16px; display: block; width: 100%; border: none; background: none; text-align: left; cursor: pointer; font-size: 14px; transition: 0.2s; }
+        .dropdown-content button { color: white; padding: 12px 16px; display: block; width: 100%; border: none; background: none; text-align: left; cursor: pointer; font-size: 14px; }
         .dropdown-content button:hover { background-color: #333; color: #5c8d67; }
 
-        .nav-btn { background-color: #333; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
+        .nav-btn { background-color: #333; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; }
         .btn-lang-main { background-color: #5c8d67 !important; }
         .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; }
 
-        /* Zoom */
-        .product-image-container { background: #f5f5f5; height: 400px; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: crosshair; }
-        .product-image { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.1s ease-out; transform-origin: center center; }
+        /* Video Layout (Home) */
+        .video-container-main { display: flex; justify-content: center; align-items: center; gap: 20px; max-width: 1400px; margin: 20px auto; flex-wrap: wrap; }
+        .side-video-box { flex: 1; min-width: 280px; max-width: 350px; aspect-ratio: 16/9; background: #111; border: 2px solid #333; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .main-stream-center { flex: 2; min-width: 320px; max-width: 850px; aspect-ratio: 16/9; border: 2px solid #5c8d67; border-radius: 12px; overflow: hidden; }
+        iframe { width: 100%; height: 100%; border: none; }
 
+        /* Produkte */
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; justify-content: center; }
-        .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 20px; max-width: 400px; margin: auto; text-align: center; }
+        .product-card { background: #1a1a1a; border-radius: 12px; border: 1px solid #333; padding-bottom: 20px; max-width: 400px; margin: auto; text-align: center; overflow: hidden; }
+        .product-image-container { background: #f5f5f5; height: 400px; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: crosshair; }
+        .product-image { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.1s ease-out; transform-origin: center center; }
         .product-info { padding: 20px; text-align: left; }
+        .price { font-size: 22px; color: #5c8d67; font-weight: bold; margin-bottom: 10px; display: block; }
         
-        /* Preis-Styles (angepasst ohne Sale) */
-        .price-container { display: flex; align-items: center; margin-bottom: 10px; }
-        .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
-
         select, input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; color: white; border: 1px solid #333; border-radius: 5px; box-sizing: border-box; font-family: inherit; }
-        .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
+        .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; font-weight: bold; background-color: #5c8d67; color: white; border: none; transition: 0.3s; }
+        .btn-add:hover { background-color: #4a7354; }
         .remove-btn { background: #ff4d4d; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; font-size: 12px; }
+
+        @media (max-width: 1000px) {
+            .side-video-box { max-width: 100%; flex: none; width: 90%; }
+            .main-stream-center { order: -1; width: 100%; flex: none; }
+        }
     </style>
 </head>
 <body>
@@ -62,9 +69,7 @@
             </div>
             <button class="nav-btn" onclick="showSection('home')">🏠 Live</button>
         </div>
-
         <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
-
         <div class="nav-right">
             <button class="nav-btn lang-nav-support" onclick="showSection('support-section')">Support</button>
             <div class="dropdown">
@@ -81,59 +86,51 @@
     </header>
 
     <section id="home" class="page-section active">
-        <h1 class="lang-home-title">robi-twice Live</h1>
-        <div style="max-width: 800px; margin: auto; aspect-ratio: 16/9;">
-            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" frameborder="0" allowfullscreen></iframe>
+        <h1 class="lang-home-title" style="text-align: center;">robi-twice Live & Latest</h1>
+        <div class="video-container-main">
+            <div class="side-video-box" id="latest-vid-1"><p style="text-align:center; padding-top:20%; color:#555;">Lädt Video...</p></div>
+            <div class="main-stream-center">
+                <iframe src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" allowfullscreen></iframe>
+            </div>
+            <div class="side-video-box" id="latest-vid-2"><p style="text-align:center; padding-top:20%; color:#555;">Lädt Video...</p></div>
         </div>
     </section>
 
     <section id="shirts-section" class="page-section">
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="tshirt.jpg" class="product-image"></div>
-                <div class="product-info">
-                    <h3 class="lang-p-shirt">robi-twice Signature Shirt</h3>
-                    <div class="price-container">
-                        <span class="price">30,00 €</span>
-                    </div>
-                    <select id="size-shirt"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-                    <button class="btn-add lang-btn-add" onclick="addToCart('Signature Shirt', 30.00, 'size-shirt')">In den Warenkorb</button>
-                </div>
+        <div class="product-grid"><div class="product-card">
+            <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="tshirt.jpg" class="product-image"></div>
+            <div class="product-info">
+                <h3 class="lang-p-shirt">robi-twice Signature Shirt</h3>
+                <span class="price">30,00 €</span>
+                <select id="size-shirt"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+                <button class="btn-add lang-btn-add" onclick="addToCart('Signature Shirt', 30.00, 'size-shirt')">In den Warenkorb</button>
             </div>
-        </div>
+        </div></div>
     </section>
 
     <section id="pullover-section" class="page-section">
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="hoodie.png" class="product-image"></div>
-                <div class="product-info">
-                    <h3 class="lang-p-hoodie">robi-twice Logo Hoodie</h3>
-                    <div class="price-container">
-                        <span class="price">40,00 €</span>
-                    </div>
-                    <select id="size-hoodie"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-                    <button class="btn-add lang-btn-add" onclick="addToCart('Logo Hoodie', 40.00, 'size-hoodie')">In den Warenkorb</button>
-                </div>
+        <div class="product-grid"><div class="product-card">
+            <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="hoodie.png" class="product-image"></div>
+            <div class="product-info">
+                <h3 class="lang-p-hoodie">robi-twice Logo Hoodie</h3>
+                <span class="price">40,00 €</span>
+                <select id="size-hoodie"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+                <button class="btn-add lang-btn-add" onclick="addToCart('Logo Hoodie', 40.00, 'size-hoodie')">In den Warenkorb</button>
             </div>
-        </div>
+        </div></div>
     </section>
 
     <section id="hats-section" class="page-section">
         <h2 class="lang-accessoires" style="text-align:center; margin-bottom: 20px;">Accessoires</h2>
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="muetze.png" class="product-image"></div>
-                <div class="product-info">
-                    <h3 class="lang-p-hat">robi-twice Logo Mütze</h3>
-                    <div class="price-container">
-                        <span class="price">17,00 €</span>
-                    </div>
-                    <select id="size-hat"><option class="lang-size-os">Einheitsgröße (OS)</option></select>
-                    <button class="btn-add lang-btn-add" onclick="addToCart('Logo Mütze', 17.00, 'size-hat')">In den Warenkorb</button>
-                </div>
+        <div class="product-grid"><div class="product-card">
+            <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="muetze.png" class="product-image"></div>
+            <div class="product-info">
+                <h3 class="lang-p-hat">robi-twice Logo Mütze</h3>
+                <span class="price">17,00 €</span>
+                <select id="size-hat"><option class="lang-size-os">Einheitsgröße (OS)</option></select>
+                <button class="btn-add lang-btn-add" onclick="addToCart('Logo Mütze', 17.00, 'size-hat')">In den Warenkorb</button>
             </div>
-        </div>
+        </div></div>
     </section>
 
     <section id="support-section" class="page-section">
@@ -170,7 +167,7 @@
         const translations = {
             de: {
                 navProd: "Produkte ▾", dropShirts: "Shirts", dropHoodies: "Pullover", dropHats: "Mützen",
-                navSupport: "Support", navLang: "Sprache ▾", homeTitle: "robi-twice Live",
+                navSupport: "Support", navLang: "Sprache ▾", homeTitle: "robi-twice Live & Latest",
                 pShirt: "robi-twice Signature Shirt", pHoodie: "robi-twice Logo Hoodie", pHat: "robi-twice Logo Mütze",
                 btnAdd: "In den Warenkorb", btnSend: "Senden", cartTitle: "Warenkorb", total: "Gesamt", 
                 sizeOS: "Einheitsgröße (OS)", phEmail: "E-Mail", phMsg: "Nachricht", accessoires: "Accessoires",
@@ -179,7 +176,7 @@
             },
             en: {
                 navProd: "Products ▾", dropShirts: "T-Shirts", dropHoodies: "Hoodies", dropHats: "Beanies",
-                navSupport: "Support", navLang: "Language ▾", homeTitle: "robi-twice Live",
+                navSupport: "Support", navLang: "Language ▾", homeTitle: "robi-twice Live & Latest",
                 pShirt: "robi-twice Signature Shirt", pHoodie: "robi-twice Logo Hoodie", pHat: "robi-twice Logo Hat",
                 btnAdd: "Add to Cart", btnSend: "Send", cartTitle: "Your Cart", total: "Total", 
                 sizeOS: "One Size (OS)", phEmail: "Email", phMsg: "Message", accessoires: "Accessories",
@@ -192,8 +189,7 @@
                 pShirt: "Camiseta Signature", pHoodie: "Sudadera Logo", pHat: "Gorro Logo",
                 btnAdd: "Añadir al carrito", btnSend: "Enviar", cartTitle: "Carrito", total: "Total", 
                 sizeOS: "Talla única (OS)", phEmail: "Correo electrónico", phMsg: "Mensaje", accessoires: "Accesorios",
-                lblIssue: "¿Cuál es el problema?", opt1: "Defectuoso / Dañado", opt2: "Tamaño/color incorrecto",
-                opt3: "No me gusta", opt4: "Pregunta de envío", opt5: "Otro"
+                lblIssue: "¿Cuál es el problema?", opt1: "Defectuoso / Dañado", opt2: "Tamaño/color incorrecto", opt3: "No me gusta", opt4: "Envío", opt5: "Otro"
             },
             fr: {
                 navProd: "Produits ▾", dropShirts: "T-Shirts", dropHoodies: "Pulls", dropHats: "Bonnets",
@@ -201,8 +197,7 @@
                 pShirt: "T-Shirt Signature", pHoodie: "Sweat à capuche", pHat: "Bonnet Logo",
                 btnAdd: "Ajouter au panier", btnSend: "Envoyer", cartTitle: "Panier", total: "Total", 
                 sizeOS: "Taille unique (OS)", phEmail: "E-mail", phMsg: "Message", accessoires: "Accessoires",
-                lblIssue: "Quel est le problème ?", opt1: "Défectueux / Endommagé", opt2: "Mauvaise taille/couleur",
-                opt3: "Je n'aime pas", opt4: "Question d'expédition", opt5: "Autre"
+                lblIssue: "Quel est le problème ?", opt1: "Défectueux", opt2: "Mauvaise taille", opt3: "Pas aimé", opt4: "Livraison", opt5: "Autre"
             }
         };
 
@@ -210,7 +205,6 @@
             currentLang = lang;
             const t = translations[lang];
             if(!t) return;
-            
             document.querySelectorAll('.lang-nav-prod').forEach(el => el.innerText = t.navProd);
             document.querySelectorAll('.lang-drop-shirts').forEach(el => el.innerText = t.dropShirts);
             document.querySelectorAll('.lang-drop-hoodies').forEach(el => el.innerText = t.dropHoodies);
@@ -232,13 +226,27 @@
             document.querySelectorAll('.opt-3').forEach(el => el.innerText = t.opt3);
             document.querySelectorAll('.opt-4').forEach(el => el.innerText = t.opt4);
             document.querySelectorAll('.opt-5').forEach(el => el.innerText = t.opt5);
-
             const emailField = document.getElementById('cust-email');
             const msgField = document.getElementById('cust-msg');
             if(emailField) emailField.placeholder = t.phEmail;
             if(msgField) msgField.placeholder = t.phMsg;
-
             updateCartDisplay();
+        }
+
+        async function loadLatestVideos() {
+            const channelId = "UCm8u2eBf67RCH16p2oA9uSQ";
+            const rssUrl = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`);
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                if (data.items && data.items.length >= 2) {
+                    const id1 = data.items[0].link.split('v=')[1];
+                    const id2 = data.items[1].link.split('v=')[1];
+                    document.getElementById('latest-vid-1').innerHTML = `<iframe src="https://www.youtube.com/embed/${id1}" allowfullscreen></iframe>`;
+                    document.getElementById('latest-vid-2').innerHTML = `<iframe src="https://www.youtube.com/embed/${id2}" allowfullscreen></iframe>`;
+                }
+            } catch (e) { console.error("Fehler YouTube Load", e); }
         }
 
         function interactiveZoom(e) {
@@ -298,6 +306,8 @@
             });
             if (response.ok) { status.innerText = "Sended! (OK)"; }
         }
+
+        window.addEventListener('load', () => { loadLatestVideos(); changeLanguage('de'); });
     </script>
 </body>
 </html>
