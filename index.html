@@ -3,142 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>robi-twice | Live & Shop</title>
+    <title>robi-twice | Official Store & Live</title>
     <style>
-        /* --- DESIGN & HINTERGRUND --- */
+        /* --- GLOBAL & BACKGROUND --- */
         body { 
-            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             margin: 0; background-color: #000; color: #fff; overflow-x: hidden;
             background-image: url('logo.png'); background-repeat: repeat; 
-            background-position: center; background-size: 150px; background-attachment: fixed;
+            background-position: center; background-size: 180px; background-attachment: fixed;
         }
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.88); z-index: -1;
+            background-color: rgba(0, 0, 0, 0.9); z-index: -1;
         }
 
+        /* --- NAVIGATION --- */
         header { 
-            background-color: #1a1a1a; padding: 15px 5%; display: flex; 
+            background-color: #111; padding: 10px 5%; display: flex; 
             justify-content: space-between; align-items: center; 
-            position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid #5c8d67; 
+            position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid #5c8d67;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-
+        .nav-left, .nav-right { display: flex; gap: 15px; align-items: center; }
         .nav-btn { 
-            background-color: #333; color: white; padding: 8px 18px; 
-            border: none; border-radius: 4px; cursor: pointer; font-weight: bold; 
-            transition: 0.3s;
+            background-color: #222; color: white; padding: 10px 20px; 
+            border: 1px solid #444; border-radius: 5px; cursor: pointer; 
+            font-weight: bold; transition: all 0.3s; font-size: 14px;
         }
-        .nav-btn:hover { background-color: #5c8d67; }
-
+        .nav-btn:hover { background-color: #5c8d67; border-color: #fff; transform: translateY(-2px); }
         .logo-nav { 
-            font-size: 24px; font-weight: bold; cursor: pointer; 
-            position: absolute; left: 50%; transform: translateX(-50%); 
+            font-size: 28px; font-weight: bold; cursor: pointer; 
+            position: absolute; left: 50%; transform: translateX(-50%);
+            text-shadow: 0 0 10px #5c8d67; letter-spacing: 1px;
         }
 
-        /* --- VIDEO LAYOUT (3 KÄSTCHEN) --- */
-        .video-container-main { 
+        /* --- VIDEO AREA --- */
+        .video-wrapper { 
             display: flex; justify-content: center; align-items: center; 
-            gap: 20px; max-width: 1400px; margin: 30px auto; flex-wrap: wrap; 
-            padding: 0 20px;
+            gap: 25px; max-width: 1400px; margin: 40px auto; flex-wrap: wrap; padding: 0 20px;
         }
-        
-        .side-video-box { 
-            flex: 1; min-width: 280px; max-width: 350px; aspect-ratio: 16/9; 
-            background: #111; border: 2px solid #444; border-radius: 12px; 
-            overflow: hidden; box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); 
-            transition: 0.3s;
+        .side-box { 
+            flex: 1; min-width: 300px; max-width: 380px; aspect-ratio: 16/9; 
+            background: #111; border: 2px solid #333; border-radius: 12px; 
+            overflow: hidden; box-shadow: 0 0 20px rgba(255, 255, 255, 0.05); transition: 0.4s;
         }
-        .side-video-box:hover { transform: scale(1.03); border-color: #fff; }
-
-        .main-stream-center { 
-            flex: 2; min-width: 320px; max-width: 850px; aspect-ratio: 16/9; 
-            border: 3px solid #5c8d67; border-radius: 12px; overflow: hidden; 
-            position: relative; animation: live-glow 2s infinite alternate;
+        .side-box:hover { border-color: #5c8d67; transform: scale(1.02); }
+        .main-stream-box { 
+            flex: 2; min-width: 350px; max-width: 850px; aspect-ratio: 16/9; 
+            border: 3px solid #5c8d67; border-radius: 15px; overflow: hidden; 
+            position: relative; animation: glow-pulse 2s infinite alternate;
         }
-
-        @keyframes live-glow {
+        @keyframes glow-pulse {
             from { box-shadow: 0 0 10px rgba(92, 141, 103, 0.3); }
-            to { box-shadow: 0 0 30px rgba(92, 141, 103, 0.8); }
+            to { box-shadow: 0 0 35px rgba(92, 141, 103, 0.7); }
         }
-
-        /* NEON OFFLINE OVERLAY */
         #offline-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background: #000; z-index: 10; display: none; flex-direction: column; 
             justify-content: center; align-items: center; text-align: center;
         }
-        .neon-text {
-            color: #fff; text-shadow: 0 0 10px #5c8d67, 0 0 20px #5c8d67, 0 0 40px #5c8d67;
-            font-size: 1.6rem; font-weight: bold; text-transform: uppercase;
+        .neon-msg {
+            color: #fff; text-shadow: 0 0 10px #5c8d67, 0 0 30px #5c8d67;
+            font-size: 2rem; font-weight: bold; margin-bottom: 10px;
         }
+
+        /* --- SHOP SECTIONS --- */
+        .page-section { display: none; padding: 60px 5%; animation: fadeIn 0.6s ease; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .product-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 40px; max-width: 1200px; margin: auto; 
+        }
+        .card { 
+            background: rgba(20, 20, 20, 0.95); border: 1px solid #333; 
+            border-radius: 15px; overflow: hidden; transition: 0.3s; 
+        }
+        .card:hover { transform: translateY(-10px); border-color: #5c8d67; }
+        .img-container { 
+            width: 100%; height: 350px; background: #fff; display: flex; 
+            justify-content: center; align-items: center; overflow: hidden; 
+        }
+        .img-container img { max-width: 90%; max-height: 90%; object-fit: contain; }
+        .info { padding: 20px; text-align: center; }
+        .price-tag { font-size: 24px; color: #5c8d67; font-weight: bold; margin: 15px 0; display: block; }
+        
+        select { 
+            width: 100%; padding: 10px; background: #000; color: #fff; 
+            border: 1px solid #444; border-radius: 5px; margin-bottom: 15px; 
+        }
+        .buy-btn { 
+            width: 100%; padding: 15px; background: #5c8d67; color: #fff; 
+            border: none; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .buy-btn:hover { background: #7ab387; letter-spacing: 1px; }
+
+        /* --- CART & FOOTER --- */
+        .cart-badge { background: #5c8d67; padding: 2px 8px; border-radius: 10px; font-size: 12px; }
+        footer { text-align: center; padding: 40px; color: #444; border-top: 1px solid #222; margin-top: 50px; }
 
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* --- SHOP & SECTIONS --- */
-        .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
-        .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .product-card { background: rgba(26, 26, 26, 0.95); border-radius: 12px; border: 1px solid #333; padding-bottom: 20px; text-align: center; overflow: hidden; }
-        .product-image { width: 100%; height: 300px; object-fit: contain; background: #fff; }
-        
-        .price { font-size: 22px; color: #5c8d67; font-weight: bold; display: block; margin: 10px 0; }
-        .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; }
-
-        /* Mobil-Anpassung */
-        @media (max-width: 1000px) {
-            .side-video-box { max-width: 100%; width: 100%; flex: none; }
-            .main-stream-center { order: -1; width: 100%; flex: none; }
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1100px) {
+            .side-box { min-width: 100%; }
+            .main-stream-box { order: -1; min-width: 100%; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <button class="nav-btn" onclick="showSection('home')">🏠 LIVE</button>
+        <div class="nav-left">
+            <button class="nav-btn" onclick="showSection('home')">HOME</button>
+            <button class="nav-btn" onclick="showSection('shop')">SHOP</button>
+        </div>
         <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
-        <div>
+        <div class="nav-right">
             <button class="nav-btn" onclick="showSection('support')">SUPPORT</button>
-            <button class="nav-btn" onclick="showSection('cart')">🛒 <span id="cart-counter" class="cart-count">0</span></button>
+            <button class="nav-btn" onclick="showSection('cart')">🛒 <span id="count" class="cart-badge">0</span></button>
         </div>
     </header>
 
     <section id="home" class="page-section active">
-        <h1 style="text-align: center; color: #5c8d67;">LATEST CONTENT</h1>
-        <div class="video-container-main">
-            <div class="side-video-box" id="vid-1"><p style="text-align:center; padding-top:20%;">Suche Video 1...</p></div>
+        <h2 style="text-align: center; letter-spacing: 3px; color: #5c8d67;">LATEST UPDATES</h2>
+        <div class="video-wrapper">
+            <div class="side-box" id="left-video">
+                <p style="text-align:center; padding-top:20%; color:#555;">Lädt Video...</p>
+            </div>
             
-            <div class="main-stream-center">
-                <iframe id="live-iframe" src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" allowfullscreen></iframe>
+            <div class="main-stream-box">
+                <iframe src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" allowfullscreen></iframe>
                 <div id="offline-overlay">
-                    <div class="neon-text">🔴 robi-twice</div>
-                    <div class="neon-text">streamt gerade nicht</div>
+                    <div class="neon-msg">🔴 OFFLINE</div>
+                    <div style="font-size: 1.2rem; color: #888;">robi-twice ist gerade nicht live</div>
                 </div>
             </div>
 
-            <div class="side-video-box" id="vid-2"><p style="text-align:center; padding-top:20%;">Suche Video 2...</p></div>
+            <div class="side-box" id="right-video">
+                <p style="text-align:center; padding-top:20%; color:#555;">Lädt Video...</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="page-section">
+        <h1 style="text-align: center; margin-bottom: 50px;">OFFICIAL MERCH</h1>
+        <div class="product-grid">
+            <div class="card">
+                <div class="img-container"><img src="tshirt.jpg" alt="Shirt"></div>
+                <div class="info">
+                    <h3>Signature T-Shirt</h3>
+                    <span class="price-tag">29,90 €</span>
+                    <select id="size-1"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+                    <button class="buy-btn" onclick="add('Signature T-Shirt', 29.90, 'size-1')">In den Warenkorb</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="img-container"><img src="hoodie.png" alt="Hoodie"></div>
+                <div class="info">
+                    <h3>Logo Hoodie</h3>
+                    <span class="price-tag">49,90 €</span>
+                    <select id="size-2"><option>M</option><option>L</option><option>XL</option></select>
+                    <button class="buy-btn" onclick="add('Logo Hoodie', 49.90, 'size-2')">In den Warenkorb</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="img-container"><img src="muetze.png" alt="Cap"></div>
+                <div class="info">
+                    <h3>robi-twice Cap</h3>
+                    <span class="price-tag">19,90 €</span>
+                    <select id="size-3"><option>Einheitsgröße</option></select>
+                    <button class="buy-btn" onclick="add('robi-twice Cap', 19.90, 'size-3')">In den Warenkorb</button>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="support" class="page-section">
-        <div style="max-width: 500px; margin: auto; background: rgba(26,26,26,0.9); padding: 30px; border-radius: 12px;">
-            <h2 style="text-align:center;">Support</h2>
-            <input type="email" id="s-email" placeholder="Deine E-Mail" style="width:100%; padding:10px; margin:10px 0; background:#000; color:#fff; border:1px solid #444;">
-            <textarea id="s-msg" rows="5" placeholder="Nachricht" style="width:100%; padding:10px; margin:10px 0; background:#000; color:#fff; border:1px solid #444;"></textarea>
-            <button class="nav-btn" style="width:100%; background:#5c8d67;" onclick="sendSupport()">ABSCHICKEN</button>
-            <p id="s-status" style="text-align:center; margin-top:10px;"></p>
+        <div style="max-width: 600px; margin: auto; background: rgba(20,20,20,0.9); padding: 40px; border-radius: 15px; border: 1px solid #5c8d67;">
+            <h2 style="text-align: center;">HILFE & KONTAKT</h2>
+            <input type="text" id="sup-name" placeholder="Name" style="width:100%; padding:12px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
+            <input type="email" id="sup-email" placeholder="E-Mail" style="width:100%; padding:12px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;">
+            <textarea id="sup-msg" rows="6" placeholder="Deine Nachricht..." style="width:100%; padding:12px; margin:10px 0; background:#000; border:1px solid #333; color:#fff;"></textarea>
+            <button class="buy-btn" onclick="sendSupport()">NACHRICHT SENDEN</button>
+            <p id="sup-status" style="text-align:center; margin-top:15px;"></p>
         </div>
     </section>
 
     <section id="cart" class="page-section">
-        <div style="max-width: 600px; margin: auto; background: rgba(26,26,26,0.9); padding: 20px; border-radius: 12px;">
-            <h2>Dein Warenkorb</h2>
-            <ul id="cart-list" style="list-style:none; padding:0;"></ul>
-            <h3 id="cart-total">Gesamt: 0,00 €</h3>
-            <a id="paypal-link" href="#" style="display:block; background:#0070ba; color:white; padding:15px; border-radius:30px; text-decoration:none; text-align:center; font-weight:bold;">PayPal Checkout</a>
+        <div style="max-width: 700px; margin: auto; background: rgba(20,20,20,0.95); padding: 30px; border-radius: 15px;">
+            <h2>DEIN WARENKORB</h2>
+            <div id="cart-content">Der Warenkorb ist leer.</div>
+            <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+            <h3 id="total-price">Gesamt: 0,00 €</h3>
+            <button class="buy-btn" style="background:#0070ba;" onclick="checkout()">Checkout mit PayPal</button>
         </div>
     </section>
+
+    <footer>&copy; 2026 robi-twice Official. Alle Rechte vorbehalten.</footer>
 
     <script>
         let cart = [];
@@ -146,58 +209,91 @@
         function showSection(id) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
         }
 
-        // --- YOUTUBE AUTOMATIK ---
-        async function loadVideos() {
+        async function loadYouTube() {
             const channelId = "UCm8u2eBf67RCH16p2oA9uSQ";
-            const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-            const apiUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+            // Wir nutzen einen Proxy, um CORS Probleme zu umgehen
+            const api = `https://api.allorigins.win/get?url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId)}`;
 
             try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
+                const res = await fetch(api);
+                const data = await res.json();
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(data.contents, "text/xml");
                 const entries = xml.getElementsByTagName("entry");
 
-                if (entries.length >= 2) {
+                if(entries.length >= 2) {
                     const id1 = entries[0].getElementsByTagName("yt:videoId")[0].textContent;
                     const id2 = entries[1].getElementsByTagName("yt:videoId")[0].textContent;
+                    
+                    document.getElementById('left-video').innerHTML = `<iframe src="https://www.youtube.com/embed/${id1}" allowfullscreen></iframe>`;
+                    document.getElementById('right-video').innerHTML = `<iframe src="https://www.youtube.com/embed/${id2}" allowfullscreen></iframe>`;
 
-                    document.getElementById('vid-1').innerHTML = `<iframe src="https://www.youtube.com/embed/${id1}" allowfullscreen></iframe>`;
-                    document.getElementById('vid-2').innerHTML = `<iframe src="https://www.youtube.com/embed/${id2}" allowfullscreen></iframe>`;
-
-                    // Live-Check: Wenn das neueste Video "live" im Titel hat
+                    // Live Check
                     const title = entries[0].getElementsByTagName("title")[0].textContent.toLowerCase();
-                    if(title.includes("live") || title.includes("streaming")) {
+                    if(title.includes("live") || title.includes("stream")) {
                         document.getElementById('offline-overlay').style.display = 'none';
                     } else {
                         document.getElementById('offline-overlay').style.display = 'flex';
                     }
                 }
             } catch (e) {
-                console.error("Fehler beim Laden", e);
+                console.error("YouTube konnte nicht geladen werden.");
                 document.getElementById('offline-overlay').style.display = 'flex';
             }
         }
 
-        // --- SUPPORT FUNKTION ---
-        async function sendSupport() {
-            const status = document.getElementById('s-status');
-            status.innerText = "Sende...";
-            const res = await fetch("https://formspree.io/f/xlgpdoak", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: document.getElementById('s-email').value, msg: document.getElementById('s-msg').value })
-            });
-            if(res.ok) {
-                status.innerText = "Gesendet! Wir melden uns.";
-                status.style.color = "#5c8d67";
-            }
+        function add(n, p, sId) {
+            const size = document.getElementById(sId).value;
+            cart.push({name: n, price: p, size: size});
+            updateCart();
         }
 
-        window.onload = loadVideos;
+        function updateCart() {
+            document.getElementById('count').innerText = cart.length;
+            const content = document.getElementById('cart-content');
+            let total = 0;
+            if(cart.length === 0) {
+                content.innerHTML = "Der Warenkorb ist leer.";
+            } else {
+                content.innerHTML = cart.map((item, i) => {
+                    total += item.price;
+                    return `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #222;">
+                        <span>${item.name} (${item.size})</span>
+                        <span>${item.price.toFixed(2)} € <button onclick="remove(${i})" style="background:none; border:none; color:red; cursor:pointer; margin-left:10px;">X</button></span>
+                    </div>`;
+                }).join('');
+            }
+            document.getElementById('total-price').innerText = `Gesamt: ${total.toFixed(2)} €`;
+        }
+
+        function remove(i) { cart.splice(i, 1); updateCart(); }
+
+        async function sendSupport() {
+            const status = document.getElementById('sup-status');
+            status.innerText = "Sende Nachricht...";
+            const res = await fetch("https://formspree.io/f/xlgpdoak", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: document.getElementById('sup-name').value,
+                    email: document.getElementById('sup-email').value,
+                    msg: document.getElementById('sup-msg').value
+                })
+            });
+            if(res.ok) status.innerText = "Gesendet! Wir melden uns bald.";
+        }
+
+        function checkout() {
+            if(cart.length === 0) return alert("Warenkorb leer!");
+            let total = cart.reduce((a, b) => a + b.price, 0);
+            let items = cart.map(i => `${i.name} (${i.size})`).join(', ');
+            window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${total.toFixed(2)}&currency_code=EUR&item_name=Bestellung: ${items}`;
+        }
+
+        window.onload = loadYouTube;
     </script>
 </body>
 </html>
