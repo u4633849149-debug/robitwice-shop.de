@@ -60,3 +60,44 @@ nav {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+.shop-title {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.product-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Abstand zwischen den Produkten */
+    padding: 40px;
+    flex-wrap: wrap; /* Zeilenumbruch, falls der Platz nicht reicht */
+}
+
+.product-card {
+    border: 1px solid #eee;
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    border-radius: 8px;
+}
+
+.product-card img {
+    width: 100%; /* Passt das Bild an die Box an */
+    height: auto;
+    border-radius: 4px;
+}
+
+.buy-btn {
+    background-color: #28a745; /* Grüner Button */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.buy-btn:hover {
+    background-color: #218838;
+}
