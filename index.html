@@ -9,14 +9,47 @@
 
     <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background-color: #000; color: #fff; overflow-x: hidden; }
+        
+        /* Header & Navigation */
         header { background-color: #1a1a1a; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
         .nav-left, .nav-right { display: flex; gap: 10px; align-items: center; }
-        .logo-nav { font-size: 24px; font-weight: bold; cursor: pointer; text-transform: lowercase; }
+        .logo-nav { font-size: 24px; font-weight: bold; cursor: pointer; text-transform: lowercase; position: absolute; left: 50%; transform: translateX(-50%); }
+        
+        /* Dropdown Menü Styling */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { 
+            display: none; 
+            position: absolute; 
+            background-color: #1a1a1a; 
+            min-width: 160px; 
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5); 
+            z-index: 1; 
+            border-radius: 4px;
+            border: 1px solid #333;
+            margin-top: 5px;
+        }
+        .dropdown-content button { 
+            color: white; 
+            padding: 12px 16px; 
+            text-decoration: none; 
+            display: block; 
+            width: 100%; 
+            border: none; 
+            background: none; 
+            text-align: left; 
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .dropdown-content button:hover { background-color: #333; color: #5c8d67; }
+        .dropdown:hover .dropdown-content { display: block; }
+
         .nav-btn { background-color: #333; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; text-decoration: none; }
         .nav-btn:hover { background-color: #444; }
         .btn-lang { background-color: #5c8d67; }
         .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; }
 
+        /* Sektionen */
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -27,18 +60,17 @@
         
         .product-image-container { background: #f5f5f5; height: 400px; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; }
         .product-image { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .img-zoom-result { position: absolute; right: 0; top: 0; width: 100%; height: 100%; background-repeat: no-repeat; display: none; z-index: 10; background-color: #f5f5f5; pointer-events: none; }
-
+        
         .product-info { padding: 20px; text-align: left; }
         .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
         select, input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #000; color: white; border: 1px solid #333; border-radius: 5px; box-sizing: border-box; }
         
         .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; text-align: center; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
-        .btn-add:disabled { background-color: #444; cursor: not-allowed; }
+        .btn-add:hover { background-color: #4e7a56; }
 
+        /* Support & Warenkorb */
         .support-box { background: #1a1a1a; padding: 30px; border-radius: 15px; border: 1px solid #5c8d67; max-width: 500px; margin: 40px auto; text-align: left; }
         .footer { background-color: #111; color: #777; padding: 40px 5%; text-align: center; border-top: 1px solid #333; margin-top: 50px; font-size: 14px; }
-
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #111; margin-bottom: 5px; border-radius: 8px; }
         .remove-btn { background: #ff4444; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer; }
         .btn-paypal-cart { display: block; width: 100%; padding: 15px; background: #0070ba; color: white; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 20px; text-align: center; }
@@ -48,12 +80,19 @@
 
     <header>
         <div class="nav-left">
-            <button class="nav-btn" onclick="showSection('shirts-section')" id="nav-shirts">Shirts</button>
-            <button class="nav-btn" onclick="showSection('pullover-section')" id="nav-hoodies">Pullover</button>
-            <button class="nav-btn" onclick="showSection('hats-section')" id="nav-hats">Mützen</button>
+            <div class="dropdown">
+                <button class="nav-btn" id="nav-products">Produkte ▾</button>
+                <div class="dropdown-content">
+                    <button onclick="showSection('shirts-section')" id="drop-shirts">Shirts</button>
+                    <button onclick="showSection('pullover-section')" id="drop-hoodies">Pullover</button>
+                    <button onclick="showSection('hats-section')" id="drop-hats">Mützen</button>
+                </div>
+            </div>
             <button class="nav-btn" onclick="showSection('home')">🏠 Live</button>
         </div>
+        
         <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
+        
         <div class="nav-right">
             <button class="nav-btn" onclick="showSection('support-section')" id="nav-support">Support</button>
             <button class="nav-btn btn-lang" onclick="toggleLanguage()" id="lang-btn">EN</button>
@@ -73,9 +112,8 @@
             <h1 id="shirts-title">Shirts Kollektion</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container" onmousemove="zoom(event)" onmouseleave="hideZoom(event)">
+                    <div class="product-image-container">
                         <img src="tshirt.jpg" alt="Signature Tee" class="product-image">
-                        <div class="img-zoom-result"></div>
                     </div>
                     <div class="product-info">
                         <h3>robi-twice Signature Tee</h3>
@@ -93,9 +131,8 @@
             <h1 id="hoodies-title">Pullover & Hoodies</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container" onmousemove="zoom(event)" onmouseleave="hideZoom(event)">
+                    <div class="product-image-container">
                         <img src="hoodie.png" alt="Logo Hoodie" class="product-image">
-                        <div class="img-zoom-result"></div>
                     </div>
                     <div class="product-info">
                         <h3>robi-twice Logo Hoodie</h3>
@@ -113,9 +150,8 @@
             <h1 id="hats-title">Accessoires</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container" onmousemove="zoom(event)" onmouseleave="hideZoom(event)">
+                    <div class="product-image-container">
                         <img src="muetze.png" alt="Logo Beanie" class="product-image">
-                        <div class="img-zoom-result"></div>
                     </div>
                     <div class="product-info">
                         <h3>robi-twice Logo Beanie</h3>
@@ -170,7 +206,8 @@
 
         const translations = {
             de: {
-                navShirts: "Shirts", navHoodies: "Pullover", navHats: "Mützen", navSupport: "Support", homeTitle: "robi-twice Live",
+                navProducts: "Produkte ▾", dropShirts: "Shirts", dropHoodies: "Pullover", dropHats: "Mützen",
+                navSupport: "Support", homeTitle: "robi-twice Live",
                 shirtsTitle: "Shirts Kollektion", hoodiesTitle: "Pullover & Hoodies", hatsTitle: "Accessoires",
                 cartTitle: "Dein Warenkorb", addBtn: "In den Warenkorb", 
                 total: "Gesamt", empty: "Warenkorb leer", paypal: "Mit PayPal bezahlen", langBtn: "EN",
@@ -181,7 +218,8 @@
                 statusError: "Fehler beim Senden. Bitte versuche es erneut."
             },
             en: {
-                navShirts: "T-Shirts", navHoodies: "Hoodies", navHats: "Beanies", navSupport: "Support", homeTitle: "robi-twice Live Stream",
+                navProducts: "Products ▾", dropShirts: "T-Shirts", dropHoodies: "Hoodies", dropHats: "Beanies",
+                navSupport: "Support", homeTitle: "robi-twice Live Stream",
                 shirtsTitle: "T-Shirt Collection", hoodiesTitle: "Hoodies & Sweats", hatsTitle: "Accessories",
                 cartTitle: "Your Cart", addBtn: "Add to Cart", 
                 total: "Total", empty: "Cart is empty", paypal: "Checkout with PayPal", langBtn: "DE",
@@ -196,9 +234,10 @@
         function toggleLanguage() {
             currentLang = currentLang === 'de' ? 'en' : 'de';
             const t = translations[currentLang];
-            document.getElementById('nav-shirts').innerText = t.navShirts;
-            document.getElementById('nav-hoodies').innerText = t.navHoodies;
-            document.getElementById('nav-hats').innerText = t.navHats;
+            document.getElementById('nav-products').innerText = t.navProducts;
+            document.getElementById('drop-shirts').innerText = t.dropShirts;
+            document.getElementById('drop-hoodies').innerText = t.dropHoodies;
+            document.getElementById('drop-hats').innerText = t.dropHats;
             document.getElementById('nav-support').innerText = t.navSupport;
             document.getElementById('home-title').innerText = t.homeTitle;
             document.getElementById('shirts-title').innerText = t.shirtsTitle;
@@ -225,49 +264,19 @@
             const status = document.getElementById('ticket-status');
             const btn = document.getElementById('send-ticket-btn');
             const t = translations[currentLang];
-
-            if(!email) {
-                alert(currentLang === 'de' ? "Bitte gib deine E-Mail Adresse an." : "Please enter your email address.");
-                return;
-            }
-
-            btn.disabled = true;
-            btn.innerText = t.ticketSending;
-
+            if(!email) { alert(currentLang === 'de' ? "Bitte gib deine E-Mail Adresse an." : "Please enter your email address."); return; }
+            btn.disabled = true; btn.innerText = t.ticketSending;
             try {
                 const response = await fetch("https://formspree.io/f/xlgpdoak", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: email, anliegen: reason, nachricht: msg })
                 });
-
                 if (response.ok) {
-                    status.innerText = t.statusSuccess;
-                    btn.innerText = t.ticketSent;
-                    document.getElementById('cust-email').value = "";
-                    document.getElementById('cust-msg').value = "";
+                    status.innerText = t.statusSuccess; btn.innerText = t.ticketSent;
+                    document.getElementById('cust-email').value = ""; document.getElementById('cust-msg').value = "";
                 } else { throw new Error(); }
-            } catch (error) {
-                status.innerText = t.statusError;
-                btn.disabled = false;
-                btn.innerText = t.ticketBtn;
-            }
+            } catch (error) { status.innerText = t.statusError; btn.disabled = false; btn.innerText = t.ticketBtn; }
         }
-
-        function zoom(e) {
-            const container = e.currentTarget;
-            const img = container.querySelector('img');
-            const result = container.querySelector('.img-zoom-result');
-            result.style.display = "block";
-            result.style.backgroundImage = `url('${img.src}')`;
-            result.style.backgroundSize = (img.width * 2.5) + "px " + (img.height * 2.5) + "px";
-            const rect = container.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / container.offsetWidth) * 100;
-            const y = ((e.clientY - rect.top) / container.offsetHeight) * 100;
-            result.style.backgroundPosition = `${x}% ${y}%`;
-        }
-
-        function hideZoom(e) { e.currentTarget.querySelector('.img-zoom-result').style.display = "none"; }
 
         function showSection(id) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
@@ -294,18 +303,13 @@
             const totalEl = document.getElementById('cart-total');
             const paypalLink = document.getElementById('paypal-link');
             const t = translations[currentLang];
-            let total = 0;
-            let itemsText = "";
+            let total = 0; let itemsText = "";
             list.innerHTML = "";
-            if (cart.length === 0) {
-                list.innerHTML = `<li>${t.empty}</li>`;
-                paypalLink.style.display = "none";
-            } else {
-                paypalLink.style.display = "block";
-                paypalLink.innerText = t.paypal;
+            if (cart.length === 0) { list.innerHTML = `<li>${t.empty}</li>`; paypalLink.style.display = "none"; } 
+            else {
+                paypalLink.style.display = "block"; paypalLink.innerText = t.paypal;
                 cart.forEach((item, index) => {
-                    total += item.price;
-                    itemsText += item.name + "(" + item.size + ") ";
+                    total += item.price; itemsText += item.name + "(" + item.size + ") ";
                     list.innerHTML += `<li class="cart-item"><span>${item.name} (${item.size})</span><span>${item.price.toFixed(2)} € <button class="remove-btn" onclick="removeFromCart(${index})">X</button></span></li>`;
                 });
             }
