@@ -20,10 +20,33 @@
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 20px; }
         
-        /* Bild-Fix: Zeigt das ganze Bild ohne Abschneiden */
-        .product-image-container { background: #f5f5f5; padding: 10px; display: flex; justify-content: center; align-items: center; height: 350px; }
-        .product-image { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+        /* ZOOM EFFEKT DESIGN */
+        .product-image-container { 
+            background: #f5f5f5; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 400px; 
+            overflow: hidden; /* Wichtig für den Zoom */
+            position: relative;
+            cursor: zoom-in;
+        }
         
+        .product-image { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; 
+            display: block; 
+            transition: transform 0.3s ease; /* Weicher Übergang */
+            transform-origin: center center;
+        }
+
+        /* Vergrößerung beim Drüberfahren */
+        .product-image-container:hover .product-image {
+            transform: scale(2.5); /* Zoom-Stärke */
+        }
+
         .product-info { padding: 20px; text-align: left; }
         .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
         
@@ -43,7 +66,7 @@
         <div class="nav-left">
             <button class="nav-btn" onclick="showSection('shirts-section')">Shirts</button>
             <button class="nav-btn" onclick="showSection('pullover-section')">Pullover</button>
-            <button class="nav-btn" onclick="showSection('home')">🏠 Live</button>
+            <button class="nav-btn btn-live" onclick="showSection('home')">🏠 Live</button>
         </div>
         <div class="nav-right">
             <button class="nav-btn" onclick="showSection('cart-section')">🛒 Warenkorb <span id="cart-counter" class="cart-count">0</span></button>
@@ -62,7 +85,7 @@
             <h1>Shirts Kollektion</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container">
+                    <div class="product-image-container" onmousemove="zoom(event)" onmouseleave="resetZoom(event)">
                         <img src="tshirt.jpg" alt="Signature Tee" class="product-image">
                     </div>
                     <div class="product-info">
@@ -81,7 +104,7 @@
             <h1>Pullover & Hoodies</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container">
+                    <div class="product-image-container" onmousemove="zoom(event)" onmouseleave="resetZoom(event)">
                         <img src="hoodie.png" alt="Logo Hoodie" class="product-image">
                     </div>
                     <div class="product-info">
@@ -110,23 +133,43 @@
 
     <script>
         let cart = [];
+
+        // ZOOM FUNKTION
+        function zoom(e) {
+            const container = e.currentTarget;
+            const img = container.querySelector('img');
+            const x = e.offsetX;
+            const y = e.offsetY;
+            img.style.transformOrigin = `${x}px ${y}px`;
+            img.style.transform = "scale(2.5)";
+        }
+
+        function resetZoom(e) {
+            const img = e.currentTarget.querySelector('img');
+            img.style.transformOrigin = "center center";
+            img.style.transform = "scale(1)";
+        }
+
         function showSection(id) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             if(id === 'cart-section') updateCartDisplay();
             window.scrollTo(0,0);
         }
+
         function addToCart(name, price, sizeId) {
             const size = document.getElementById(sizeId).value;
             cart.push({ name, price, size });
             document.getElementById('cart-counter').innerText = cart.length;
             alert(name + " hinzugefügt!");
         }
+
         function removeFromCart(index) {
             cart.splice(index, 1);
             document.getElementById('cart-counter').innerText = cart.length;
             updateCartDisplay();
         }
+
         function updateCartDisplay() {
             const list = document.getElementById('cart-items');
             const totalEl = document.getElementById('cart-total');
