@@ -178,7 +178,6 @@
         function changeLanguage(lang) {
             currentLang = lang;
             const t = translations[lang];
-            
             document.querySelectorAll('.lang-nav-prod').forEach(el => el.innerText = t.navProd);
             document.querySelectorAll('.lang-drop-shirts').forEach(el => el.innerText = t.dropShirts);
             document.querySelectorAll('.lang-drop-hoodies').forEach(el => el.innerText = t.dropHoodies);
@@ -196,7 +195,6 @@
             document.querySelectorAll('.lang-accessoires').forEach(el => el.innerText = t.accessoires);
             document.querySelectorAll('.lang-ph-email').forEach(el => el.placeholder = t.phEmail);
             document.querySelectorAll('.lang-ph-msg').forEach(el => el.placeholder = t.phMsg);
-
             updateCartDisplay();
         }
 
@@ -222,18 +220,32 @@
             const size = document.getElementById(sizeId).value;
             cart.push({ name, price, size });
             document.getElementById('cart-counter').innerText = cart.length;
-            alert(name + " added!");
+            alert(name + " (" + size + ") added!");
+            updateCartDisplay();
         }
 
         function updateCartDisplay() {
             const list = document.getElementById('cart-items');
-            let total = 0; list.innerHTML = "";
-            cart.forEach(item => {
+            let total = 0; 
+            let itemSummary = "";
+            list.innerHTML = "";
+
+            cart.forEach((item, index) => {
                 total += item.price;
-                list.innerHTML += `<li style="padding:10px; border-bottom:1px solid #333; display:flex; justify-content:space-between;"><span>${item.name} (${item.size})</span><span>${item.price.toFixed(2)} €</span></li>`;
+                itemSummary += `${item.name} (${item.size}), `;
+                list.innerHTML += `<li style="padding:10px; border-bottom:1px solid #333; display:flex; justify-content:space-between;">
+                    <span>${item.name} (${item.size})</span>
+                    <span>${item.price.toFixed(2)} €</span>
+                </li>`;
             });
+
             document.getElementById('cart-total').innerText = `${translations[currentLang].total}: ${total.toFixed(2)} €`;
-            document.getElementById('paypal-link').href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${total.toFixed(2)}&currency_code=EUR`;
+            
+            // PAYPAL LINK AKTUALISIERUNG
+            // item_name wird in der PayPal-Email angezeigt!
+            const businessEmail = "bananielheinrich@gmail.com";
+            const encodedSummary = encodeURIComponent("Bestellung: " + itemSummary);
+            document.getElementById('paypal-link').href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${businessEmail}&amount=${total.toFixed(2)}&currency_code=EUR&item_name=${encodedSummary}`;
         }
 
         async function sendSupportTicket() {
