@@ -37,6 +37,10 @@
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #111; margin-bottom: 5px; border-radius: 8px; }
         .remove-btn { background: #ff4444; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer; }
         .btn-paypal-cart { display: block; width: 100%; padding: 15px; background: #0070ba; color: white; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 20px; text-align: center; }
+        
+        .support-box { background: #1a1a1a; padding: 30px; border-radius: 15px; border: 1px solid #5c8d67; max-width: 500px; margin: 40px auto; }
+        .support-mail { font-size: 20px; color: #5c8d67; font-weight: bold; text-decoration: none; word-break: break-all; }
+
         .footer { background-color: #111; color: #777; padding: 40px 5%; text-align: center; border-top: 1px solid #333; margin-top: 50px; font-size: 14px; }
     </style>
 </head>
@@ -50,7 +54,7 @@
         </div>
         <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
         <div class="nav-right">
-            <a href="mailto:bananielheinrich@gmail.com" class="nav-btn btn-support" id="nav-support">Support</a>
+            <button class="nav-btn btn-support" onclick="showSection('support-section')" id="nav-support">Support</button>
             <button class="nav-btn btn-lang" onclick="toggleLanguage()" id="lang-btn">EN</button>
             <button class="nav-btn" onclick="showSection('cart-section')">🛒 <span id="cart-counter" class="cart-count">0</span></button>
         </div>
@@ -103,6 +107,17 @@
         </div>
     </section>
 
+    <section id="support-section" class="page-section">
+        <div class="container">
+            <h1 id="support-title">Shop Support</h1>
+            <div class="support-box">
+                <p id="support-text">Hast du Fragen zu deiner Bestellung? Schreib mir einfach eine E-Mail:</p>
+                <a href="mailto:bananielheinrich@gmail.com" class="support-mail">bananielheinrich@gmail.com</a>
+                <p style="margin-top: 20px; font-size: 14px; color: #777;">(Klicke auf die E-Mail oder kopiere sie)</p>
+            </div>
+        </div>
+    </section>
+
     <section id="cart-section" class="page-section">
         <div class="container" style="max-width: 600px;">
             <h1 id="cart-title">Dein Warenkorb</h1>
@@ -113,7 +128,7 @@
     </section>
 
     <footer class="footer">
-        <p><strong>Impressum:</strong> Bananiel Heinrich, 46a Brüggen, 41379 Deutschland. E-Mail: bananielheinrich@gmail.com</p>
+        <p><strong>Impressum:</strong> Bananiel Heinrich, 46a Brüggen, 41379 Deutschland.</p>
     </footer>
 
     <script>
@@ -125,13 +140,15 @@
                 navShirts: "Shirts", navHoodies: "Pullover", navSupport: "Support", homeTitle: "robi-twice Live",
                 shirtsTitle: "Shirts Kollektion", hoodiesTitle: "Pullover & Hoodies",
                 cartTitle: "Dein Warenkorb", addBtn: "In den Warenkorb", 
-                total: "Gesamt", empty: "Warenkorb leer", paypal: "Mit PayPal bezahlen", langBtn: "EN"
+                total: "Gesamt", empty: "Warenkorb leer", paypal: "Mit PayPal bezahlen", langBtn: "EN",
+                supportTitle: "Shop Support", supportText: "Fragen zur Bestellung? Schreib mir eine E-Mail:"
             },
             en: {
-                navShirts: "T-Shirts", navHoodies: "Hoodies", navSupport: "Help", homeTitle: "robi-twice Live Stream",
+                navShirts: "T-Shirts", navHoodies: "Hoodies", navSupport: "Support", homeTitle: "robi-twice Live Stream",
                 shirtsTitle: "T-Shirt Collection", hoodiesTitle: "Hoodies & Sweats",
                 cartTitle: "Your Cart", addBtn: "Add to Cart", 
-                total: "Total", empty: "Cart is empty", paypal: "Checkout with PayPal", langBtn: "DE"
+                total: "Total", empty: "Cart is empty", paypal: "Checkout with PayPal", langBtn: "DE",
+                supportTitle: "Shop Support", supportText: "Questions about your order? Send me an email:"
             }
         };
 
@@ -148,6 +165,8 @@
             document.getElementById('add-shirt').innerText = t.addBtn;
             document.getElementById('add-hoodie').innerText = t.addBtn;
             document.getElementById('lang-btn').innerText = t.langBtn;
+            document.getElementById('support-title').innerText = t.supportTitle;
+            document.getElementById('support-text').innerText = t.supportText;
             updateCartDisplay();
         }
 
