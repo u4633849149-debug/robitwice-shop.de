@@ -7,9 +7,12 @@
     <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background-color: #000; color: #fff; overflow-x: hidden; }
         header { background-color: #1a1a1a; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
-        .nav-left { display: flex; gap: 15px; align-items: center; }
-        .logo-nav { font-size: 26px; font-weight: bold; cursor: pointer; text-transform: lowercase; }
-        .nav-btn { background-color: #333; color: white; padding: 10px 18px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
+        .nav-left { display: flex; gap: 10px; align-items: center; }
+        .nav-right { display: flex; gap: 10px; align-items: center; }
+        .logo-nav { font-size: 24px; font-weight: bold; cursor: pointer; text-transform: lowercase; }
+        .nav-btn { background-color: #333; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
+        .nav-btn:hover { background-color: #444; }
+        .btn-lang { background-color: #5c8d67; }
         .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; }
 
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
@@ -20,38 +23,10 @@
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 20px; position: relative; }
         
-        /* Bild-Container stabil halten */
-        .product-image-container { 
-            background: #f5f5f5; 
-            padding: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 400px; 
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .product-image { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain; 
-            display: block; 
-        }
+        .product-image-container { background: #f5f5f5; padding: 0; display: flex; justify-content: center; align-items: center; height: 400px; position: relative; overflow: hidden; }
+        .product-image { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
 
-        /* Das Zoom-Feld (Resultat) */
-        .img-zoom-result {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-repeat: no-repeat;
-            display: none; /* Erst beim Hover zeigen */
-            z-index: 10;
-            background-color: #f5f5f5;
-            pointer-events: none;
-        }
+        .img-zoom-result { position: absolute; right: 0; top: 0; width: 100%; height: 100%; background-repeat: no-repeat; display: none; z-index: 10; background-color: #f5f5f5; pointer-events: none; }
 
         .product-info { padding: 20px; text-align: left; }
         .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
@@ -68,17 +43,19 @@
 
     <header>
         <div class="nav-left">
-            <button class="nav-btn" onclick="showSection('shirts-section')">Shirts</button>
-            <button class="nav-btn" onclick="showSection('pullover-section')">Pullover</button>
-            <button class="nav-btn btn-live" onclick="showSection('home')">🏠 Live</button>
+            <button class="nav-btn" onclick="showSection('shirts-section')" id="nav-shirts">Shirts</button>
+            <button class="nav-btn" onclick="showSection('pullover-section')" id="nav-hoodies">Pullover</button>
+            <button class="nav-btn" onclick="showSection('home')">🏠 Live</button>
         </div>
+        <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
         <div class="nav-right">
-            <button class="nav-btn" onclick="showSection('cart-section')">🛒 Warenkorb <span id="cart-counter" class="cart-count">0</span></button>
+            <button class="nav-btn btn-lang" onclick="toggleLanguage()" id="lang-btn">EN</button>
+            <button class="nav-btn" onclick="showSection('cart-section')">🛒 <span id="cart-counter" class="cart-count">0</span></button>
         </div>
     </header>
 
     <section id="home" class="page-section active">
-        <h1>robi-twice Live</h1>
+        <h1 id="home-title">robi-twice Live</h1>
         <div style="max-width: 800px; margin: auto;">
             <iframe width="100%" height="450" src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" frameborder="0" allowfullscreen></iframe>
         </div>
@@ -86,18 +63,18 @@
 
     <section id="shirts-section" class="page-section">
         <div class="container">
-            <h1>Shirts Kollektion</h1>
+            <h1 id="shirts-title">Shirts Kollektion</h1>
             <div class="product-grid">
                 <div class="product-card">
                     <div class="product-image-container" onmousemove="zoom(event)" onmouseleave="hideZoom(event)">
-                        <img id="img-shirt" src="tshirt.jpg" alt="Signature Tee" class="product-image">
-                        <div id="zoom-shirt" class="img-zoom-result"></div>
+                        <img src="tshirt.jpg" alt="Signature Tee" class="product-image">
+                        <div class="img-zoom-result"></div>
                     </div>
                     <div class="product-info">
                         <h3>robi-twice Signature Tee</h3>
                         <p class="price">20,00 €</p>
                         <select id="size-shirt"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-                        <button class="btn-add" onclick="addToCart('Signature Tee', 20.00, 'size-shirt')">In den Warenkorb</button>
+                        <button class="btn-add" onclick="addToCart('Signature Tee', 20.00, 'size-shirt')" id="add-shirt">In den Warenkorb</button>
                     </div>
                 </div>
             </div>
@@ -106,18 +83,18 @@
 
     <section id="pullover-section" class="page-section">
         <div class="container">
-            <h1>Pullover & Hoodies</h1>
+            <h1 id="hoodies-title">Pullover & Hoodies</h1>
             <div class="product-grid">
                 <div class="product-card">
                     <div class="product-image-container" onmousemove="zoom(event)" onmouseleave="hideZoom(event)">
-                        <img id="img-hoodie" src="hoodie.png" alt="Logo Hoodie" class="product-image">
-                        <div id="zoom-hoodie" class="img-zoom-result"></div>
+                        <img src="hoodie.png" alt="Logo Hoodie" class="product-image">
+                        <div class="img-zoom-result"></div>
                     </div>
                     <div class="product-info">
                         <h3>robi-twice Logo Hoodie</h3>
                         <p class="price">30,00 €</p>
                         <select id="size-hoodie"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-                        <button class="btn-add" onclick="addToCart('Logo Hoodie', 30.00, 'size-hoodie')">In den Warenkorb</button>
+                        <button class="btn-add" onclick="addToCart('Logo Hoodie', 30.00, 'size-hoodie')" id="add-hoodie">In den Warenkorb</button>
                     </div>
                 </div>
             </div>
@@ -126,7 +103,7 @@
 
     <section id="cart-section" class="page-section">
         <div class="container" style="max-width: 600px;">
-            <h1>Dein Warenkorb</h1>
+            <h1 id="cart-title">Dein Warenkorb</h1>
             <ul id="cart-items" style="list-style: none; padding: 0;"></ul>
             <h3 id="cart-total">Gesamt: 0,00 €</h3>
             <a id="paypal-link" href="#" class="btn-paypal-cart" target="_blank">Mit PayPal bezahlen</a>
@@ -139,29 +116,55 @@
 
     <script>
         let cart = [];
+        let currentLang = 'de';
+
+        const translations = {
+            de: {
+                navShirts: "Shirts", navHoodies: "Pullover", homeTitle: "robi-twice Live",
+                shirtsTitle: "Shirts Kollektion", hoodiesTitle: "Pullover & Hoodies",
+                cartTitle: "Dein Warenkorb", addBtn: "In den Warenkorb", 
+                total: "Gesamt", empty: "Warenkorb leer", paypal: "Mit PayPal bezahlen", langBtn: "EN"
+            },
+            en: {
+                navShirts: "T-Shirts", navHoodies: "Hoodies", homeTitle: "robi-twice Live Stream",
+                shirtsTitle: "T-Shirt Collection", hoodiesTitle: "Hoodies & Sweats",
+                cartTitle: "Your Cart", addBtn: "Add to Cart", 
+                total: "Total", empty: "Cart is empty", paypal: "Checkout with PayPal", langBtn: "DE"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'de' ? 'en' : 'de';
+            const t = translations[currentLang];
+            
+            document.getElementById('nav-shirts').innerText = t.navShirts;
+            document.getElementById('nav-hoodies').innerText = t.navHoodies;
+            document.getElementById('home-title').innerText = t.homeTitle;
+            document.getElementById('shirts-title').innerText = t.shirtsTitle;
+            document.getElementById('hoodies-title').innerText = t.hoodiesTitle;
+            document.getElementById('cart-title').innerText = t.cartTitle;
+            document.getElementById('add-shirt').innerText = t.addBtn;
+            document.getElementById('add-hoodie').innerText = t.addBtn;
+            document.getElementById('lang-btn').innerText = t.langBtn;
+            
+            updateCartDisplay();
+        }
 
         function zoom(e) {
             const container = e.currentTarget;
             const img = container.querySelector('img');
             const result = container.querySelector('.img-zoom-result');
-            
             result.style.display = "block";
             result.style.backgroundImage = `url('${img.src}')`;
             result.style.backgroundSize = (img.width * 2.5) + "px " + (img.height * 2.5) + "px";
-
             const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const posX = (x / container.offsetWidth) * 100;
-            const posY = (y / container.offsetHeight) * 100;
-
-            result.style.backgroundPosition = `${posX}% ${posY}%`;
+            const x = ((e.clientX - rect.left) / container.offsetWidth) * 100;
+            const y = ((e.clientY - rect.top) / container.offsetHeight) * 100;
+            result.style.backgroundPosition = `${x}% ${y}%`;
         }
 
         function hideZoom(e) {
-            const result = e.currentTarget.querySelector('.img-zoom-result');
-            result.style.display = "none";
+            e.currentTarget.querySelector('.img-zoom-result').style.display = "none";
         }
 
         function showSection(id) {
@@ -175,7 +178,6 @@
             const size = document.getElementById(sizeId).value;
             cart.push({ name, price, size });
             document.getElementById('cart-counter').innerText = cart.length;
-            alert(name + " hinzugefügt!");
         }
 
         function removeFromCart(index) {
@@ -188,22 +190,25 @@
             const list = document.getElementById('cart-items');
             const totalEl = document.getElementById('cart-total');
             const paypalLink = document.getElementById('paypal-link');
+            const t = translations[currentLang];
             let total = 0;
             let itemsText = "";
             list.innerHTML = "";
+            
             if (cart.length === 0) {
-                list.innerHTML = "<li>Warenkorb leer</li>";
+                list.innerHTML = `<li>${t.empty}</li>`;
                 paypalLink.style.display = "none";
             } else {
                 paypalLink.style.display = "block";
+                paypalLink.innerText = t.paypal;
                 cart.forEach((item, index) => {
                     total += item.price;
                     itemsText += item.name + "(" + item.size + ") ";
                     list.innerHTML += `<li class="cart-item"><span>${item.name} (${item.size})</span><span>${item.price.toFixed(2)} € <button class="remove-btn" onclick="removeFromCart(${index})">X</button></span></li>`;
                 });
             }
-            totalEl.innerText = "Gesamt: " + total.toFixed(2) + " €";
-            paypalLink.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&item_name=Bestellung_${encodeURIComponent(itemsText)}&amount=${total.toFixed(2)}&currency_code=EUR`;
+            totalEl.innerText = `${t.total}: ${total.toFixed(2)} €`;
+            paypalLink.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&item_name=Order_${encodeURIComponent(itemsText)}&amount=${total.toFixed(2)}&currency_code=EUR`;
         }
     </script>
 </body>
