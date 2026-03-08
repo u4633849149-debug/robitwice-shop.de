@@ -50,7 +50,8 @@
         <div class="nav-left">
             <button class="nav-btn" onclick="showSection('shirts-section')" id="nav-shirts">Shirts</button>
             <button class="nav-btn" onclick="showSection('pullover-section')" id="nav-hoodies">Pullover</button>
-            <button class="nav-btn" onclick="showSection('home')"> Live</button>
+            <button class="nav-btn" onclick="showSection('hats-section')" id="nav-hats">Mützen</button>
+            <button class="nav-btn" onclick="showSection('home')">🏠 Live</button>
         </div>
         <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
         <div class="nav-right">
@@ -107,6 +108,26 @@
         </div>
     </section>
 
+    <section id="hats-section" class="page-section">
+        <div class="container">
+            <h1 id="hats-title">Accessoires</h1>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image-container" onmousemove="zoom(event)" onmouseleave="hideZoom(event)">
+                        <img src="muetze.png" alt="Logo Beanie" class="product-image">
+                        <div class="img-zoom-result"></div>
+                    </div>
+                    <div class="product-info">
+                        <h3>robi-twice Logo Beanie</h3>
+                        <p class="price">17,00 €</p>
+                        <select id="size-hat"><option>Einheitsgröße (OS)</option></select>
+                        <button class="btn-add" onclick="addToCart('Logo Beanie', 17.00, 'size-hat')" id="add-hat">In den Warenkorb</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="support-section" class="page-section">
         <div class="container">
             <h1 id="support-title">Shop Support</h1>
@@ -149,8 +170,8 @@
 
         const translations = {
             de: {
-                navShirts: "Shirts", navHoodies: "Pullover", navSupport: "Support", homeTitle: "robi-twice Live",
-                shirtsTitle: "Shirts Kollektion", hoodiesTitle: "Pullover & Hoodies",
+                navShirts: "Shirts", navHoodies: "Pullover", navHats: "Mützen", navSupport: "Support", homeTitle: "robi-twice Live",
+                shirtsTitle: "Shirts Kollektion", hoodiesTitle: "Pullover & Hoodies", hatsTitle: "Accessoires",
                 cartTitle: "Dein Warenkorb", addBtn: "In den Warenkorb", 
                 total: "Gesamt", empty: "Warenkorb leer", paypal: "Mit PayPal bezahlen", langBtn: "EN",
                 supportTitle: "Shop Support", supportText: "Bitte fülle das Formular aus, ich helfe dir gerne!",
@@ -160,8 +181,8 @@
                 statusError: "Fehler beim Senden. Bitte versuche es erneut."
             },
             en: {
-                navShirts: "T-Shirts", navHoodies: "Hoodies", navSupport: "Support", homeTitle: "robi-twice Live Stream",
-                shirtsTitle: "T-Shirt Collection", hoodiesTitle: "Hoodies & Sweats",
+                navShirts: "T-Shirts", navHoodies: "Hoodies", navHats: "Beanies", navSupport: "Support", homeTitle: "robi-twice Live Stream",
+                shirtsTitle: "T-Shirt Collection", hoodiesTitle: "Hoodies & Sweats", hatsTitle: "Accessories",
                 cartTitle: "Your Cart", addBtn: "Add to Cart", 
                 total: "Total", empty: "Cart is empty", paypal: "Checkout with PayPal", langBtn: "DE",
                 supportTitle: "Shop Support", supportText: "Please fill out the form, I'm happy to help!",
@@ -177,13 +198,16 @@
             const t = translations[currentLang];
             document.getElementById('nav-shirts').innerText = t.navShirts;
             document.getElementById('nav-hoodies').innerText = t.navHoodies;
+            document.getElementById('nav-hats').innerText = t.navHats;
             document.getElementById('nav-support').innerText = t.navSupport;
             document.getElementById('home-title').innerText = t.homeTitle;
             document.getElementById('shirts-title').innerText = t.shirtsTitle;
             document.getElementById('hoodies-title').innerText = t.hoodiesTitle;
+            document.getElementById('hats-title').innerText = t.hatsTitle;
             document.getElementById('cart-title').innerText = t.cartTitle;
             document.getElementById('add-shirt').innerText = t.addBtn;
             document.getElementById('add-hoodie').innerText = t.addBtn;
+            document.getElementById('add-hat').innerText = t.addBtn;
             document.getElementById('lang-btn').innerText = t.langBtn;
             document.getElementById('support-title').innerText = t.supportTitle;
             document.getElementById('support-text').innerText = t.supportText;
