@@ -284,7 +284,7 @@
             });
 
             if (response.ok) {
-                alert("Danke! Deine Lieferadresse wurde an uns gesendet. Jetzt schließe bitte die Zahlung über PayPal ab.");
+                alert("Danke! Deine Lieferadresse wurde an uns gesendet. Jetzt schließe bitte die Zahlung über PayPal ab.Es kein an parr tage dauern bids ihr Paket an kommt");
                 const finalTotal = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
                 window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${finalTotal}&currency_code=EUR&item_name=Bestellung robi-twice: ${summary}`;
             } else {
