@@ -19,13 +19,15 @@
             opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease-in-out; pointer-events: none;
         }
         .dropdown:hover .dropdown-content { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
-        .dropdown-content button { color: white; padding: 12px 16px; display: block; width: 100%; border: none; background: none; text-align: left; cursor: pointer; font-size: 14px; }
+        .dropdown-content::before { content: ""; position: absolute; top: -15px; left: 0; width: 100%; height: 15px; }
+        .dropdown-content button { color: white; padding: 12px 16px; display: block; width: 100%; border: none; background: none; text-align: left; cursor: pointer; font-size: 14px; transition: 0.2s; }
         .dropdown-content button:hover { background-color: #333; color: #5c8d67; }
 
-        .nav-btn { background-color: #333; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; }
+        .nav-btn { background-color: #333; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
         .btn-lang-main { background-color: #5c8d67 !important; }
         .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; }
 
+        /* Zoom */
         .product-image-container { background: #f5f5f5; height: 400px; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: crosshair; }
         .product-image { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.1s ease-out; transform-origin: center center; }
 
@@ -34,14 +36,12 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; justify-content: center; }
-        .product-card { background: #1a1a1a; border-radius: 12px; border: 1px solid #333; padding-bottom: 20px; max-width: 400px; margin: auto; text-align: center; position: relative; }
+        .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 20px; max-width: 400px; margin: auto; text-align: center; }
         .product-info { padding: 20px; text-align: left; }
         
-        /* Rabatt Styles */
-        .price-container { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        /* Preis-Styles (angepasst ohne Sale) */
+        .price-container { display: flex; align-items: center; margin-bottom: 10px; }
         .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
-        .old-price { font-size: 16px; color: #888; text-decoration: line-through; }
-        .discount-badge { position: absolute; top: 10px; right: 10px; background: #e74c3c; color: white; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; z-index: 10; }
 
         select, input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; color: white; border: 1px solid #333; border-radius: 5px; box-sizing: border-box; font-family: inherit; }
         .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
@@ -62,7 +62,9 @@
             </div>
             <button class="nav-btn" onclick="showSection('home')">🏠 Live</button>
         </div>
+
         <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
+
         <div class="nav-right">
             <button class="nav-btn lang-nav-support" onclick="showSection('support-section')">Support</button>
             <div class="dropdown">
@@ -88,16 +90,14 @@
     <section id="shirts-section" class="page-section">
         <div class="product-grid">
             <div class="product-card">
-                <div class="discount-badge">-10%</div>
                 <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="tshirt.jpg" class="product-image"></div>
                 <div class="product-info">
                     <h3 class="lang-p-shirt">robi-twice Signature Shirt</h3>
                     <div class="price-container">
-                        <span class="price">27,00 €</span>
-                        <span class="old-price">30,00 €</span>
+                        <span class="price">30,00 €</span>
                     </div>
                     <select id="size-shirt"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-                    <button class="btn-add lang-btn-add" onclick="addToCart('Signature Shirt', 27.00, 'size-shirt')">In den Warenkorb</button>
+                    <button class="btn-add lang-btn-add" onclick="addToCart('Signature Shirt', 30.00, 'size-shirt')">In den Warenkorb</button>
                 </div>
             </div>
         </div>
@@ -106,16 +106,14 @@
     <section id="pullover-section" class="page-section">
         <div class="product-grid">
             <div class="product-card">
-                <div class="discount-badge">SALE</div>
                 <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="hoodie.png" class="product-image"></div>
                 <div class="product-info">
                     <h3 class="lang-p-hoodie">robi-twice Logo Hoodie</h3>
                     <div class="price-container">
-                        <span class="price">35,00 €</span>
-                        <span class="old-price">40,00 €</span>
+                        <span class="price">40,00 €</span>
                     </div>
                     <select id="size-hoodie"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-                    <button class="btn-add lang-btn-add" onclick="addToCart('Logo Hoodie', 35.00, 'size-hoodie')">In den Warenkorb</button>
+                    <button class="btn-add lang-btn-add" onclick="addToCart('Logo Hoodie', 40.00, 'size-hoodie')">In den Warenkorb</button>
                 </div>
             </div>
         </div>
@@ -187,8 +185,25 @@
                 sizeOS: "One Size (OS)", phEmail: "Email", phMsg: "Message", accessoires: "Accessories",
                 lblIssue: "What is the issue?", opt1: "Defective / Damaged", opt2: "Wrong size/color ordered",
                 opt3: "Don't like it", opt4: "Shipping question", opt5: "Other"
+            },
+            es: {
+                navProd: "Productos ▾", dropShirts: "Camisetas", dropHoodies: "Sudaderas", dropHats: "Gorros",
+                navSupport: "Soporte", navLang: "Idioma ▾", homeTitle: "robi-twice en Vivo",
+                pShirt: "Camiseta Signature", pHoodie: "Sudadera Logo", pHat: "Gorro Logo",
+                btnAdd: "Añadir al carrito", btnSend: "Enviar", cartTitle: "Carrito", total: "Total", 
+                sizeOS: "Talla única (OS)", phEmail: "Correo electrónico", phMsg: "Mensaje", accessoires: "Accesorios",
+                lblIssue: "¿Cuál es el problema?", opt1: "Defectuoso / Dañado", opt2: "Tamaño/color incorrecto",
+                opt3: "No me gusta", opt4: "Pregunta de envío", opt5: "Otro"
+            },
+            fr: {
+                navProd: "Produits ▾", dropShirts: "T-Shirts", dropHoodies: "Pulls", dropHats: "Bonnets",
+                navSupport: "Support", navLang: "Langue ▾", homeTitle: "robi-twice en Direct",
+                pShirt: "T-Shirt Signature", pHoodie: "Sweat à capuche", pHat: "Bonnet Logo",
+                btnAdd: "Ajouter au panier", btnSend: "Envoyer", cartTitle: "Panier", total: "Total", 
+                sizeOS: "Taille unique (OS)", phEmail: "E-mail", phMsg: "Message", accessoires: "Accessoires",
+                lblIssue: "Quel est le problème ?", opt1: "Défectueux / Endommagé", opt2: "Mauvaise taille/couleur",
+                opt3: "Je n'aime pas", opt4: "Question d'expédition", opt5: "Autre"
             }
-            // (Weitere Sprachen wie gehabt...)
         };
 
         function changeLanguage(lang) {
