@@ -10,9 +10,10 @@
         .nav-left { display: flex; gap: 10px; align-items: center; }
         .nav-right { display: flex; gap: 10px; align-items: center; }
         .logo-nav { font-size: 24px; font-weight: bold; cursor: pointer; text-transform: lowercase; }
-        .nav-btn { background-color: #333; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
+        .nav-btn { background-color: #333; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; text-decoration: none; display: inline-block; }
         .nav-btn:hover { background-color: #444; }
         .btn-lang { background-color: #5c8d67; }
+        .btn-support { background-color: #444; border: 1px solid #555; }
         .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; }
 
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
@@ -49,6 +50,7 @@
         </div>
         <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
         <div class="nav-right">
+            <a href="mailto:bananielheinrich@gmail.com" class="nav-btn btn-support" id="nav-support">Support</a>
             <button class="nav-btn btn-lang" onclick="toggleLanguage()" id="lang-btn">EN</button>
             <button class="nav-btn" onclick="showSection('cart-section')">🛒 <span id="cart-counter" class="cart-count">0</span></button>
         </div>
@@ -111,7 +113,7 @@
     </section>
 
     <footer class="footer">
-        <p><strong>Impressum:</strong> Bananiel Heinrich, 46a Brüggen, 41379 Deutschland.</p>
+        <p><strong>Impressum:</strong> Bananiel Heinrich, 46a Brüggen, 41379 Deutschland. E-Mail: bananielheinrich@gmail.com</p>
     </footer>
 
     <script>
@@ -120,13 +122,13 @@
 
         const translations = {
             de: {
-                navShirts: "Shirts", navHoodies: "Pullover", homeTitle: "robi-twice Live",
+                navShirts: "Shirts", navHoodies: "Pullover", navSupport: "Support", homeTitle: "robi-twice Live",
                 shirtsTitle: "Shirts Kollektion", hoodiesTitle: "Pullover & Hoodies",
                 cartTitle: "Dein Warenkorb", addBtn: "In den Warenkorb", 
                 total: "Gesamt", empty: "Warenkorb leer", paypal: "Mit PayPal bezahlen", langBtn: "EN"
             },
             en: {
-                navShirts: "T-Shirts", navHoodies: "Hoodies", homeTitle: "robi-twice Live Stream",
+                navShirts: "T-Shirts", navHoodies: "Hoodies", navSupport: "Help", homeTitle: "robi-twice Live Stream",
                 shirtsTitle: "T-Shirt Collection", hoodiesTitle: "Hoodies & Sweats",
                 cartTitle: "Your Cart", addBtn: "Add to Cart", 
                 total: "Total", empty: "Cart is empty", paypal: "Checkout with PayPal", langBtn: "DE"
@@ -138,6 +140,7 @@
             const t = translations[currentLang];
             document.getElementById('nav-shirts').innerText = t.navShirts;
             document.getElementById('nav-hoodies').innerText = t.navHoodies;
+            document.getElementById('nav-support').innerText = t.navSupport;
             document.getElementById('home-title').innerText = t.homeTitle;
             document.getElementById('shirts-title').innerText = t.shirtsTitle;
             document.getElementById('hoodies-title').innerText = t.hoodiesTitle;
