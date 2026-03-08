@@ -43,7 +43,6 @@
         
         select, input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #000; color: white; border: 1px solid #333; border-radius: 5px; }
         .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
-        .footer { background-color: #111; color: #777; padding: 40px 5%; text-align: center; border-top: 1px solid #333; font-size: 14px; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -141,10 +140,6 @@
         </div>
     </section>
 
-    <footer class="footer">
-        <p><strong>Impressum:</strong> Bananiel Heinrich, 46a Brüggen, 41379 Deutschland.</p>
-    </footer>
-
     <script>
         let cart = [];
         let currentLang = 'de';
@@ -184,7 +179,6 @@
             currentLang = lang;
             const t = translations[lang];
             
-            // Texte in Buttons und Headings
             document.querySelectorAll('.lang-nav-prod').forEach(el => el.innerText = t.navProd);
             document.querySelectorAll('.lang-drop-shirts').forEach(el => el.innerText = t.dropShirts);
             document.querySelectorAll('.lang-drop-hoodies').forEach(el => el.innerText = t.dropHoodies);
@@ -200,8 +194,6 @@
             document.querySelectorAll('.lang-cart-title').forEach(el => el.innerText = t.cartTitle);
             document.querySelectorAll('.lang-size-os').forEach(el => el.innerText = t.sizeOS);
             document.querySelectorAll('.lang-accessoires').forEach(el => el.innerText = t.accessoires);
-
-            // Platzhalter in Eingabefeldern übersetzen
             document.querySelectorAll('.lang-ph-email').forEach(el => el.placeholder = t.phEmail);
             document.querySelectorAll('.lang-ph-msg').forEach(el => el.placeholder = t.phMsg);
 
