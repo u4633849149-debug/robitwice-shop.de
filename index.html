@@ -31,6 +31,7 @@
         .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
         select, input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #000; color: white; border: 1px solid #333; border-radius: 5px; box-sizing: border-box; }
         .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; text-align: center; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
+        .btn-add:disabled { background-color: #444; cursor: not-allowed; }
 
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #111; margin-bottom: 5px; border-radius: 8px; }
         .remove-btn { background: #ff4444; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer; }
@@ -125,7 +126,7 @@
                 <textarea id="cust-msg" rows="4"></textarea>
 
                 <button class="btn-add" onclick="sendSupportTicket()" id="send-ticket-btn">Ticket senden</button>
-                <p id="ticket-status" style="margin-top:15px; font-size:12px; color:#5c8d67;"></p>
+                <p id="ticket-status" style="margin-top:15px; font-size:14px; color:#5c8d67; font-weight:bold;"></p>
             </div>
         </div>
     </section>
@@ -155,7 +156,8 @@
                 total: "Gesamt", empty: "Warenkorb leer", paypal: "Mit PayPal bezahlen", langBtn: "EN",
                 supportTitle: "Shop Support", supportText: "Bitte fülle das Formular aus, ich helfe dir gerne!",
                 labelEmail: "Deine E-Mail Adresse:", labelReason: "Was ist dein Anliegen?", labelMsg: "Nachricht (optional):",
-                ticketBtn: "Ticket senden", statusMsg: "Dein E-Mail Programm wurde geöffnet. Bitte klicke dort auf 'Senden'."
+                ticketBtn: "Ticket senden", ticketSending: "Wird gesendet...", ticketSent: "Gesendet!",
+                statusSuccess: "Danke! Deine Nachricht wurde gesendet.", statusError: "Fehler beim Senden. Bitte versuche es erneut."
             },
             en: {
                 navShirts: "T-Shirts", navHoodies: "Hoodies", navSupport: "Support", homeTitle: "robi-twice Live Stream",
@@ -164,7 +166,8 @@
                 total: "Total", empty: "Cart is empty", paypal: "Checkout with PayPal", langBtn: "DE",
                 supportTitle: "Shop Support", supportText: "Please fill out the form, I'm happy to help!",
                 labelEmail: "Your Email Address:", labelReason: "What is your concern?", labelMsg: "Message (optional):",
-                ticketBtn: "Send Ticket", statusMsg: "Your email app has been opened. Please click 'Send' there."
+                ticketBtn: "Send Ticket", ticketSending: "Sending...", ticketSent: "Sent!",
+                statusSuccess: "Thanks! Your message has been sent.", statusError: "Error sending message. Please try again."
             }
         };
 
@@ -190,10 +193,12 @@
             updateCartDisplay();
         }
 
-        function sendSupportTicket() {
+        async function sendSupportTicket() {
             const email = document.getElementById('cust-email').value;
             const reason = document.getElementById('support-reason').value;
             const msg = document.getElementById('cust-msg').value;
+            const status = document.getElementById('ticket-status');
+            const btn = document.getElementById('send-ticket-btn');
             const t = translations[currentLang];
 
             if(!email) {
@@ -201,10 +206,33 @@
                 return;
             }
 
-            const subject = encodeURIComponent("Support Ticket: " + reason);
-            const body = encodeURIComponent("Absender: " + email + "\nAnliegen: " + reason + "\n\nNachricht:\n" + msg);
-            window.location.href = `mailto:bananielheinrich@gmail.com?subject=${subject}&body=${body}`;
-            document.getElementById('ticket-status').innerText = t.statusMsg;
+            btn.disabled = true;
+            btn.innerText = t.ticketSending;
+
+            try {
+                const response = await fetch("https://formspree.io/f/xlgpdoak", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        anliegen: reason,
+                        nachricht: msg
+                    })
+                });
+
+                if (response.ok) {
+                    status.innerText = t.statusSuccess;
+                    btn.innerText = t.ticketSent;
+                    document.getElementById('cust-email').value = "";
+                    document.getElementById('cust-msg').value = "";
+                } else {
+                    throw new Error();
+                }
+            } catch (error) {
+                status.innerText = t.statusError;
+                btn.disabled = false;
+                btn.innerText = t.ticketBtn;
+            }
         }
 
         function zoom(e) {
