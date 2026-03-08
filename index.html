@@ -6,209 +6,143 @@
     <title>robi-twice | Live & Shop</title>
     <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background-color: #000; color: #fff; overflow-x: hidden; }
-        
-        /* Navigation */
-        header { 
-            background-color: #1a1a1a; 
-            color: white; 
-            padding: 15px 5%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            border-bottom: 1px solid #333; 
-        }
-
+        header { background-color: #1a1a1a; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
         .nav-left { display: flex; gap: 15px; align-items: center; }
-        .logo-nav { font-size: 26px; font-weight: bold; cursor: pointer; text-transform: lowercase; transition: 0.3s; }
-        .logo-nav:hover { color: #5c8d67; }
-        
-        .dropdown { position: relative; display: inline-block; }
-        
-        /* Buttons Style */
-        .nav-btn { 
-            background-color: #333; 
-            color: white; 
-            padding: 10px 18px; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 14px;
-            transition: 0.3s;
-        }
-        .nav-btn:hover { background-color: #444; }
+        .logo-nav { font-size: 26px; font-weight: bold; cursor: pointer; text-transform: lowercase; }
+        .nav-btn { background-color: #333; color: white; padding: 10px 18px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
         .btn-live { background-color: #444; border: 1px solid #ff0000; }
+        .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; }
 
-        .dropdown-content { display: none; position: absolute; background-color: #222; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.5); border-radius: 4px; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #333; cursor: pointer; }
-        .dropdown-content a:hover { background-color: #333; }
-        .dropdown:hover .dropdown-content { display: block; }
-
-        /* Sektions-Logik */
+        /* Sektionen */
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* STARTSEITE: Live Stream */
-        #home { text-align: center; }
-        .stream-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 1000px; margin: 20px auto; border: 2px solid #333; border-radius: 8px; background: #111; }
-        .stream-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .status-badge { display: inline-block; padding: 5px 15px; background-color: #ff0000; border-radius: 20px; font-weight: bold; margin-bottom: 10px; animation: blink 1.5s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
-        /* NEUES SHOP DESIGN (image_4.png style) */
+        /* Shop & Bilder (Vollbild-Fix) */
         .container { max-width: 1100px; margin: 0 auto; text-align: center; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 20px; }
+        .product-image-container { background: #f5f5f5; padding: 20px; display: flex; justify-content: center; }
+        .product-image { max-width: 100%; height: auto; display: block; }
+        .product-info { padding: 20px; text-align: left; }
+        .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
         
-        .product-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 40px; 
-            padding-top: 20px;
-        }
-        
-        .product-card { 
-            background: #1a1a1a; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            border: 1px solid #333; 
-            transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            border-color: #555;
-        }
-        
-        /* BEHOBEN: Bild wird jetzt GANZ angezeigt */
-        .product-image-container {
-            width: 100%;
-            background-color: #f5f5f5; /* Heller Hintergrund für das Shirt */
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .product-image { 
-            max-width: 100%; 
-            height: auto; /* Zeigt das Bild komplett an */
-            display: block;
-        }
-        
-        .product-info { 
-            padding: 25px; 
-            text-align: left; 
-            background-color: #1a1a1a;
-            border-top: 1px solid #333;
-        }
-        
-        .product-info h3 { margin: 0 0 10px 0; font-size: 20px; color: #fff; }
-        .price { font-size: 22px; color: #5c8d67; font-weight: bold; margin-bottom: 15px; }
-        
-        /* Buy Button (robi-twice style) */
-        .btn-buy { 
-            display: block; 
-            width: 100%; 
-            padding: 12px; 
-            border-radius: 25px; 
-            cursor: pointer; 
-            text-align: center; 
-            font-weight: bold; 
-            background-color: #5c8d67; 
-            color: white; 
-            border: none; 
-            transition: 0.3s;
-            font-size: 16px;
-            text-decoration: none;
-        }
-        .btn-buy:hover { background-color: #4a7354; }
+        select { width: 100%; padding: 10px; margin: 10px 0; background: #333; color: white; border: 1px solid #555; border-radius: 5px; }
+        .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; text-align: center; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
+
+        /* Warenkorb-Style */
+        #cart-items { list-style: none; padding: 0; text-align: left; }
+        .cart-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #333; }
+        .btn-paypal-cart { display: block; width: 100%; padding: 15px; background: #0070ba; color: white; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 20px; }
+
+        .footer { background-color: #111; color: #777; padding: 40px 5%; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="nav-left">
-            <div class="dropdown">
-                <button class="nav-btn">Produkte ▼</button>
-                <div class="dropdown-content">
-                    <a onclick="showSection('shirts-section')">— Shirts</a>
-                    <a onclick="showSection('pullover-section')">— Pullover</a>
-                </div>
-            </div>
-            <button class="nav-btn btn-live" onclick="showSection('home')">🏠 Live Stream</button>
+            <button class="nav-btn" onclick="showSection('shirts-section')">Shirts</button>
+            <button class="nav-btn" onclick="showSection('pullover-section')">Pullover</button>
+            <button class="nav-btn btn-live" onclick="showSection('home')">🏠 Live</button>
         </div>
-        <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
+        <div class="nav-right">
+            <button class="nav-btn" onclick="showSection('cart-section')">🛒 Warenkorb <span id="cart-counter" class="cart-count">0</span></button>
+        </div>
     </header>
 
     <section id="home" class="page-section active">
-        <div class="status-badge">LIVE</div>
-        <h1>robi-twice Live Stream</h1>
-        <div class="stream-container">
-            <iframe src="https://www.youtube.com/embed/live_stream?channel=DEINE_KANAL_ID" frameborder="0" allowfullscreen></iframe>
+        <h1>robi-twice Live</h1>
+        <div style="max-width: 800px; margin: auto;">
+            <iframe width="100%" height="450" src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" frameborder="0" allowfullscreen></iframe>
         </div>
-        <p>Willkommen! Schau mir live zu und check meine exklusiven Drops aus.</p>
     </section>
 
     <section id="shirts-section" class="page-section">
         <div class="container">
-            <h1>Shirts Kollektion</h1>
+            <h1>Shirts (20,00 €)</h1>
             <div class="product-grid">
-                
                 <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="tshirt.png" alt="robi-twice Signature Tee" class="product-image">
-                    </div>
+                    <div class="product-image-container"><img src="tshirt.png" class="product-image"></div>
                     <div class="product-info">
-                        <h3>robi-twice Signature Tee</h3>
-                        <p class="price">29,99 €</p>
-                        <a href="#" class="btn-buy">In den Warenkorb legen</a>
+                        <h3>Signature Tee</h3>
+                        <p class="price">20,00 €</p>
+                        <select id="size-shirt"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+                        <button class="btn-add" onclick="addToCart('Signature Tee', 20.00, 'size-shirt')">In den Warenkorb</button>
                     </div>
                 </div>
-                
-                </div>
+            </div>
         </div>
     </section>
 
     <section id="pullover-section" class="page-section">
         <div class="container">
-            <h1>Pullover & Hoodies</h1>
+            <h1>Pullover (30,00 €)</h1>
             <div class="product-grid">
-                
                 <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="hoodie.png" alt="robi-twice Logo Hoodie" class="product-image">
-                    </div>
+                    <div class="product-image-container"><img src="hoodie.png" class="product-image"></div>
                     <div class="product-info">
-                        <h3>robi-twice Logo Hoodie</h3>
-                        <p class="price">49,99 €</p>
-                        <a href="#" class="btn-buy">In den Warenkorb legen</a>
+                        <h3>Logo Hoodie</h3>
+                        <p class="price">30,00 €</p>
+                        <select id="size-hoodie"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+                        <button class="btn-add" onclick="addToCart('Logo Hoodie', 30.00, 'size-hoodie')">In den Warenkorb</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
+    <section id="cart-section" class="page-section">
+        <div class="container" style="max-width: 600px;">
+            <h1>Dein Warenkorb</h1>
+            <div id="cart-content">
+                <ul id="cart-items"></ul>
+                <h3 id="cart-total">Gesamt: 0,00 €</h3>
+                <p style="font-size: 12px; color: #aaa;">Hinweis: Bei PayPal bitte nochmal kurz die Größe und Adresse bestätigen!</p>
+                <a id="paypal-link" href="#" class="btn-paypal-cart" target="_blank">Mit PayPal bezahlen</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>Impressum: Bananiel Heinrich, 46a Brüggen, 41379 Deutschland</p>
+    </footer>
+
     <script>
-        // Einfache Funktion zum Umschalten zwischen den Sektionen
-        function showSection(sectionId) {
-            // Alle Sektionen verstecken
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(s => s.classList.remove('active'));
+        let cart = [];
+
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(id === 'cart-section') updateCartDisplay();
+        }
+
+        function addToCart(name, price, sizeId) {
+            const size = document.getElementById(sizeId).value;
+            cart.push({ name, price, size });
+            document.getElementById('cart-counter').innerText = cart.length;
+            alert(name + " in Größe " + size + " wurde hinzugefügt!");
+        }
+
+        function updateCartDisplay() {
+            const list = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            list.innerHTML = "";
+            let total = 0;
+            let itemsString = "";
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                itemsString += item.name + " (Größe " + item.size + "), ";
+                list.innerHTML += `<li class="cart-item"><span>${item.name} (${item.size})</span> <span>${item.price.toFixed(2)} €</span></li>`;
+            });
+
+            totalEl.innerText = "Gesamt: " + total.toFixed(2) + " €";
             
-            // Die gewählte Sektion anzeigen
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Zum Anfang der Seite springen
-            window.scrollTo(0, 0);
+            // Dynamischer PayPal Link für die gesamte Summe
+            const businessEmail = "bananielheinrich@gmail.com";
+            document.getElementById('paypal-link').href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${businessEmail}&item_name=robi-twice_Bestellung_${itemsString}&amount=${total.toFixed(2)}&currency_code=EUR`;
         }
     </script>
-
 </body>
 </html>
