@@ -29,11 +29,35 @@
 
         /* Video Layout (Home) */
         .video-container-main { display: flex; justify-content: center; align-items: center; gap: 20px; max-width: 1400px; margin: 20px auto; flex-wrap: wrap; }
-        .side-video-box { flex: 1; min-width: 280px; max-width: 350px; aspect-ratio: 16/9; background: #111; border: 2px solid #333; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .main-stream-center { flex: 2; min-width: 320px; max-width: 850px; aspect-ratio: 16/9; border: 2px solid #5c8d67; border-radius: 12px; overflow: hidden; }
+        
+        .side-video-box { 
+            flex: 1; min-width: 280px; max-width: 350px; aspect-ratio: 16/9; background: #111; border: 2px solid #444; border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); transition: 0.3s;
+        }
+        .side-video-box:hover { transform: scale(1.02); box-shadow: 0 0 25px rgba(255, 255, 255, 0.3); border-color: #fff; }
+
+        .main-stream-center { 
+            flex: 2; min-width: 320px; max-width: 850px; aspect-ratio: 16/9; border: 2px solid #5c8d67; border-radius: 12px; overflow: hidden; 
+            position: relative; animation: live-glow 2s infinite alternate;
+        }
+        @keyframes live-glow {
+            from { box-shadow: 0 0 10px rgba(92, 141, 103, 0.3); }
+            to { box-shadow: 0 0 25px rgba(92, 141, 103, 0.8); border-color: #7ab387; }
+        }
+
+        /* Neon Offline Overlay */
+        #offline-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; 
+            z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        .neon-text {
+            color: #fff; text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #5c8d67, 0 0 30px #5c8d67, 0 0 40px #5c8d67;
+            font-size: 1.5rem; font-weight: bold; margin: 10px;
+        }
+
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* Produkte */
+        /* Produkte & Sections */
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -41,16 +65,13 @@
         .product-card { background: #1a1a1a; border-radius: 12px; border: 1px solid #333; padding-bottom: 20px; max-width: 400px; margin: auto; text-align: center; overflow: hidden; }
         .product-image-container { background: #f5f5f5; height: 400px; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: crosshair; }
         .product-image { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.1s ease-out; transform-origin: center center; }
-        .product-info { padding: 20px; text-align: left; }
         .price { font-size: 22px; color: #5c8d67; font-weight: bold; margin-bottom: 10px; display: block; }
         
-        select, input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; color: white; border: 1px solid #333; border-radius: 5px; box-sizing: border-box; font-family: inherit; }
-        .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; font-weight: bold; background-color: #5c8d67; color: white; border: none; transition: 0.3s; }
-        .btn-add:hover { background-color: #4a7354; }
-        .remove-btn { background: #ff4d4d; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; font-size: 12px; }
-
+        select, input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; color: white; border: 1px solid #333; border-radius: 5px; box-sizing: border-box; }
+        .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
+        
         @media (max-width: 1000px) {
-            .side-video-box { max-width: 100%; flex: none; width: 90%; }
+            .side-video-box { max-width: 100%; width: 90%; flex: none; }
             .main-stream-center { order: -1; width: 100%; flex: none; }
         }
     </style>
@@ -67,7 +88,7 @@
                     <button onclick="showSection('hats-section')" class="lang-drop-hats">Mützen</button>
                 </div>
             </div>
-            <button class="nav-btn" onclick="showSection('home')"> Live & Latest</button>
+            <button class="nav-btn" onclick="showSection('home')">🏠 Live</button>
         </div>
         <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
         <div class="nav-right">
@@ -77,8 +98,6 @@
                 <div class="dropdown-content" style="right: 0;">
                     <button onclick="changeLanguage('de')">Deutsch 🇩🇪</button>
                     <button onclick="changeLanguage('en')">English 🇺🇸</button>
-                    <button onclick="changeLanguage('es')">Español 🇪🇸</button>
-                    <button onclick="changeLanguage('fr')">Français 🇫🇷</button>
                 </div>
             </div>
             <button class="nav-btn" onclick="showSection('cart-section')">🛒 <span id="cart-counter" class="cart-count">0</span></button>
@@ -89,9 +108,16 @@
         <h1 class="lang-home-title" style="text-align: center;">robi-twice Live & Latest</h1>
         <div class="video-container-main">
             <div class="side-video-box" id="latest-vid-1"><p style="text-align:center; padding-top:20%; color:#555;">Lädt Video...</p></div>
+            
             <div class="main-stream-center">
-                <iframe src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" allowfullscreen></iframe>
+                <iframe id="live-iframe" src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" allowfullscreen></iframe>
+                <div id="offline-overlay">
+                    <div class="neon-text">🔴 robi-twice</div>
+                    <div class="neon-text">streamt gerade nicht</div>
+                    <p style="color: #777; margin-top: 15px;">Schau dir meine neuesten Videos an!</p>
+                </div>
             </div>
+
             <div class="side-video-box" id="latest-vid-2"><p style="text-align:center; padding-top:20%; color:#555;">Lädt Video...</p></div>
         </div>
     </section>
@@ -99,11 +125,9 @@
     <section id="shirts-section" class="page-section">
         <div class="product-grid"><div class="product-card">
             <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="tshirt.jpg" class="product-image"></div>
-            <div class="product-info">
-                <h3 class="lang-p-shirt">robi-twice Signature Shirt</h3>
-                <span class="price">30,00 €</span>
+            <div class="product-info"><h3>Signature Shirt</h3><span class="price">30,00 €</span>
                 <select id="size-shirt"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-                <button class="btn-add lang-btn-add" onclick="addToCart('Signature Shirt', 30.00, 'size-shirt')">In den Warenkorb</button>
+                <button class="btn-add" onclick="addToCart('Signature Shirt', 30.00, 'size-shirt')">In den Warenkorb</button>
             </div>
         </div></div>
     </section>
@@ -111,49 +135,44 @@
     <section id="pullover-section" class="page-section">
         <div class="product-grid"><div class="product-card">
             <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="hoodie.png" class="product-image"></div>
-            <div class="product-info">
-                <h3 class="lang-p-hoodie">robi-twice Logo Hoodie</h3>
-                <span class="price">40,00 €</span>
+            <div class="product-info"><h3>Logo Hoodie</h3><span class="price">40,00 €</span>
                 <select id="size-hoodie"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
-                <button class="btn-add lang-btn-add" onclick="addToCart('Logo Hoodie', 40.00, 'size-hoodie')">In den Warenkorb</button>
+                <button class="btn-add" onclick="addToCart('Logo Hoodie', 40.00, 'size-hoodie')">In den Warenkorb</button>
             </div>
         </div></div>
     </section>
 
     <section id="hats-section" class="page-section">
-        <h2 class="lang-accessoires" style="text-align:center; margin-bottom: 20px;">Accessoires</h2>
         <div class="product-grid"><div class="product-card">
             <div class="product-image-container" onmousemove="interactiveZoom(event)" onmouseleave="resetZoom(event)"><img src="muetze.png" class="product-image"></div>
-            <div class="product-info">
-                <h3 class="lang-p-hat">robi-twice Logo Mütze</h3>
-                <span class="price">17,00 €</span>
-                <select id="size-hat"><option class="lang-size-os">Einheitsgröße (OS)</option></select>
-                <button class="btn-add lang-btn-add" onclick="addToCart('Logo Mütze', 17.00, 'size-hat')">In den Warenkorb</button>
+            <div class="product-info"><h3>Logo Mütze</h3><span class="price">17,00 €</span>
+                <select id="size-hat"><option>Einheitsgröße (OS)</option></select>
+                <button class="btn-add" onclick="addToCart('Logo Mütze', 17.00, 'size-hat')">In den Warenkorb</button>
             </div>
         </div></div>
     </section>
 
     <section id="support-section" class="page-section">
         <div style="max-width: 500px; margin: auto; background: #1a1a1a; padding: 30px; border-radius: 12px; border: 1px solid #333;">
-            <h1 class="lang-nav-support">Support</h1>
-            <label class="lang-label-issue" style="font-size: 14px; color: #777;">Was ist das Problem?</label>
+            <h1>Support</h1>
+            <label style="font-size: 14px; color: #777;">Was ist das Problem?</label>
             <select id="support-issue">
-                <option value="Defekt" class="opt-1">Defekt / Beschädigt</option>
-                <option value="Falsche Bestellung" class="opt-2">Falsche Größe/Farbe bestellt</option>
-                <option value="Nicht gefallen" class="opt-3">Gefällt mir nicht</option>
-                <option value="Versand" class="opt-4">Frage zum Versand</option>
-                <option value="Sonstiges" class="opt-5">Sonstiges</option>
+                <option value="Defekt">Defekt / Beschädigt</option>
+                <option value="Falsche Bestellung">Falsche Größe/Farbe bestellt</option>
+                <option value="Nicht gefallen">Gefällt mir nicht</option>
+                <option value="Versand">Frage zum Versand</option>
+                <option value="Sonstiges">Sonstiges</option>
             </select>
-            <input type="email" id="cust-email" class="lang-ph-email" placeholder="E-Mail">
-            <textarea id="cust-msg" rows="5" class="lang-ph-msg" placeholder="Nachricht"></textarea>
-            <button class="btn-add lang-btn-send" onclick="sendSupportTicket()">Senden</button>
+            <input type="email" id="cust-email" placeholder="E-Mail">
+            <textarea id="cust-msg" rows="5" placeholder="Nachricht"></textarea>
+            <button class="btn-add" onclick="sendSupportTicket()">Senden</button>
             <p id="ticket-status" style="margin-top:10px; color:#5c8d67;"></p>
         </div>
     </section>
 
     <section id="cart-section" class="page-section">
         <div style="max-width: 600px; margin: auto;">
-            <h1 class="lang-cart-title">Warenkorb</h1>
+            <h1>Warenkorb</h1>
             <ul id="cart-items" style="list-style:none; padding:0;"></ul>
             <h3 id="cart-total">Gesamt: 0,00 €</h3>
             <a id="paypal-link" href="#" style="display:block; background:#0070ba; color:white; padding:15px; border-radius:30px; text-decoration:none; text-align:center; font-weight:bold;">PayPal Checkout</a>
@@ -164,102 +183,38 @@
         let cart = [];
         let currentLang = 'de';
 
-        const translations = {
-            de: {
-                navProd: "Produkte ▾", dropShirts: "Shirts", dropHoodies: "Pullover", dropHats: "Mützen",
-                navSupport: "Support", navLang: "Sprache ▾", homeTitle: "robi-twice Live & Latest",
-                pShirt: "robi-twice Signature Shirt", pHoodie: "robi-twice Logo Hoodie", pHat: "robi-twice Logo Mütze",
-                btnAdd: "In den Warenkorb", btnSend: "Senden", cartTitle: "Warenkorb", total: "Gesamt", 
-                sizeOS: "Einheitsgröße (OS)", phEmail: "E-Mail", phMsg: "Nachricht", accessoires: "Accessoires",
-                lblIssue: "Was ist das Problem?", opt1: "Defekt / Beschädigt", opt2: "Falsche Größe/Farbe bestellt",
-                opt3: "Gefällt mir nicht", opt4: "Frage zum Versand", opt5: "Sonstiges"
-            },
-            en: {
-                navProd: "Products ▾", dropShirts: "T-Shirts", dropHoodies: "Hoodies", dropHats: "Beanies",
-                navSupport: "Support", navLang: "Language ▾", homeTitle: "robi-twice Live & Latest",
-                pShirt: "robi-twice Signature Shirt", pHoodie: "robi-twice Logo Hoodie", pHat: "robi-twice Logo Hat",
-                btnAdd: "Add to Cart", btnSend: "Send", cartTitle: "Your Cart", total: "Total", 
-                sizeOS: "One Size (OS)", phEmail: "Email", phMsg: "Message", accessoires: "Accessories",
-                lblIssue: "What is the issue?", opt1: "Defective / Damaged", opt2: "Wrong size/color ordered",
-                opt3: "Don't like it", opt4: "Shipping question", opt5: "Other"
-            },
-            es: {
-                navProd: "Productos ▾", dropShirts: "Camisetas", dropHoodies: "Sudaderas", dropHats: "Gorros",
-                navSupport: "Soporte", navLang: "Idioma ▾", homeTitle: "robi-twice en Vivo",
-                pShirt: "Camiseta Signature", pHoodie: "Sudadera Logo", pHat: "Gorro Logo",
-                btnAdd: "Añadir al carrito", btnSend: "Enviar", cartTitle: "Carrito", total: "Total", 
-                sizeOS: "Talla única (OS)", phEmail: "Correo electrónico", phMsg: "Mensaje", accessoires: "Accesorios",
-                lblIssue: "¿Cuál es el problema?", opt1: "Defectuoso / Dañado", opt2: "Tamaño/color incorrecto", opt3: "No me gusta", opt4: "Envío", opt5: "Otro"
-            },
-            fr: {
-                navProd: "Produits ▾", dropShirts: "T-Shirts", dropHoodies: "Pulls", dropHats: "Bonnets",
-                navSupport: "Support", navLang: "Langue ▾", homeTitle: "robi-twice en Direct",
-                pShirt: "T-Shirt Signature", pHoodie: "Sweat à capuche", pHat: "Bonnet Logo",
-                btnAdd: "Ajouter au panier", btnSend: "Envoyer", cartTitle: "Panier", total: "Total", 
-                sizeOS: "Taille unique (OS)", phEmail: "E-mail", phMsg: "Message", accessoires: "Accessoires",
-                lblIssue: "Quel est le problème ?", opt1: "Défectueux", opt2: "Mauvaise taille", opt3: "Pas aimé", opt4: "Livraison", opt5: "Autre"
-            }
-        };
-
-        function changeLanguage(lang) {
-            currentLang = lang;
-            const t = translations[lang];
-            if(!t) return;
-            document.querySelectorAll('.lang-nav-prod').forEach(el => el.innerText = t.navProd);
-            document.querySelectorAll('.lang-drop-shirts').forEach(el => el.innerText = t.dropShirts);
-            document.querySelectorAll('.lang-drop-hoodies').forEach(el => el.innerText = t.dropHoodies);
-            document.querySelectorAll('.lang-drop-hats').forEach(el => el.innerText = t.dropHats);
-            document.querySelectorAll('.lang-nav-support').forEach(el => el.innerText = t.navSupport);
-            document.querySelectorAll('.lang-nav-lang').forEach(el => el.innerText = t.navLang);
-            document.querySelectorAll('.lang-home-title').forEach(el => el.innerText = t.homeTitle);
-            document.querySelectorAll('.lang-p-shirt').forEach(el => el.innerText = t.pShirt);
-            document.querySelectorAll('.lang-p-hoodie').forEach(el => el.innerText = t.pHoodie);
-            document.querySelectorAll('.lang-p-hat').forEach(el => el.innerText = t.pHat);
-            document.querySelectorAll('.lang-btn-add').forEach(el => el.innerText = t.btnAdd);
-            document.querySelectorAll('.lang-btn-send').forEach(el => el.innerText = t.btnSend);
-            document.querySelectorAll('.lang-cart-title').forEach(el => el.innerText = t.cartTitle);
-            document.querySelectorAll('.lang-size-os').forEach(el => el.innerText = t.sizeOS);
-            document.querySelectorAll('.lang-accessoires').forEach(el => el.innerText = t.accessoires);
-            document.querySelectorAll('.lang-label-issue').forEach(el => el.innerText = t.lblIssue);
-            document.querySelectorAll('.opt-1').forEach(el => el.innerText = t.opt1);
-            document.querySelectorAll('.opt-2').forEach(el => el.innerText = t.opt2);
-            document.querySelectorAll('.opt-3').forEach(el => el.innerText = t.opt3);
-            document.querySelectorAll('.opt-4').forEach(el => el.innerText = t.opt4);
-            document.querySelectorAll('.opt-5').forEach(el => el.innerText = t.opt5);
-            const emailField = document.getElementById('cust-email');
-            const msgField = document.getElementById('cust-msg');
-            if(emailField) emailField.placeholder = t.phEmail;
-            if(msgField) msgField.placeholder = t.phMsg;
-            updateCartDisplay();
-        }
-
-        async function loadLatestVideos() {
+        // 1. YouTube Videos & Live Status laden
+        async function loadYTData() {
             const channelId = "UCm8u2eBf67RCH16p2oA9uSQ";
             const rssUrl = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`);
             const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+
             try {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
+                
+                // Neueste Videos in die Side-Boxes
                 if (data.items && data.items.length >= 2) {
                     const id1 = data.items[0].link.split('v=')[1];
                     const id2 = data.items[1].link.split('v=')[1];
                     document.getElementById('latest-vid-1').innerHTML = `<iframe src="https://www.youtube.com/embed/${id1}" allowfullscreen></iframe>`;
                     document.getElementById('latest-vid-2').innerHTML = `<iframe src="https://www.youtube.com/embed/${id2}" allowfullscreen></iframe>`;
                 }
-            } catch (e) { console.error("Fehler YouTube Load", e); }
+
+                // Live Status Check (Prüft ob das erste Video ein aktueller Stream ist)
+                // YouTube API ist hier streng, wir machen einen einfachen Check:
+                // Wenn du live gehst, wird das Overlay manuell oder durch "live" im Titel ausgeblendet.
+                const isLiveNow = data.items[0].title.toLowerCase().includes("live"); 
+                if(!isLiveNow) {
+                    document.getElementById('offline-overlay').style.display = 'flex';
+                } else {
+                    document.getElementById('offline-overlay').style.display = 'none';
+                }
+
+            } catch (e) { console.error("YT Fehler", e); }
         }
 
-        function interactiveZoom(e) {
-            const container = e.currentTarget;
-            const img = container.querySelector('img');
-            const rect = container.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / container.offsetWidth) * 100;
-            const y = ((e.clientY - rect.top) / container.offsetHeight) * 100;
-            img.style.transformOrigin = `${x}% ${y}%`;
-            img.style.transform = "scale(2.5)";
-        }
-        function resetZoom(e) { e.currentTarget.querySelector('img').style.transform = "scale(1)"; }
-
+        // 2. Shop Funktionen
         function showSection(id) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
@@ -271,13 +226,7 @@
             cart.push({ name, price, size });
             document.getElementById('cart-counter').innerText = cart.length;
             updateCartDisplay();
-            alert(name + " OK!");
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            document.getElementById('cart-counter').innerText = cart.length;
-            updateCartDisplay();
+            alert("Hinzugefügt!");
         }
 
         function updateCartDisplay() {
@@ -287,27 +236,40 @@
             cart.forEach((item, index) => {
                 total += item.price;
                 itemSummary += `${item.name} (${item.size}), `;
-                list.innerHTML += `<li style="padding:10px; border-bottom:1px solid #333; display:flex; justify-content:space-between; align-items:center;">
+                list.innerHTML += `<li style="padding:10px; border-bottom:1px solid #333; display:flex; justify-content:space-between;">
                     <span>${item.name} (${item.size}) - ${item.price.toFixed(2)} €</span>
-                    <button class="remove-btn" onclick="removeFromCart(${index})">X</button>
+                    <button onclick="cart.splice(${index},1); updateCartDisplay();" class="nav-btn" style="background:red;">X</button>
                 </li>`;
             });
-            const tTotal = translations[currentLang] ? translations[currentLang].total : "Gesamt";
-            document.getElementById('cart-total').innerText = `${tTotal}: ${total.toFixed(2)} €`;
-            const encodedSummary = encodeURIComponent("robi-twice Shop: " + itemSummary);
-            document.getElementById('paypal-link').href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${total.toFixed(2)}&currency_code=EUR&item_name=${encodedSummary}`;
+            document.getElementById('cart-total').innerText = `Gesamt: ${total.toFixed(2)} €`;
+            document.getElementById('paypal-link').href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${total.toFixed(2)}&currency_code=EUR&item_name=${encodeURIComponent(itemSummary)}`;
         }
 
         async function sendSupportTicket() {
-            const status = document.getElementById('ticket-status'); status.innerText = "...";
+            const status = document.getElementById('ticket-status');
+            status.innerText = "Sende...";
             const response = await fetch("https://formspree.io/f/xlgpdoak", {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: document.getElementById('cust-email').value, Betreff: document.getElementById('support-issue').value, Nachricht: document.getElementById('cust-msg').value })
+                body: JSON.stringify({ 
+                    email: document.getElementById('cust-email').value, 
+                    Problem: document.getElementById('support-issue').value, 
+                    Nachricht: document.getElementById('cust-msg').value 
+                })
             });
-            if (response.ok) { status.innerText = "Sended! (OK)"; }
+            if (response.ok) status.innerText = "Erfolgreich gesendet!";
         }
 
-        window.addEventListener('load', () => { loadLatestVideos(); changeLanguage('de'); });
+        function interactiveZoom(e) {
+            const img = e.currentTarget.querySelector('img');
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / e.currentTarget.offsetWidth) * 100;
+            const y = ((e.clientY - rect.top) / e.currentTarget.offsetHeight) * 100;
+            img.style.transformOrigin = `${x}% ${y}%`;
+            img.style.transform = "scale(2.5)";
+        }
+        function resetZoom(e) { e.currentTarget.querySelector('img').style.transform = "scale(1)"; }
+
+        window.addEventListener('load', loadYTData);
     </script>
 </body>
 </html>
