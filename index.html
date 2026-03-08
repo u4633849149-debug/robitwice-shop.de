@@ -6,87 +6,32 @@
     <title>robi-twice | Live & Shop</title>
     <style>
         body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background-color: #000; color: #fff; overflow-x: hidden; }
-        
-        /* Navigation */
-        header { 
-            background-color: #1a1a1a; 
-            color: white; 
-            padding: 15px 5%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            border-bottom: 1px solid #333; 
-        }
-
+        header { background-color: #1a1a1a; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
         .nav-left { display: flex; gap: 15px; align-items: center; }
         .logo-nav { font-size: 26px; font-weight: bold; cursor: pointer; text-transform: lowercase; }
-        
-        .nav-btn { 
-            background-color: #333; 
-            color: white; 
-            padding: 10px 18px; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 14px;
-        }
+        .nav-btn { background-color: #333; color: white; padding: 10px 18px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
         .btn-live { background-color: #444; border: 1px solid #ff0000; }
-
         .dropdown { position: relative; display: inline-block; }
         .dropdown-content { display: none; position: absolute; background-color: #222; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.5); border-radius: 4px; }
         .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #333; cursor: pointer; }
         .dropdown:hover .dropdown-content { display: block; }
-
-        /* Sektionen */
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Live Stream */
         #home { text-align: center; }
-        .stream-container { 
-            position: relative; 
-            padding-bottom: 56.25%; 
-            height: 0; 
-            overflow: hidden; 
-            max-width: 1000px; 
-            margin: 20px auto; 
-            border: 2px solid #333; 
-            border-radius: 8px; 
-            background: #111; 
-        }
+        .stream-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 1000px; margin: 20px auto; border: 2px solid #333; border-radius: 8px; background: #111; }
         .stream-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .status-badge { display: inline-block; padding: 5px 15px; background-color: #ff0000; border-radius: 20px; font-weight: bold; margin-bottom: 10px; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
-        /* Shop Layout */
         .container { max-width: 1100px; margin: 0 auto; text-align: center; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 25px; }
         .product-image { width: 100%; height: 450px; object-fit: cover; }
         .product-info { padding: 20px; text-align: left; }
         .price { font-size: 24px; color: #fff; font-weight: bold; margin: 10px 0; }
-        
         select { width: 90%; padding: 10px; margin-bottom: 15px; border-radius: 5px; background: #333; color: white; border: 1px solid #555; }
-        
-        .btn-buy { 
-            display: inline-block; 
-            width: 90%; 
-            padding: 15px; 
-            border-radius: 30px; 
-            font-weight: bold; 
-            background-color: #0070ba; 
-            color: white; 
-            text-decoration: none; 
-            text-align: center; 
-            transition: 0.3s;
-        }
+        .btn-buy { display: inline-block; width: 90%; padding: 15px; border-radius: 30px; font-weight: bold; background-color: #0070ba; color: white; text-decoration: none; text-align: center; transition: 0.3s; }
         .btn-buy:hover { background-color: #005ea6; transform: scale(1.03); }
-
         .footer { background-color: #111; color: #777; padding: 40px 5%; text-align: center; border-top: 1px solid #333; margin-top: 50px; font-size: 14px; }
     </style>
 </head>
@@ -123,14 +68,9 @@
                     <img src="tshirt.png" class="product-image">
                     <div class="product-info">
                         <h3>robi-twice Signature Tee</h3>
-                        <p class="price">29,99 €</p>
-                        <select id="size-shirt">
-                            <option>Größe S</option>
-                            <option>Größe M</option>
-                            <option>Größe L</option>
-                            <option>Größe XL</option>
-                        </select>
-                        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&item_name=robi-twice+Signature+Tee&amount=29.99&currency_code=EUR" target="_blank" class="btn-buy">Mit PayPal kaufen</a>
+                        <p class="price">20,00 €</p>
+                        <select><option>Größe S</option><option>Größe M</option><option>Größe L</option><option>Größe XL</option></select>
+                        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&item_name=robi-twice+Signature+Tee&amount=20.00&currency_code=EUR" target="_blank" class="btn-buy">Mit PayPal kaufen</a>
                     </div>
                 </div>
             </div>
@@ -145,14 +85,9 @@
                     <img src="hoodie.png" class="product-image">
                     <div class="product-info">
                         <h3>robi-twice Logo Hoodie</h3>
-                        <p class="price">49,99 €</p>
-                        <select id="size-hoodie">
-                            <option>Größe S</option>
-                            <option>Größe M</option>
-                            <option>Größe L</option>
-                            <option>Größe XL</option>
-                        </select>
-                        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&item_name=robi-twice+Logo+Hoodie&amount=49.99&currency_code=EUR" target="_blank" class="btn-buy">Mit PayPal kaufen</a>
+                        <p class="price">30,00 €</p>
+                        <select><option>Größe S</option><option>Größe M</option><option>Größe L</option><option>Größe XL</option></select>
+                        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&item_name=robi-twice+Logo+Hoodie&amount=30.00&currency_code=EUR" target="_blank" class="btn-buy">Mit PayPal kaufen</a>
                     </div>
                 </div>
             </div>
@@ -161,12 +96,8 @@
 
     <footer class="footer">
         <h3>Versand & Impressum</h3>
-        <p>Lieferzeit: 5-10 Werktage (Print-on-Demand). Bitte stelle sicher, dass deine Adresse bei PayPal korrekt ist.</p>
-        <p><strong>Impressum:</strong><br>
-        Bananiel Heinrich<br>
-        46a Brüggen<br>
-        41379 Deutschland<br>
-        E-Mail: bananielheinrich@gmail.com</p>
+        <p>Lieferzeit: 5-10 Werktage (Print-on-Demand). Bitte Adresse bei PayPal korrekt angeben.</p>
+        <p><strong>Impressum:</strong> Bananiel Heinrich, 46a Brüggen, 41379 Deutschland. E-Mail: bananielheinrich@gmail.com</p>
     </footer>
 
     <script>
@@ -177,6 +108,5 @@
             window.scrollTo(0, 0);
         }
     </script>
-
 </body>
 </html>
