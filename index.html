@@ -77,6 +77,10 @@
         input, textarea, select { width: 90%; padding: 12px; margin: 10px 0; background: #0b0b0b; color: #fff; border: 1px solid #444; border-radius: 8px; box-sizing: border-box; }
         .action-btn { width: 90%; padding: 15px; background: #5c8d67; color: #fff; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; }
 
+        /* --- CART STYLES --- */
+        .delete-btn { color: #ff4444; cursor: pointer; font-size: 0.8rem; text-decoration: underline; margin-left: 15px; }
+        .delete-btn:hover { color: #ff0000; }
+
         iframe { width: 100%; height: 100%; border: none; }
         footer { text-align: center; padding: 50px; color: #555; border-top: 1px solid #1a1a1a; margin-top: 50px; }
     </style>
@@ -99,7 +103,6 @@
         <h2 style="text-align: center; color: #5c8d67;">AKTUELLE VIDEOS & LIVE</h2>
         <div class="video-wrapper">
             <div class="side-vid" id="vid-left"></div>
-            
             <div class="main-stream">
                 <iframe id="live-iframe" src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" allowfullscreen></iframe>
                 <div id="offline-overlay">
@@ -107,7 +110,6 @@
                     <p style="color: #888; margin-top: 10px;">Schau bald wieder vorbei!</p>
                 </div>
             </div>
-
             <div class="side-vid" id="vid-right"></div>
         </div>
     </section>
@@ -183,42 +185,41 @@
         }
 
         async function loadYT() {
-            // Deine festen Video-IDs einfügen
             const idLeft = "5Mf7S0pDyP0"; 
             const idRight = "vvj64ZskM9Y"; 
-            
             document.getElementById('vid-left').innerHTML = `<iframe src="https://www.youtube.com/embed/${idLeft}" allowfullscreen></iframe>`;
             document.getElementById('vid-right').innerHTML = `<iframe src="https://www.youtube.com/embed/${idRight}" allowfullscreen></iframe>`;
 
-            // Live-Check Logik
             const channelId = "UCm8u2eBf67RCH16p2oA9uSQ";
             const api = `https://api.allorigins.win/get?url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId)}`;
-            
             try {
                 const res = await fetch(api);
                 const d = await res.json();
                 const parser = new DOMParser();
                 const xml = parser.parseFromString(d.contents, "text/xml");
                 const entries = xml.getElementsByTagName("entry");
-                
                 if(entries.length > 0) {
                     const title = entries[0].getElementsByTagName("title")[0].textContent.toLowerCase();
-                    // Wenn "live" oder "stream" im neuesten Titel steht, Overlay ausblenden
-                    if(title.includes("live") || title.includes("stream")) {
-                        document.getElementById('offline-overlay').style.display = 'none';
-                    } else {
-                        document.getElementById('offline-overlay').style.display = 'flex';
-                    }
+                    document.getElementById('offline-overlay').style.display = (title.includes("live") || title.includes("stream")) ? 'none' : 'flex';
                 }
-            } catch(e) { 
-                document.getElementById('offline-overlay').style.display = 'flex'; 
-            }
+            } catch(e) { document.getElementById('offline-overlay').style.display = 'flex'; }
         }
 
         function addToCart(name, price, sizeId) {
             const sizeValue = document.getElementById(sizeId).value;
             cart.push({name: name, price: price, size: sizeValue});
             updateCartDisplay();
+        }
+
+        // NEUE FUNKTION: Artikel entfernen
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+            // Wenn der Warenkorb leer wird, Adressformular wieder verstecken
+            if(cart.length === 0) {
+                document.getElementById('address-section').style.display = 'none';
+                document.getElementById('show-address-btn').style.display = 'block';
+            }
         }
 
         function updateCartDisplay() {
@@ -229,9 +230,9 @@
             else {
                 container.innerHTML = cart.map((item, i) => {
                     sum += item.price;
-                    return `<div style="padding:10px 0; border-bottom:1px solid #222; display:flex; justify-content:space-between;">
-                        <span>${item.name} (${item.size})</span>
-                        <span>${item.price.toFixed(2)} €</span>
+                    return `<div style="padding:10px 0; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center;">
+                        <span>${item.name} (${item.size}) - ${item.price.toFixed(2)} €</span>
+                        <span class="delete-btn" onclick="removeFromCart(${i})">ENTFERNEN</span>
                     </div>`;
                 }).join('');
             }
