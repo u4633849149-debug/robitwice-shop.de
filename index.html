@@ -13,50 +13,30 @@
         .btn-live { background-color: #444; border: 1px solid #ff0000; }
         .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; }
 
-        /* Sektionen */
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Shop & Bilder */
         .container { max-width: 1100px; margin: 0 auto; text-align: center; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 20px; }
-        .product-image-container { background: #f5f5f5; padding: 20px; display: flex; justify-content: center; }
-        .product-image { max-width: 100%; height: auto; display: block; }
+        
+        /* Fix für die Bildanzeige: Bilder werden GANZ angezeigt */
+        .product-image-container { background: #f5f5f5; padding: 20px; display: flex; justify-content: center; min-height: 300px; }
+        .product-image { max-width: 100%; height: auto; object-fit: contain; display: block; }
+        
         .product-info { padding: 20px; text-align: left; }
         .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
         
         select { width: 100%; padding: 10px; margin: 10px 0; background: #333; color: white; border: 1px solid #555; border-radius: 5px; }
         .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; text-align: center; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
 
-        /* Warenkorb-Style */
         #cart-items { list-style: none; padding: 0; text-align: left; }
-        .cart-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            padding: 15px; 
-            border-bottom: 1px solid #333; 
-            background: #111;
-            margin-bottom: 5px;
-            border-radius: 8px;
-        }
-        .remove-btn { 
-            background: #ff4444; 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            padding: 5px 10px; 
-            cursor: pointer; 
-            font-weight: bold;
-            margin-left: 15px;
-        }
-        .remove-btn:hover { background: #cc0000; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #111; margin-bottom: 5px; border-radius: 8px; }
+        .remove-btn { background: #ff4444; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer; font-weight: bold; margin-left: 15px; }
         
         .btn-paypal-cart { display: block; width: 100%; padding: 15px; background: #0070ba; color: white; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 20px; text-align: center; }
-
-        .footer { background-color: #111; color: #777; padding: 40px 5%; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
+        .footer { background-color: #111; color: #777; padding: 40px 5%; text-align: center; border-top: 1px solid #333; margin-top: 50px; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -81,12 +61,14 @@
 
     <section id="shirts-section" class="page-section">
         <div class="container">
-            <h1>Shirts (20,00 €)</h1>
+            <h1>Shirts Kollektion</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container"><img src="tshirt.png" class="product-image"></div>
+                    <div class="product-image-container">
+                        <img src="tshirt.png" alt="Signature Tee" class="product-image">
+                    </div>
                     <div class="product-info">
-                        <h3>Signature Tee</h3>
+                        <h3>robi-twice Signature Tee</h3>
                         <p class="price">20,00 €</p>
                         <select id="size-shirt"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
                         <button class="btn-add" onclick="addToCart('Signature Tee', 20.00, 'size-shirt')">In den Warenkorb</button>
@@ -98,12 +80,14 @@
 
     <section id="pullover-section" class="page-section">
         <div class="container">
-            <h1>Pullover (30,00 €)</h1>
+            <h1>Pullover & Hoodies</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container"><img src="hoodie.png" class="product-image"></div>
+                    <div class="product-image-container">
+                        <img src="hoodie.png" alt="Logo Hoodie" class="product-image">
+                    </div>
                     <div class="product-info">
-                        <h3>Logo Hoodie</h3>
+                        <h3>robi-twice Logo Hoodie</h3>
                         <p class="price">30,00 €</p>
                         <select id="size-hoodie"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
                         <button class="btn-add" onclick="addToCart('Logo Hoodie', 30.00, 'size-hoodie')">In den Warenkorb</button>
@@ -119,14 +103,14 @@
             <div id="cart-content">
                 <ul id="cart-items"></ul>
                 <h3 id="cart-total" style="margin-top: 20px; border-top: 2px solid #333; padding-top: 10px;">Gesamt: 0,00 €</h3>
-                <p style="font-size: 12px; color: #aaa;">Hinweis: Bei PayPal bitte nochmal kurz die Größe und Adresse bestätigen!</p>
+                <p style="font-size: 12px; color: #aaa;">Hinweis: Bei PayPal bitte Adresse bestätigen!</p>
                 <a id="paypal-link" href="#" class="btn-paypal-cart" target="_blank">Mit PayPal bezahlen</a>
             </div>
         </div>
     </section>
 
     <footer class="footer">
-        <p>Impressum: Bananiel Heinrich, 46a Brüggen, 41379 Deutschland</p>
+        <p><strong>Impressum:</strong> Bananiel Heinrich, 46a Brüggen, 41379 Deutschland. E-Mail: bananielheinrich@gmail.com</p>
     </footer>
 
     <script>
@@ -136,13 +120,14 @@
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             if(id === 'cart-section') updateCartDisplay();
+            window.scrollTo(0,0);
         }
 
         function addToCart(name, price, sizeId) {
             const size = document.getElementById(sizeId).value;
             cart.push({ name, price, size });
             updateCounter();
-            alert(name + " in Größe " + size + " wurde hinzugefügt!");
+            alert(name + " (" + size + ") hinzugefügt!");
         }
 
         function removeFromCart(index) {
@@ -159,37 +144,27 @@
             const list = document.getElementById('cart-items');
             const totalEl = document.getElementById('cart-total');
             const paypalLink = document.getElementById('paypal-link');
-            
-            list.innerHTML = "";
             let total = 0;
-            let itemsString = "";
+            let itemsText = "";
 
+            list.innerHTML = "";
             if (cart.length === 0) {
-                list.innerHTML = "<p>Dein Warenkorb ist leer.</p>";
+                list.innerHTML = "<li>Warenkorb ist leer</li>";
                 paypalLink.style.display = "none";
             } else {
                 paypalLink.style.display = "block";
                 cart.forEach((item, index) => {
                     total += item.price;
-                    itemsString += item.name + " (" + item.size + "), ";
+                    itemsText += `${item.name}(${item.size}) `;
                     list.innerHTML += `
                         <li class="cart-item">
-                            <div>
-                                <strong>${item.name}</strong><br>
-                                <small>Größe: ${item.size}</small>
-                            </div>
-                            <div style="display: flex; align-items: center;">
-                                <span>${item.price.toFixed(2)} €</span>
-                                <button class="remove-btn" onclick="removeFromCart(${index})">X</button>
-                            </div>
+                            <div>${item.name} (${item.size})</div>
+                            <div>${item.price.toFixed(2)} € <button class="remove-btn" onclick="removeFromCart(${index})">X</button></div>
                         </li>`;
                 });
             }
-
             totalEl.innerText = "Gesamt: " + total.toFixed(2) + " €";
-            
-            const businessEmail = "bananielheinrich@gmail.com";
-            paypalLink.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${businessEmail}&item_name=robi-twice_Bestellung_${encodeURIComponent(itemsString)}&amount=${total.toFixed(2)}&currency_code=EUR`;
+            paypalLink.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&item_name=Bestellung_${encodeURIComponent(itemsText)}&amount=${total.toFixed(2)}&currency_code=EUR`;
         }
     </script>
 </body>
