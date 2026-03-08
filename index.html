@@ -10,7 +10,6 @@
         .nav-left { display: flex; gap: 15px; align-items: center; }
         .logo-nav { font-size: 26px; font-weight: bold; cursor: pointer; text-transform: lowercase; }
         .nav-btn { background-color: #333; color: white; padding: 10px 18px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
-        .btn-live { background-color: #444; border: 1px solid #ff0000; }
         .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; }
 
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
@@ -21,9 +20,9 @@
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 20px; }
         
-        /* Fix für die Bildanzeige: Volle Größe ohne Beschnitt */
-        .product-image-container { background: #f5f5f5; padding: 20px; display: flex; justify-content: center; min-height: 300px; }
-        .product-image { max-width: 100%; height: auto; object-fit: contain; display: block; }
+        /* Bild-Fix: Zeigt das ganze Bild ohne Abschneiden */
+        .product-image-container { background: #f5f5f5; padding: 10px; display: flex; justify-content: center; align-items: center; height: 350px; }
+        .product-image { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
         
         .product-info { padding: 20px; text-align: left; }
         .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
@@ -31,9 +30,8 @@
         select { width: 100%; padding: 10px; margin: 10px 0; background: #333; color: white; border: 1px solid #555; border-radius: 5px; }
         .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; text-align: center; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
 
-        #cart-items { list-style: none; padding: 0; text-align: left; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #333; background: #111; margin-bottom: 5px; border-radius: 8px; }
-        .remove-btn { background: #ff4444; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer; font-weight: bold; margin-left: 15px; }
+        .remove-btn { background: #ff4444; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer; }
         
         .btn-paypal-cart { display: block; width: 100%; padding: 15px; background: #0070ba; color: white; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 20px; text-align: center; }
         .footer { background-color: #111; color: #777; padding: 40px 5%; text-align: center; border-top: 1px solid #333; margin-top: 50px; font-size: 14px; }
@@ -45,7 +43,7 @@
         <div class="nav-left">
             <button class="nav-btn" onclick="showSection('shirts-section')">Shirts</button>
             <button class="nav-btn" onclick="showSection('pullover-section')">Pullover</button>
-            <button class="nav-btn btn-live" onclick="showSection('home')">🏠 Live</button>
+            <button class="nav-btn" onclick="showSection('home')">🏠 Live</button>
         </div>
         <div class="nav-right">
             <button class="nav-btn" onclick="showSection('cart-section')">🛒 Warenkorb <span id="cart-counter" class="cart-count">0</span></button>
@@ -100,67 +98,51 @@
     <section id="cart-section" class="page-section">
         <div class="container" style="max-width: 600px;">
             <h1>Dein Warenkorb</h1>
-            <div id="cart-content">
-                <ul id="cart-items"></ul>
-                <h3 id="cart-total" style="margin-top: 20px; border-top: 2px solid #333; padding-top: 10px;">Gesamt: 0,00 €</h3>
-                <p style="font-size: 12px; color: #aaa;">Hinweis: Bei PayPal bitte Adresse bestätigen!</p>
-                <a id="paypal-link" href="#" class="btn-paypal-cart" target="_blank">Mit PayPal bezahlen</a>
-            </div>
+            <ul id="cart-items" style="list-style: none; padding: 0;"></ul>
+            <h3 id="cart-total">Gesamt: 0,00 €</h3>
+            <a id="paypal-link" href="#" class="btn-paypal-cart" target="_blank">Mit PayPal bezahlen</a>
         </div>
     </section>
 
     <footer class="footer">
-        <p><strong>Impressum:</strong> Bananiel Heinrich, 46a Brüggen, 41379 Deutschland. E-Mail: bananielheinrich@gmail.com</p>
+        <p><strong>Impressum:</strong> Bananiel Heinrich, 46a Brüggen, 41379 Deutschland.</p>
     </footer>
 
     <script>
         let cart = [];
-
         function showSection(id) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             if(id === 'cart-section') updateCartDisplay();
             window.scrollTo(0,0);
         }
-
         function addToCart(name, price, sizeId) {
             const size = document.getElementById(sizeId).value;
             cart.push({ name, price, size });
-            updateCounter();
-            alert(name + " (" + size + ") hinzugefügt!");
+            document.getElementById('cart-counter').innerText = cart.length;
+            alert(name + " hinzugefügt!");
         }
-
         function removeFromCart(index) {
             cart.splice(index, 1);
-            updateCounter();
+            document.getElementById('cart-counter').innerText = cart.length;
             updateCartDisplay();
         }
-
-        function updateCounter() {
-            document.getElementById('cart-counter').innerText = cart.length;
-        }
-
         function updateCartDisplay() {
             const list = document.getElementById('cart-items');
             const totalEl = document.getElementById('cart-total');
             const paypalLink = document.getElementById('paypal-link');
             let total = 0;
             let itemsText = "";
-
             list.innerHTML = "";
             if (cart.length === 0) {
-                list.innerHTML = "<li>Warenkorb ist leer</li>";
+                list.innerHTML = "<li>Warenkorb leer</li>";
                 paypalLink.style.display = "none";
             } else {
                 paypalLink.style.display = "block";
                 cart.forEach((item, index) => {
                     total += item.price;
-                    itemsText += `${item.name}(${item.size}) `;
-                    list.innerHTML += `
-                        <li class="cart-item">
-                            <div>${item.name} (${item.size})</div>
-                            <div>${item.price.toFixed(2)} € <button class="remove-btn" onclick="removeFromCart(${index})">X</button></div>
-                        </li>`;
+                    itemsText += item.name + "(" + item.size + ") ";
+                    list.innerHTML += `<li class="cart-item"><span>${item.name} (${item.size})</span><span>${item.price.toFixed(2)} € <button class="remove-btn" onclick="removeFromCart(${index})">X</button></span></li>`;
                 });
             }
             totalEl.innerText = "Gesamt: " + total.toFixed(2) + " €";
