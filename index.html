@@ -3,193 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>robi-twice | Shop</title>
+    <title>robi-twice | Official Shop</title>
     <style>
-        /* Modernes Design-Setup */
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            color: #333;
-        }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background-color: #fff; color: #333; }
+        
+        /* Navigation */
+        header { background-color: #1a1a1a; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo-nav { font-size: 24px; font-weight: bold; letter-spacing: -1px; }
+        
+        .dropdown { position: relative; display: inline-block; }
+        .dropbtn { background-color: #444; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        .dropdown-content { display: none; position: absolute; background-color: #222; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.5); }
+        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #333; }
+        .dropdown:hover .dropdown-content { display: block; }
 
-        /* Schwarze Top-Bar (Navigation) */
-        header {
-            background-color: #1a1a1a;
-            color: white;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        /* Shop Bereich */
+        .container { max-width: 1100px; margin: 50px auto; text-align: center; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; padding: 20px; }
 
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: -1px;
-        }
+        /* Produkt Karte mit Logo-Overlay */
+        .product-card { background: #f9f9f9; border-radius: 12px; overflow: hidden; border: 1px solid #eee; position: relative; }
+        
+        .image-container { position: relative; width: 100%; height: 400px; background-color: #f0f0f0; }
+        .product-image { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Dropdown Menü Styling */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropbtn {
-            background-color: #444;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .dropbtn:hover {
-            background-color: #666;
-        }
-
-        .dropdown-content {
-            display: none;
+        /* DEIN LOGO AUF DER KLEIDUNG */
+        .brand-overlay {
             position: absolute;
-            background-color: #222;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.5);
-            border-radius: 0 0 4px 4px;
-            overflow: hidden;
-        }
-
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            border-bottom: 1px solid #333;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #444;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        /* Produkt Sektion */
-        .container {
-            max-width: 1100px;
-            margin: 50px auto;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 32px;
-            margin-bottom: 40px;
-            font-weight: 300;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            padding: 20px;
-        }
-
-        /* Produkt Karte */
-        .product-card {
-            background: #f9f9f9;
-            border-radius: 12px;
-            padding: 0 0 20px 0;
-            overflow: hidden;
-            transition: transform 0.3s;
-            border: 1px solid #eee;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        /* Styling für die neuen Bilder */
-        .product-image {
-            width: 100%;
-            height: 350px;
-            object-fit: cover; /* Sorgt dafür, dass das Bild den Bereich füllt, ohne verzerrt zu werden */
-            border-bottom: 1px solid #eee;
-        }
-
-        .product-info {
-            padding: 20px;
-            text-align: left;
-            flex-grow: 1; /* Schiebt die Buttons nach unten */
-        }
-
-        .product-info h3 {
-            margin: 0;
-            font-size: 20px;
-        }
-
-        .product-info p {
-            color: #666;
-            font-size: 18px;
-            margin: 10px 0;
-        }
-
-        /* Buttons */
-        .btn {
-            display: block;
-            width: 90%;
-            margin: 10px auto;
-            padding: 12px;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .btn-cart {
-            background-color: #5c8d67;
-            color: white;
-        }
-
-        .btn-details {
-            background-color: #444;
-            color: white;
-        }
-
-        .btn:hover {
+            top: 35%; /* Position auf der Brust */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white; /* Weißer Druck auf dunkler Kleidung */
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: lowercase;
             opacity: 0.8;
+            pointer-events: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
-        /* Footer Text */
-        .intro-text {
-            background-color: #f4f4f4;
-            padding: 60px 20px;
-            margin-top: 50px;
-        }
+        .product-info { padding: 20px; text-align: left; }
+        .product-info h3 { margin: 0; font-size: 18px; }
+        .product-info p { color: #666; font-size: 20px; margin: 10px 0; font-weight: bold; }
 
-        .intro-text h2 {
-            font-size: 28px;
-            max-width: 700px;
-            margin: 0 auto 20px;
-        }
-
-        .intro-text p {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-            color: #555;
-        }
+        .btn { display: block; width: 90%; margin: 10px auto; padding: 12px; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; text-align: center; text-decoration: none; transition: 0.3s; }
+        .btn-cart { background-color: #5c8d67; color: white; }
+        .btn-details { background-color: #444; color: white; }
+        .btn:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -202,7 +63,7 @@
                 <a href="#">— Pullover</a>
             </div>
         </div>
-        <div class="logo">robi-twice</div>
+        <div class="logo-nav">robi-twice</div>
     </header>
 
     <div class="container">
@@ -210,29 +71,30 @@
 
         <div class="product-grid">
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600&auto=format&fit=crop" alt="Schwarzes T-Shirt" class="product-image">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=600&auto=format&fit=crop" class="product-image">
+                    <div class="brand-overlay">robi-twice</div>
+                </div>
                 <div class="product-info">
                     <h3>robi-twice Signature Tee</h3>
-                    <p>€29.99</p>
+                    <p>29,99 €</p>
                 </div>
                 <button class="btn btn-cart">In den Warenkorb legen</button>
             </div>
 
             <div class="product-card">
-                <img src="https://images.unsplash.com/photo-1512353087810-25dfcd100962?q=80&w=600&auto=format&fit=crop" alt="Dunkler Kapuzenpullover" class="product-image">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=600&auto=format&fit=crop" class="product-image">
+                    <div class="brand-overlay" style="top: 40%;">robi-twice</div>
+                </div>
                 <div class="product-info">
                     <h3>robi-twice Logo Hoodie</h3>
-                    <p>€49.99</p>
+                    <p>49,99 €</p>
                 </div>
                 <button class="btn btn-details">Mehr Details</button>
             </div>
         </div>
     </div>
-
-    <section class="intro-text">
-        <h2>Willkommen bei robi-twice – Entdecken Sie unsere exklusive Kollektion.</h2>
-        <p>Wir sind stolz, Ihnen unsere handverlesene Auswahl an hochwertigen Shirts und Pullovern zu präsentieren. Jedes Stück ist ein Unikat, mit Liebe zum Detail und handwerklichem Können gefertigt.</p>
-    </section>
 
 </body>
 </html>
