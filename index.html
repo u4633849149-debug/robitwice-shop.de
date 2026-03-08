@@ -18,7 +18,7 @@
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Shop & Bilder (Vollbild-Fix) */
+        /* Shop & Bilder */
         .container { max-width: 1100px; margin: 0 auto; text-align: center; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 20px; }
@@ -32,8 +32,29 @@
 
         /* Warenkorb-Style */
         #cart-items { list-style: none; padding: 0; text-align: left; }
-        .cart-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #333; }
-        .btn-paypal-cart { display: block; width: 100%; padding: 15px; background: #0070ba; color: white; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 20px; }
+        .cart-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 15px; 
+            border-bottom: 1px solid #333; 
+            background: #111;
+            margin-bottom: 5px;
+            border-radius: 8px;
+        }
+        .remove-btn { 
+            background: #ff4444; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            padding: 5px 10px; 
+            cursor: pointer; 
+            font-weight: bold;
+            margin-left: 15px;
+        }
+        .remove-btn:hover { background: #cc0000; }
+        
+        .btn-paypal-cart { display: block; width: 100%; padding: 15px; background: #0070ba; color: white; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 20px; text-align: center; }
 
         .footer { background-color: #111; color: #777; padding: 40px 5%; text-align: center; border-top: 1px solid #333; margin-top: 50px; }
     </style>
@@ -97,7 +118,7 @@
             <h1>Dein Warenkorb</h1>
             <div id="cart-content">
                 <ul id="cart-items"></ul>
-                <h3 id="cart-total">Gesamt: 0,00 €</h3>
+                <h3 id="cart-total" style="margin-top: 20px; border-top: 2px solid #333; padding-top: 10px;">Gesamt: 0,00 €</h3>
                 <p style="font-size: 12px; color: #aaa;">Hinweis: Bei PayPal bitte nochmal kurz die Größe und Adresse bestätigen!</p>
                 <a id="paypal-link" href="#" class="btn-paypal-cart" target="_blank">Mit PayPal bezahlen</a>
             </div>
@@ -120,28 +141,55 @@
         function addToCart(name, price, sizeId) {
             const size = document.getElementById(sizeId).value;
             cart.push({ name, price, size });
-            document.getElementById('cart-counter').innerText = cart.length;
+            updateCounter();
             alert(name + " in Größe " + size + " wurde hinzugefügt!");
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCounter();
+            updateCartDisplay();
+        }
+
+        function updateCounter() {
+            document.getElementById('cart-counter').innerText = cart.length;
         }
 
         function updateCartDisplay() {
             const list = document.getElementById('cart-items');
             const totalEl = document.getElementById('cart-total');
+            const paypalLink = document.getElementById('paypal-link');
+            
             list.innerHTML = "";
             let total = 0;
             let itemsString = "";
 
-            cart.forEach((item, index) => {
-                total += item.price;
-                itemsString += item.name + " (Größe " + item.size + "), ";
-                list.innerHTML += `<li class="cart-item"><span>${item.name} (${item.size})</span> <span>${item.price.toFixed(2)} €</span></li>`;
-            });
+            if (cart.length === 0) {
+                list.innerHTML = "<p>Dein Warenkorb ist leer.</p>";
+                paypalLink.style.display = "none";
+            } else {
+                paypalLink.style.display = "block";
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    itemsString += item.name + " (" + item.size + "), ";
+                    list.innerHTML += `
+                        <li class="cart-item">
+                            <div>
+                                <strong>${item.name}</strong><br>
+                                <small>Größe: ${item.size}</small>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <span>${item.price.toFixed(2)} €</span>
+                                <button class="remove-btn" onclick="removeFromCart(${index})">X</button>
+                            </div>
+                        </li>`;
+                });
+            }
 
             totalEl.innerText = "Gesamt: " + total.toFixed(2) + " €";
             
-            // Dynamischer PayPal Link für die gesamte Summe
             const businessEmail = "bananielheinrich@gmail.com";
-            document.getElementById('paypal-link').href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${businessEmail}&item_name=robi-twice_Bestellung_${itemsString}&amount=${total.toFixed(2)}&currency_code=EUR`;
+            paypalLink.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${businessEmail}&item_name=robi-twice_Bestellung_${encodeURIComponent(itemsString)}&amount=${total.toFixed(2)}&currency_code=EUR`;
         }
     </script>
 </body>
