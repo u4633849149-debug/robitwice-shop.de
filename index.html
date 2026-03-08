@@ -15,16 +15,11 @@
         .nav-left, .nav-right { display: flex; gap: 10px; align-items: center; }
         .logo-nav { font-size: 24px; font-weight: bold; cursor: pointer; text-transform: lowercase; position: absolute; left: 50%; transform: translateX(-50%); }
         
-        /* Dropdown Menü Styling mit Hover-Effekt */
+        /* Dropdown Menü mit Schlitter-Animation */
         .dropdown { position: relative; display: inline-block; }
         
-        /* Dieser Bereich sorgt dafür, dass das Menü beim Drüberfahren erscheint */
-        .dropdown:hover .dropdown-content { 
-            display: block; 
-        }
-
         .dropdown-content { 
-            display: none; 
+            display: block; 
             position: absolute; 
             background-color: #1a1a1a; 
             min-width: 160px; 
@@ -32,17 +27,32 @@
             z-index: 1; 
             border-radius: 4px;
             border: 1px solid #333;
-            margin-top: 0; /* Direkt am Button für besseren Hover-Übergang */
+            margin-top: 0;
+            
+            /* Animation Einstellungen */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+            pointer-events: none; /* Verhindert Klicken, wenn unsichtbar */
         }
         
-        /* Unsichtbare Brücke, damit das Menü nicht schließt, wenn man die Maus bewegt */
+        /* Beim Hover "schlittert" es rein */
+        .dropdown:hover .dropdown-content { 
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        /* Brücke zwischen Button und Menü */
         .dropdown-content::before {
             content: "";
             position: absolute;
-            top: -10px;
+            top: -15px;
             left: 0;
             width: 100%;
-            height: 10px;
+            height: 15px;
         }
 
         .dropdown-content button { 
@@ -65,7 +75,7 @@
         .btn-lang { background-color: #5c8d67; }
         .cart-count { background: #5c8d67; color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; }
 
-        /* Sektionen */
+        /* Sektionen & Design */
         .page-section { display: none; padding: 40px 5%; animation: fadeIn 0.4s; }
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -73,14 +83,12 @@
         .container { max-width: 1100px; margin: 0 auto; text-align: center; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .product-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; padding-bottom: 20px; position: relative; width: 100%; max-width: 400px; margin: auto; }
-        
         .product-image-container { background: #f5f5f5; height: 400px; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; }
         .product-image { max-width: 100%; max-height: 100%; object-fit: contain; }
-        
         .product-info { padding: 20px; text-align: left; }
         .price { font-size: 22px; color: #5c8d67; font-weight: bold; }
-        select, input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #000; color: white; border: 1px solid #333; border-radius: 5px; box-sizing: border-box; }
         
+        select, input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #000; color: white; border: 1px solid #333; border-radius: 5px; box-sizing: border-box; }
         .btn-add { display: block; width: 100%; padding: 12px; border-radius: 25px; cursor: pointer; text-align: center; font-weight: bold; background-color: #5c8d67; color: white; border: none; }
         .btn-add:hover { background-color: #4e7a56; }
 
@@ -127,9 +135,7 @@
             <h1 id="shirts-title">Shirts Kollektion</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="tshirt.jpg" alt="Signature Tee" class="product-image">
-                    </div>
+                    <div class="product-image-container"><img src="tshirt.jpg" alt="Signature Tee" class="product-image"></div>
                     <div class="product-info">
                         <h3>robi-twice Signature Tee</h3>
                         <p class="price">30,00 €</p>
@@ -146,9 +152,7 @@
             <h1 id="hoodies-title">Pullover & Hoodies</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="hoodie.png" alt="Logo Hoodie" class="product-image">
-                    </div>
+                    <div class="product-image-container"><img src="hoodie.png" alt="Logo Hoodie" class="product-image"></div>
                     <div class="product-info">
                         <h3>robi-twice Logo Hoodie</h3>
                         <p class="price">40,00 €</p>
@@ -165,9 +169,7 @@
             <h1 id="hats-title">Accessoires</h1>
             <div class="product-grid">
                 <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="muetze.png" alt="Logo Beanie" class="product-image">
-                    </div>
+                    <div class="product-image-container"><img src="muetze.png" alt="Logo Beanie" class="product-image"></div>
                     <div class="product-info">
                         <h3>robi-twice Logo Beanie</h3>
                         <p class="price">17,00 €</p>
@@ -274,8 +276,6 @@
 
         async function sendSupportTicket() {
             const email = document.getElementById('cust-email').value;
-            const reason = document.getElementById('support-reason').value;
-            const msg = document.getElementById('cust-msg').value;
             const status = document.getElementById('ticket-status');
             const btn = document.getElementById('send-ticket-btn');
             const t = translations[currentLang];
@@ -284,7 +284,7 @@
             try {
                 const response = await fetch("https://formspree.io/f/xlgpdoak", {
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, anliegen: reason, nachricht: msg })
+                    body: JSON.stringify({ email: email, anliegen: document.getElementById('support-reason').value, nachricht: document.getElementById('cust-msg').value })
                 });
                 if (response.ok) {
                     status.innerText = t.statusSuccess; btn.innerText = t.ticketSent;
