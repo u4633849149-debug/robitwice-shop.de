@@ -5,63 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>robi-twice | Official Shop</title>
     <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background-color: #ffffff; color: #1a1a1a; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background-color: #ffffff; color: #1a1a1a; overflow-x: hidden; }
+        
+        /* Navigation */
         header { background-color: #1a1a1a; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo-nav { font-size: 26px; font-weight: bold; letter-spacing: -1px; }
+        .logo-nav { font-size: 26px; font-weight: bold; letter-spacing: -1px; cursor: pointer; }
+        
         .dropdown { position: relative; display: inline-block; }
         .dropbtn { background-color: #333; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
         .dropdown-content { display: none; position: absolute; background-color: #222; min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.5); }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #333; }
+        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: block; border-bottom: 1px solid #333; cursor: pointer; }
         .dropdown:hover .dropdown-content { display: block; }
-        .container { max-width: 1100px; margin: 50px auto; text-align: center; padding: 0 20px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+
+        /* Sektionen */
+        .page-section { display: none; padding: 50px 5%; animation: fadeIn 0.5s; }
+        .active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Startseite Design */
+        #home { text-align: center; padding: 100px 5%; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('tshirt.png'); background-size: cover; background-position: center; color: white; height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        #home h1 { font-size: 60px; margin: 0; }
+        .shop-now-btn { margin-top: 20px; padding: 15px 40px; background-color: white; color: black; text-decoration: none; font-weight: bold; border-radius: 30px; font-size: 18px; }
+
+        /* Produkt-Raster */
+        .container { max-width: 1100px; margin: 0 auto; text-align: center; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 30px; }
         .product-card { background: #f9f9f9; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: transform 0.3s; }
-        .product-card:hover { transform: translateY(-5px); }
-        .product-image { width: 100%; height: 400px; object-fit: cover; background-color: #eee; }
+        .product-image { width: 100%; height: 400px; object-fit: cover; }
         .product-info { padding: 20px; text-align: left; }
         .price { font-size: 18px; color: #444; margin: 10px 0; font-weight: bold; }
-        .btn { display: block; width: 90%; margin: 10px auto; padding: 12px; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; font-weight: bold; }
-        .btn-buy { background-color: #5c8d67; color: white; }
-        .intro-text { background-color: #f4f4f4; padding: 60px 20px; margin-top: 50px; }
+        .btn-buy { display: block; width: 90%; margin: 10px auto; padding: 12px; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; text-align: center; text-decoration: none; font-weight: bold; background-color: #5c8d67; color: white; }
     </style>
 </head>
 <body>
+
     <header>
         <div class="dropdown">
             <button class="dropbtn">Produkte ▼</button>
             <div class="dropdown-content">
-                <a href="#">— Shirts</a>
-                <a href="#">— Pullover</a>
+                <a onclick="showSection('shirts-section')">— Shirts</a>
+                <a onclick="showSection('pullover-section')">— Pullover</a>
             </div>
         </div>
-        <div class="logo-nav">robi-twice</div>
+        <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
     </header>
 
-    <div class="container">
-        <h1>robi-twice Kollektion</h1>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="tshirt.png" alt="robi-twice Signature Tee" class="product-image">
-                <div class="product-info">
-                    <h3>robi-twice Signature Tee</h3>
-                    <p class="price">29,99 €</p>
+    <section id="home" class="page-section active">
+        <h1>robi-twice</h1>
+        <p>Exklusive Streetwear Kollektion 2026</p>
+        <a class="shop-now-btn" onclick="showSection('shirts-section')">Jetzt entdecken</a>
+    </section>
+
+    <section id="shirts-section" class="page-section">
+        <div class="container">
+            <h1>Unsere Shirts</h1>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="tshirt.png" class="product-image">
+                    <div class="product-info">
+                        <h3>robi-twice Signature Tee</h3>
+                        <p class="price">29,99 €</p>
+                        <a href="#" class="btn btn-buy">In den Warenkorb legen</a>
+                    </div>
                 </div>
-                <a href="#" class="btn btn-buy">In den Warenkorb legen</a>
-            </div>
-            <div class="product-card">
-                <img src="hoodie.png" alt="robi-twice Logo Hoodie" class="product-image">
-                <div class="product-info">
-                    <h3>robi-twice Logo Hoodie</h3>
-                    <p class="price">49,99 €</p>
-                </div>
-                <a href="#" class="btn btn-buy">In den Warenkorb legen</a>
             </div>
         </div>
-    </div>
-
-    <section class="intro-text">
-        <h2>Willkommen bei robi-twice – Entdecken Sie unsere exklusive Kollektion.</h2>
-        <p>Wir sind stolz, Ihnen unsere handverlesene Auswahl an hochwertigen Shirts und Pullovern zu präsentieren.</p>
     </section>
+
+    <section id="pullover-section" class="page-section">
+        <div class="container">
+            <h1>Unsere Pullover</h1>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="hoodie.png" class="product-image">
+                    <div class="product-info">
+                        <h3>robi-twice Logo Hoodie</h3>
+                        <p class="price">49,99 €</p>
+                        <a href="#" class="btn btn-buy">In den Warenkorb legen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function showSection(sectionId) {
+            // Alle Sektionen verstecken
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Die gewählte Sektion anzeigen
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Seite nach oben scrollen
+            window.scrollTo(0, 0);
+        }
+    </script>
+
 </body>
 </html>
