@@ -257,11 +257,13 @@
         document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
         document.getElementById(id).style.display = 'block';
         if(document.getElementById('btn-'+id)) document.getElementById('btn-'+id).classList.add('active');
+        window.scrollTo(0,0);
     }
 
     function add(name, price) {
         cart.push({name, price});
         update();
+        alert(name + " wurde hinzugefügt!");
     }
 
     function update() {
@@ -281,7 +283,15 @@
         e.preventDefault();
         if(cart.length === 0) return alert("Warenkorb leer!");
         const data = new FormData(e.target);
-        await fetch('https://formspree.io/f/xlgpdoak', { method: 'POST', body: data, headers: {'Accept': 'application/json'} });
+        
+        // Formspree Benachrichtigung senden
+        await fetch('https://formspree.io/f/xlgpdoak', { 
+            method: 'POST', 
+            body: data, 
+            headers: {'Accept': 'application/json'} 
+        });
+
+        // PayPal Weiterleitung
         const sum = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
         window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${sum}&currency_code=EUR&item_name=RobiTwice-Order`;
     });
