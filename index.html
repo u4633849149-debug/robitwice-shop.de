@@ -19,10 +19,10 @@
             --color-primary-glow: rgba(92, 141, 103, 0.45);
             
             /* DEEP BLACK THEME - ABSOLUT DUNKEL */
-            --color-bg-base: #000000;
-            --color-bg-surface: #050505;
+            --color-bg-base: #000000; /* Auf absolutes Schwarz gesetzt */
+            --color-bg-surface: #020202; /* Von #050505 dunkler gemacht */
             --color-bg-input: #000000;
-            --color-bg-card: #080808;
+            --color-bg-card: #040404; /* Von #080808 dunkler gemacht */
             
             /* TEXT LAYERS */
             --color-text-main: #ffffff;
@@ -86,7 +86,8 @@
         .page-darkness-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.88) 0%, rgba(0,0,0,1) 100%);
+            /* Gradient deutlich dunkler gemacht: Start bei 95% Schwarz (statt 88%) bis 100% Schwarz */
+            background: radial-gradient(circle at center, rgba(0,0,0,0.95) 0%, rgba(0,0,0,1) 100%);
             z-index: -1;
             pointer-events: none;
         }
@@ -428,449 +429,382 @@
         }
 
         /* ========================================================================================
-           VII. SHOPPING CART & SPLIT CHECKOUT (BILD 1 - VOLL INTEGRATION)
+           VII. CART & CHECKOUT MODULE (BILD 1)
            ========================================================================================
         */
-        .cart-experience {
-            padding: 100px 5%;
+        .cart-wrapper {
+            padding: 80px 5%;
         }
 
-        .cart-master-layout {
+        .cart-container {
             max-width: 1400px;
             margin: 0 auto;
-            background: #070707;
-            border: 1px solid var(--border-color-strong);
-            border-radius: var(--radius-massive);
+            background: #080808;
+            border: 1px solid var(--border-grey);
+            border-radius: var(--radius-full);
             display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            min-height: 850px;
+            grid-template-columns: 1.5fr 1fr;
+            min-height: 800px;
             overflow: hidden;
-            box-shadow: 0 80px 160px rgba(0,0,0,0.8);
+            box-shadow: 0 60px 120px rgba(0,0,0,0.7);
         }
 
-        /* Column Left: Order Review */
-        .cart-review-col {
-            padding: 80px;
+        .cart-items-section {
+            padding: 70px;
             border-right: 1px solid #111;
         }
 
-        /* Column Right: Information / Shipping (EXAKT BILD 1) */
-        .cart-checkout-col {
-            padding: 80px;
-            background: #030303;
+        .checkout-section {
+            padding: 70px;
+            background: #050505;
         }
 
-        .view-title {
-            font-size: 52px;
+        .cart-title {
+            font-size: 48px;
             font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 60px;
-            letter-spacing: 2px;
+            margin-bottom: 50px;
         }
 
         .cart-item-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 35px 0;
+            padding: 30px 0;
             border-bottom: 1px solid #111;
         }
 
-        .item-details h4 {
-            font-size: 26px;
+        .cart-item-details h4 {
+            font-size: 24px;
             text-transform: uppercase;
             font-weight: 900;
         }
 
-        .item-details p {
+        .cart-item-details p {
             color: var(--color-primary-green);
             font-weight: 800;
-            font-size: 15px;
-            margin-top: 5px;
+            font-size: 14px;
         }
 
-        .item-price-display {
-            font-size: 30px;
+        .cart-item-price {
+            font-size: 28px;
             font-weight: 900;
         }
 
-        .remove-trigger {
+        .btn-remove {
             background: none;
             border: none;
-            color: #ff3333;
+            color: #ff4444;
             text-transform: uppercase;
             font-weight: 900;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
-            margin-top: 12px;
-            letter-spacing: 1px;
+            margin-top: 10px;
         }
 
-        .cart-grand-total {
-            margin-top: 70px;
+        .cart-summary-total {
+            margin-top: 60px;
             background: #000;
-            padding: 45px;
-            border-radius: 35px;
-            border: 1px solid #151515;
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid #111;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .cart-grand-total .label {
-            font-size: 34px;
+        .cart-summary-total span:first-child {
+            font-size: 32px;
             font-weight: 900;
             text-transform: uppercase;
         }
 
-        .cart-grand-total .value {
-            font-size: 44px;
+        .cart-summary-total span:last-child {
+            font-size: 40px;
             font-weight: 900;
-            color: var(--color-primary-green);
+            color: var(--brand-green);
         }
 
-        /* CHECKOUT FORM ARCHITECTURE (BILD 1 KONFORM) */
-        .checkout-engine {
+        /* CHECKOUT FORM */
+        .checkout-form {
             display: flex;
             flex-direction: column;
-            gap: 30px;
-        }
-
-        .input-row-split {
-            display: flex;
             gap: 25px;
-            width: 100%;
         }
 
-        .input-wrapper {
+        .form-field {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            flex: 1;
+            gap: 10px;
         }
 
-        .input-wrapper label {
-            font-size: 13px;
+        .form-field label {
+            font-size: 12px;
             text-transform: uppercase;
             font-weight: 900;
             color: #555;
             letter-spacing: 2px;
         }
 
-        .input-wrapper input {
-            padding: 24px;
+        .form-field input {
+            padding: 22px;
             background: #000;
-            border: 1px solid #1a1a1a;
-            border-radius: 20px;
+            border: 1px solid #222;
+            border-radius: 18px;
             color: #fff;
-            font-size: 17px;
-            transition: all 0.3s var(--anim-curve);
+            font-size: 16px;
+            transition: 0.3s;
         }
 
-        .input-wrapper input:focus {
-            border-color: var(--color-primary-green);
-            background: #050505;
-            box-shadow: 0 0 20px rgba(92,141,103,0.15);
+        .form-field input:focus {
+            border-color: var(--brand-green);
         }
 
-        .submit-payment-btn {
-            margin-top: 40px;
-            padding: 28px;
-            background: #ffffff;
-            color: #000000;
+        .pay-submit-btn {
+            margin-top: 30px;
+            padding: 26px;
+            background: #fff;
+            color: #000;
             border: none;
-            border-radius: 22px;
+            border-radius: 20px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 6px;
+            letter-spacing: 5px;
             cursor: pointer;
-            transition: all var(--anim-speed-std) var(--anim-curve);
+            transition: var(--t-std) var(--ease);
         }
 
-        .submit-payment-btn:hover {
-            background: var(--color-primary-green);
+        .pay-submit-btn:hover {
+            background: var(--brand-green);
             color: #fff;
             transform: scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         /* ========================================================================================
-           VIII. FOOTER SYSTEM (BILD 3 - VOLL INTEGRATION)
+           VII. FOOTER MODULE (BILD 3)
            ========================================================================================
         */
         footer {
-            background: #000000;
-            padding: 140px 0 70px;
+            background: #020202;
+            padding: 120px 0 60px;
             text-align: center;
-            border-top: 1px solid #0a0a0a;
+            border-top: 1px solid #111;
             margin-top: auto;
         }
 
-        .footer-brand-massive {
-            font-size: 70px;
+        .footer-logo-text {
+            font-size: 65px;
             font-weight: 900;
-            color: #090909;
+            color: #0d0d0d;
             text-transform: uppercase;
-            letter-spacing: 45px;
-            margin-bottom: 90px;
+            letter-spacing: 40px;
+            margin-bottom: 80px;
             pointer-events: none;
-            user-select: none;
-            line-height: 1;
         }
 
-        .footer-nav-hub {
+        .footer-navigation {
             display: flex;
             justify-content: center;
-            gap: 65px;
-            margin-bottom: 80px;
+            gap: 50px;
+            margin-bottom: 60px;
             flex-wrap: wrap;
         }
 
-        .footer-nav-hub a {
+        .footer-navigation a {
             color: #333;
             text-decoration: none;
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 15px;
-            letter-spacing: 5px;
-            transition: all 0.3s ease;
+            font-size: 14px;
+            letter-spacing: 4px;
+            transition: 0.3s;
         }
 
-        .footer-nav-hub a:hover {
-            color: var(--color-primary-green);
-            transform: translateY(-2px);
+        .footer-navigation a:hover {
+            color: var(--brand-green);
         }
 
-        .trust-badges {
+        .payment-icons {
             display: flex;
             justify-content: center;
-            gap: 50px;
-            margin-bottom: 80px;
-            opacity: 0.18;
-            filter: grayscale(1) invert(1);
+            gap: 40px;
+            margin-bottom: 60px;
+            opacity: 0.2;
+            filter: grayscale(1);
         }
 
-        .trust-badges img { height: 28px; }
+        .payment-icons img {
+            height: 25px;
+        }
 
-        .copyright-strata {
-            font-size: 13px;
-            color: #1a1a1a;
+        .copyright-notice {
+            font-size: 12px;
+            color: #222;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            font-weight: 700;
+            letter-spacing: 3px;
         }
 
         /* ========================================================================================
-           IX. RESPONSIVE DESIGN ADAPTATION
+           VIII. RESPONSIVE DESIGN MATRIX
            ========================================================================================
         */
-        @media (max-width: 1250px) {
-            .video-triple-matrix { grid-template-columns: 1fr; }
-            .v-shell-aux { display: none; }
-            .cart-master-layout { grid-template-columns: 1fr; }
-            .cart-review-col { border-right: none; border-bottom: 1px solid #111; padding: 50px; }
-            .cart-checkout-col { padding: 50px; }
-            .brand-logo-area h1 { font-size: 28px; letter-spacing: 10px; }
+        @media (max-width: 1200px) {
+            .video-matrix { grid-template-columns: 1fr; }
+            .video-box-side { display: none; }
+            .cart-container { grid-template-columns: 1fr; }
+            .cart-items-section { border-right: none; padding: 40px; }
+            .cart-items-section { border-bottom: 1px solid #111; }
+            .brand-hub h1 { font-size: 28px; letter-spacing: 8px; }
         }
 
         @media (max-width: 768px) {
-            header { padding: 0 25px; }
-            .nav-block { display: none; }
-            .portal-header h2 { font-size: 45px; }
-            .grid-engine { grid-template-columns: 1fr; }
-            .footer-brand-massive { font-size: 35px; letter-spacing: 15px; }
-            .input-row-split { flex-direction: column; gap: 30px; }
+            header { padding: 0 20px; }
+            .logo-center h1 { font-size: 24px; letter-spacing: 5px; }
+            .section-headline h2 { font-size: 40px; }
+            .product-grid { grid-template-columns: 1fr; }
+            .footer-logo-text { font-size: 30px; letter-spacing: 15px; }
         }
-
-        /* ========================================================================================
-           X. ADDITIONAL DEEP-STYLING (PROMISE OF 1000+ LINES)
-           ========================================================================================
-        */
-        /* Custom Select Styling */
-        select::-ms-expand { display: none; }
-        
-        /* Focus Rings */
-        *:focus-visible { outline: 3px solid var(--color-primary-green); outline-offset: 5px; }
-
-        /* Selection Color */
-        ::selection { background: var(--color-primary-green); color: white; }
-
-        /* Animation delays for grid items */
-        .product-node:nth-child(1) { animation-delay: 0.1s; }
-        .product-node:nth-child(2) { animation-delay: 0.2s; }
-        .product-node:nth-child(3) { animation-delay: 0.3s; }
-
-        /* Smooth page entrance */
-        body { animation: bodyFadeIn 1s ease; }
-        @keyframes bodyFadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Extended Footer Logic */
-        .footer-social-tray { margin-bottom: 40px; display: flex; justify-content: center; gap: 30px; }
-        .footer-social-tray svg { fill: #222; width: 24px; transition: 0.3s; cursor: pointer; }
-        .footer-social-tray svg:hover { fill: var(--color-primary-green); }
-
-        /* Extra Detail: Cart Empty State */
-        .empty-cart-msg { text-align: center; padding: 100px 0; color: #444; font-weight: 900; text-transform: uppercase; font-size: 20px; letter-spacing: 4px; }
     </style>
 </head>
-<body id="app-body-root">
+<body id="app-root">
 
     <div class="page-darkness-overlay"></div>
 
-    <header id="main-header">
-        <div class="nav-block">
-            <button class="action-button active" id="nav-btn-home" onclick="window.robiApp.setView('home')">Live</button>
-            <button class="action-button" id="nav-btn-shop" onclick="window.robiApp.setView('shop')">Store</button>
+    <header>
+        <div class="header-left">
+            <button class="btn-nav active" id="nav-home" onclick="window.engine.changeView('home')">Live</button>
+            <button class="btn-nav" id="nav-shop" onclick="window.engine.changeView('shop')">Store</button>
         </div>
 
-        <div class="brand-logo-area">
-            <h1 onclick="window.robiApp.setView('home')">robi-twice</h1>
+        <div class="logo-center">
+            <h1 onclick="window.engine.changeView('home')">robi-twice</h1>
         </div>
 
-        <div class="nav-block right">
-            <button class="action-button cart-toggle-btn" id="nav-btn-cart" onclick="window.robiApp.setView('cart')">
-                Cart <span class="cart-pill" id="cart-global-count">0</span>
+        <div class="header-right">
+            <button class="btn-nav cart-btn" id="nav-cart" onclick="window.engine.changeView('cart')">
+                Cart <span class="cart-badge" id="cart-ui-count">0</span>
             </button>
         </div>
     </header>
 
-    <main id="view-home" class="app-view">
-        <section class="live-container">
-            <div class="video-triple-matrix">
-                <div class="v-shell-aux">
-                    <iframe class="video-iframe" src="https://www.youtube.com/embed/5Mf7S0pDyP0?controls=0&mute=1&autoplay=1&loop=1&playlist=5Mf7S0pDyP0"></iframe>
+    <main id="view-home" class="view-section">
+        <section class="live-wrapper">
+            <div class="video-matrix">
+                <div class="video-box-side">
+                    <iframe class="iframe-element" src="https://www.youtube.com/embed/5Mf7S0pDyP0?controls=0&mute=1&autoplay=1&loop=1&playlist=5Mf7S0pDyP0"></iframe>
                 </div>
 
-                <div class="v-shell-main">
-                    <iframe class="video-iframe" src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1" allowfullscreen></iframe>
+                <div class="video-box-main">
+                    <iframe class="iframe-element" src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1" allowfullscreen></iframe>
                 </div>
 
-                <div class="v-shell-aux">
-                    <iframe class="video-iframe" src="https://www.youtube.com/embed/vvj64ZskM9Y?controls=0&mute=1&autoplay=1&loop=1&playlist=vvj64ZskM9Y"></iframe>
+                <div class="video-box-side">
+                    <iframe class="iframe-element" src="https://www.youtube.com/embed/vvj64ZskM9Y?controls=0&mute=1&autoplay=1&loop=1&playlist=vvj64ZskM9Y"></iframe>
                 </div>
             </div>
 
-            <div class="branding-ticker">
-                <div class="ticker-wrap">
-                    +++ NEW MERCH COLLECTION ONLINE +++ ROBI-TWICE OFFICIAL 2026 +++ WORLDWIDE SHIPPING +++ LIMITED QUANTITIES +++ CHECK THE STORE FOR UPDATES +++ JOIN THE COMMUNITY +++
+            <div class="news-ticker-bar">
+                <div class="ticker-content">
+                    +++ ROBI-TWICE OFFICIAL MERCH DROP 2026 +++ WORLDWIDE SHIPPING +++ LIMITED QUANTITY +++ JOIN THE DISCORD +++ NEW VIDEO EVERY SUNDAY +++
                 </div>
             </div>
         </section>
     </main>
 
-    <main id="view-shop" class="app-view">
-        <section class="store-portal">
-            <div class="portal-header">
+    <main id="view-shop" class="view-section">
+        <section class="store-hub">
+            <div class="section-headline">
                 <h2>The Collection</h2>
-                <div class="sub-brand">Season One / Apparel</div>
+                <p>Premium Apparel 2026</p>
             </div>
 
-            <div class="grid-engine">
-                <article class="product-node">
-                    <div class="visual-container">
+            <div class="product-grid">
+                <article class="product-card">
+                    <div class="product-visual">
                         <img src="tshirt.png" alt="Signature Tee">
                     </div>
-                    <div class="product-info-wrap">
-                        <h3 class="product-title">Signature Tee</h3>
-                        <span class="product-price-tag">29,95 €</span>
-                        <select id="size-node-1" class="size-selector-ui">
-                            <option value="S">SELECT SIZE: S</option>
-                            <option value="M">SELECT SIZE: M</option>
-                            <option value="L">SELECT SIZE: L</option>
-                            <option value="XL">SELECT SIZE: XL</option>
+                    <div class="product-info">
+                        <h3>Signature Tee</h3>
+                        <span class="product-price">29,95 €</span>
+                        <select id="size-shirt" class="size-selector">
+                            <option value="S">Größe: S</option>
+                            <option value="M">Größe: M</option>
+                            <option value="L">Größe: L</option>
+                            <option value="XL">Größe: XL</option>
                         </select>
-                        <button class="add-to-cart-trigger" onclick="window.robiApp.cartHandler.add('Signature Tee', 29.95, 'size-node-1')">Add to Cart</button>
+                        <button class="add-cart-btn" onclick="window.engine.addToCart('Signature Tee', 29.95, 'size-shirt')">Add to Cart</button>
                     </div>
                 </article>
 
-                <article class="product-node">
-                    <div class="visual-container">
+                <article class="product-card">
+                    <div class="product-visual">
                         <img src="hoodie.png" alt="Legacy Hoodie">
                     </div>
-                    <div class="product-info-wrap">
-                        <h3 class="product-title">Legacy Hoodie</h3>
-                        <span class="product-price-tag">54,95 €</span>
-                        <select id="size-node-2" class="size-selector-ui">
-                            <option value="S">SELECT SIZE: S</option>
-                            <option value="M">SELECT SIZE: M</option>
-                            <option value="L">SELECT SIZE: L</option>
-                            <option value="XL">SELECT SIZE: XL</option>
+                    <div class="product-info">
+                        <h3>Legacy Hoodie</h3>
+                        <span class="product-price">54,95 €</span>
+                        <select id="size-hoodie" class="size-selector">
+                            <option value="S">Größe: S</option>
+                            <option value="M">Größe: M</option>
+                            <option value="L">Größe: L</option>
+                            <option value="XL">Größe: XL</option>
                         </select>
-                        <button class="add-to-cart-trigger" onclick="window.robiApp.cartHandler.add('Legacy Hoodie', 54.95, 'size-node-2')">Add to Cart</button>
+                        <button class="add-cart-btn" onclick="window.engine.addToCart('Legacy Hoodie', 54.95, 'size-hoodie')">Add to Cart</button>
                     </div>
                 </article>
 
-                <article class="product-node">
-                    <div class="visual-container">
-                        <img src="muetze.png" alt="Urban Beanie">
+                <article class="product-card">
+                    <div class="product-visual">
+                        <img src="muetze.png" alt="Beanie">
                     </div>
-                    <div class="product-info-wrap">
-                        <h3 class="product-title">Urban Beanie</h3>
-                        <span class="product-price-tag">24,95 €</span>
-                        <select id="size-node-3" class="size-selector-ui">
-                            <option value="OS">One Size Fits All</option>
+                    <div class="product-info">
+                        <h3>Urban Beanie</h3>
+                        <span class="product-price">24,95 €</span>
+                        <select id="size-beanie" class="size-selector">
+                            <option value="OneSize">One Size</option>
                         </select>
-                        <button class="add-to-cart-trigger" onclick="window.robiApp.cartHandler.add('Urban Beanie', 24.95, 'size-node-3')">Add to Cart</button>
+                        <button class="add-cart-btn" onclick="window.engine.addToCart('Urban Beanie', 24.95, 'size-beanie')">Add to Cart</button>
                     </div>
                 </article>
             </div>
         </section>
     </main>
 
-    <main id="view-cart" class="app-view">
-        <section class="cart-experience">
-            <div class="cart-master-layout">
+    <main id="view-cart" class="view-section">
+        <section class="cart-wrapper">
+            <div class="cart-container">
                 
-                <div class="cart-review-col">
-                    <h2 class="view-title">Your Order</h2>
-                    <div id="cart-dom-sink">
+                <div class="cart-items-section">
+                    <h2 class="cart-title">Your Cart</h2>
+                    <div id="cart-render-list">
                         </div>
                     
-                    <div class="cart-grand-total">
-                        <span class="label">Subtotal</span>
-                        <span class="value" id="cart-dom-total">0,00 €</span>
+                    <div class="cart-summary-total">
+                        <span>Grand Total:</span>
+                        <span id="cart-total-value">0,00 €</span>
                     </div>
                 </div>
 
-                <div class="cart-checkout-col">
-                    <h2 class="view-title">Information</h2>
-                    <form id="robi-checkout-form" class="checkout-engine">
+                <div class="checkout-section">
+                    <h2 class="cart-title">Checkout</h2>
+                    <form id="master-checkout-form" class="checkout-form">
+                        <div class="form-field">
+                            <label>Full Name</label>
+                            <input type="text" name="customer_name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-field">
+                            <label>Shipping Address</label>
+                            <input type="text" name="customer_address" required placeholder="Main Street 1, 12345 City">
+                        </div>
+                        <div class="form-field">
+                            <label>Email Address</label>
+                            <input type="email" name="customer_email" required placeholder="john@example.com">
+                        </div>
                         
-                        <div class="input-row-split">
-                            <div class="input-wrapper">
-                                <label>Vorname*</label>
-                                <input type="text" name="first_name" required placeholder="z.B. Max">
-                            </div>
-                            <div class="input-wrapper">
-                                <label>Nachname*</label>
-                                <input type="text" name="last_name" required placeholder="z.B. Mustermann">
-                            </div>
-                        </div>
+                        <input type="hidden" name="_subject" value="New Order from robi-twice Hub">
+                        <input type="hidden" name="order_details" id="hidden-order-summary">
 
-                        <div class="input-wrapper">
-                            <label>E-Mail Adresse*</label>
-                            <input type="email" name="customer_email" required placeholder="name@beispiel.de">
-                        </div>
-
-                        <div class="input-wrapper">
-                            <label>Straße & Hausnummer*</label>
-                            <input type="text" name="address" required placeholder="Musterstraße 123">
-                        </div>
-
-                        <div class="input-row-split">
-                            <div class="input-wrapper">
-                                <label>Postleitzahl*</label>
-                                <input type="text" name="zip" required placeholder="12345">
-                            </div>
-                            <div class="input-wrapper">
-                                <label>Stadt*</label>
-                                <input type="text" name="city" required placeholder="Berlin">
-                            </div>
-                        </div>
-
-                        <input type="hidden" name="order_data_payload" id="form-payload">
-                        
-                        <button type="submit" class="submit-payment-btn">Continue to PayPal</button>
+                        <button type="submit" class="pay-submit-btn">Continue to PayPal</button>
                     </form>
                 </div>
 
@@ -878,227 +812,204 @@
         </section>
     </main>
 
-    <footer id="main-footer">
-        <div class="footer-brand-massive">robi-twice</div>
-        
-        <nav class="footer-nav-hub">
-            <a href="#" onclick="window.robiApp.setView('home')">Live Hub</a>
-            <a href="#" onclick="window.robiApp.setView('shop')">Store</a>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
+    <footer>
+        <div class="footer-logo-text">robi-twice</div>
+        <nav class="footer-navigation">
+            <a href="#" onclick="window.engine.changeView('home')">Home</a>
+            <a href="#" onclick="window.engine.changeView('shop')">Store</a>
             <a href="#">Impressum</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
             <a href="#">Contact</a>
         </nav>
 
-        <div class="trust-badges">
+        <div class="payment-icons">
             <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Google_Pay_logo.svg" alt="GPay">
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Google_Pay_logo.svg" alt="GPay">
         </div>
 
-        <p class="copyright-strata">&copy; 2026 ROBI-TWICE ENTERTAINMENT GROUP. ALL RIGHTS RESERVED.</p>
+        <p class="copyright-notice">&copy; 2026 ROBI-TWICE ENTERTAINMENT GROUP. ALL RIGHTS RESERVED.</p>
     </footer>
 
     <script>
         /**
-         * ROBI-TWICE APPLICATION ENGINE
-         * Version: 28.0 (Enterprise Stability)
+         * GLOBAL ENGINE OBJECT
+         * Wir kapseln alles, um globale Variablen-Konflikte zu vermeiden.
          */
-        window.robiApp = {
+        window.engine = {
             // STATE DATA
             state: {
-                cart: [],
                 currentView: 'home',
+                cart: [],
                 config: {
-                    paypalBusiness: "bananielheinrich@gmail.com",
+                    paypalEmail: "bananielheinrich@gmail.com",
                     formspreeId: "xlgpdoak"
                 }
             },
 
-            // INITIALIZATION CORE
+            // INITIALIZATION
             init: function() {
-                console.log("%c >>> ENGINE: BOOTING SYSTEM...", "color: #5c8d67; font-weight: 900;");
-                this.bindDOM();
-                this.renderCart();
-                console.log("%c >>> ENGINE: STATUS ONLINE.", "color: #5c8d67; font-weight: 900;");
+                console.log("%c >>> ROBI-TWICE ENGINE BOOTING... ", "background: #5c8d67; color: white; font-weight: bold;");
+                this.bindEvents();
+                this.updateCartUI();
+                console.log("%c >>> ENGINE READY. ", "color: #5c8d67; font-weight: bold;");
             },
 
-            // DOM EVENT BINDING
-            bindDOM: function() {
-                const form = document.getElementById('robi-checkout-form');
-                if(form) {
-                    form.addEventListener('submit', (e) => this.checkoutHandler.process(e));
+            // EVENT BINDING
+            bindEvents: function() {
+                const checkoutForm = document.getElementById('master-checkout-form');
+                if (checkoutForm) {
+                    checkoutForm.addEventListener('submit', (e) => this.handleCheckout(e));
                 }
             },
 
-            // VIEW NAVIGATION ENGINE
-            setView: function(viewId) {
-                console.log("ROBI_NAV: Moving to -> " + viewId);
+            // VIEW NAVIGATION LOGIC
+            changeView: function(viewId) {
+                console.log("Navigating to view: " + viewId);
                 
-                // Switch DOM Visibility
-                const views = document.querySelectorAll('.app-view');
+                // Alle Views verstecken
+                const views = document.querySelectorAll('.view-section');
                 views.forEach(v => v.style.display = 'none');
-                
-                const activeView = document.getElementById('view-' + viewId);
-                if(activeView) activeView.style.display = 'block';
 
-                // Switch Button States
-                const navBtns = document.querySelectorAll('.action-button');
+                // Nav Buttons Style zurücksetzen
+                const navBtns = document.querySelectorAll('.btn-nav');
                 navBtns.forEach(b => b.classList.remove('active'));
-                
-                const activeBtn = document.getElementById('nav-btn-' + viewId);
-                if(activeBtn) activeBtn.classList.add('active');
 
-                // Global UI Reset
+                // Gewählte View anzeigen
+                const activeView = document.getElementById('view-' + viewId);
+                if (activeView) {
+                    activeView.style.display = 'block';
+                }
+
+                // Nav Button aktivieren
+                const activeBtn = document.getElementById('nav-' + viewId);
+                if (activeBtn) {
+                    activeBtn.classList.add('active');
+                }
+
+                // Scroll to Top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 this.state.currentView = viewId;
             },
 
-            // CART HANDLER LOGIC
-            cartHandler: {
-                add: function(name, price, sizeId) {
-                    const size = document.getElementById(sizeId).value;
-                    const item = {
-                        id: 'item-' + Date.now() + Math.floor(Math.random() * 1000),
-                        name: name,
-                        price: parseFloat(price),
-                        size: size
-                    };
+            // CART OPERATIONS
+            addToCart: function(name, price, sizeSelectId) {
+                const size = document.getElementById(sizeSelectId).value;
+                const item = {
+                    id: 'it-' + Date.now(),
+                    name: name,
+                    price: parseFloat(price),
+                    size: size
+                };
 
-                    window.robiApp.state.cart.push(item);
-                    window.robiApp.renderCart();
+                this.state.cart.push(item);
+                this.updateCartUI();
 
-                    // UI Notification Feedback
-                    const target = event.target;
-                    const oldText = target.innerText;
-                    target.innerText = "SUCCESS ✓";
-                    target.style.background = "#fff";
-                    target.style.color = "#000";
-                    
-                    setTimeout(() => {
-                        target.innerText = oldText;
-                        target.style.background = "";
-                        target.style.color = "";
-                    }, 1200);
-                },
-
-                remove: function(uid) {
-                    window.robiApp.state.cart = window.robiApp.state.cart.filter(i => i.id !== uid);
-                    window.robiApp.renderCart();
-                }
+                // Button Feedback
+                const btn = event.target;
+                const originalText = btn.innerText;
+                btn.innerText = "SUCCESS ✓";
+                btn.style.background = "#ffffff";
+                btn.style.color = "#000000";
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = "var(--brand-green)";
+                    btn.style.color = "#ffffff";
+                }, 1000);
             },
 
-            // RENDER ENGINE
-            renderCart: function() {
-                const countBadge = document.getElementById('cart-global-count');
-                const listSink = document.getElementById('cart-dom-sink');
-                const totalSink = document.getElementById('cart-dom-total');
+            removeFromCart: function(id) {
+                this.state.cart = this.state.cart.filter(item => item.id !== id);
+                this.updateCartUI();
+            },
+
+            // UI RE-RENDERING
+            updateCartUI: function() {
+                const countBadge = document.getElementById('cart-ui-count');
+                const renderList = document.getElementById('cart-render-list');
+                const totalDisplay = document.getElementById('cart-total-value');
                 
-                // Badge Logic
+                // Badge
                 countBadge.innerText = this.state.cart.length;
 
-                // Content Logic
-                if(this.state.cart.length === 0) {
-                    listSink.innerHTML = `<div class="empty-cart-msg">Your cart is empty.</div>`;
-                    totalSink.innerText = "0,00 €";
+                // Cart List
+                if (this.state.cart.length === 0) {
+                    renderList.innerHTML = `<p style="color: #444; padding: 40px 0; font-weight: 800; text-transform: uppercase;">Your cart is currently empty.</p>`;
+                    totalDisplay.innerText = "0,00 €";
                     return;
                 }
 
-                let total = 0;
-                let html = "";
+                let listHtml = "";
+                let totalSum = 0;
 
                 this.state.cart.forEach(item => {
-                    total += item.price;
-                    html += `
+                    totalSum += item.price;
+                    listHtml += `
                         <div class="cart-item-row">
-                            <div class="item-details">
+                            <div class="cart-item-details">
                                 <h4>${item.name}</h4>
-                                <p>SIZE: ${item.size}</p>
-                                <button class="remove-trigger" onclick="window.robiApp.cartHandler.remove('${item.id}')">Remove Item</button>
+                                <p>Size: ${item.size}</p>
+                                <button class="btn-remove" onclick="window.engine.removeFromCart('${item.id}')">Remove Item</button>
                             </div>
-                            <div class="item-price-display">${item.price.toFixed(2).replace('.', ',')} €</div>
+                            <div class="cart-item-price">${item.price.toFixed(2).replace('.', ',')} €</div>
                         </div>
                     `;
                 });
 
-                listSink.innerHTML = html;
-                totalSink.innerText = total.toFixed(2).replace('.', ',') + " €";
+                renderList.innerHTML = listHtml;
+                totalDisplay.innerText = totalSum.toFixed(2).replace('.', ',') + " €";
             },
 
-            // CHECKOUT GATEWAY ENGINE
-            checkoutHandler: {
-                process: async function(e) {
-                    e.preventDefault();
-                    
-                    if(window.robiApp.state.cart.length === 0) {
-                        alert("Please add items to your cart first.");
-                        return;
+            // CHECKOUT PIPELINE
+            handleCheckout: async function(e) {
+                e.preventDefault();
+                
+                if (this.state.cart.length === 0) {
+                    alert("Your cart is empty!");
+                    return;
+                }
+
+                const submitBtn = e.target.querySelector('button');
+                submitBtn.innerText = "SENDING ORDER...";
+                submitBtn.disabled = true;
+
+                // Create Order Summary for Email
+                const summary = this.state.cart.map(i => `${i.name} [Size: ${i.size}]`).join(' | ');
+                document.getElementById('hidden-order-summary').value = summary;
+
+                // Send to Formspree
+                try {
+                    const response = await fetch(`https://formspree.io/f/${this.state.config.formspreeId}`, {
+                        method: 'POST',
+                        body: new FormData(e.target),
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        // Success -> Go to PayPal
+                        const total = this.state.cart.reduce((a, b) => a + b.price, 0).toFixed(2);
+                        const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${this.state.config.paypalEmail}&amount=${total}&currency_code=EUR&item_name=Order from robi-twice Hub: ${encodeURIComponent(summary)}`;
+                        
+                        window.location.href = paypalUrl;
+                    } else {
+                        throw new Error("API Error");
                     }
-
-                    const btn = e.target.querySelector('button');
-                    btn.innerText = "PROCESSING...";
-                    btn.disabled = true;
-
-                    // Data Preparation
-                    const cartSummary = window.robiApp.state.cart.map(i => `${i.name} (${i.size})`).join(' | ');
-                    document.getElementById('form-payload').value = cartSummary;
-
-                    try {
-                        const formData = new FormData(e.target);
-                        const response = await fetch(`https://formspree.io/f/${window.robiApp.state.config.formspreeId}`, {
-                            method: 'POST',
-                            body: formData,
-                            headers: { 'Accept': 'application/json' }
-                        });
-
-                        if(response.ok) {
-                            // Proceed to PayPal
-                            const total = window.robiApp.state.cart.reduce((a,b) => a+b.price, 0).toFixed(2);
-                            const ppUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${window.robiApp.state.config.paypalBusiness}&amount=${total}&currency_code=EUR&item_name=Order from robi-twice: ${encodeURIComponent(cartSummary)}`;
-                            window.location.href = ppUrl;
-                        } else {
-                            throw new Error("API Connection Failed");
-                        }
-                    } catch(err) {
-                        alert("Error processing checkout. Please try again.");
-                        btn.innerText = "Continue to PayPal";
-                        btn.disabled = false;
-                    }
+                } catch (err) {
+                    alert("Checkout Error. Please try again.");
+                    submitBtn.innerText = "Continue to PayPal";
+                    submitBtn.disabled = false;
                 }
             }
         };
 
-        // BOOTING SEQUENCE
+        // RUN ENGINE ON LOAD
         document.addEventListener('DOMContentLoaded', () => {
-            window.robiApp.init();
+            window.engine.init();
         });
     </script>
-
-    <style>
-        /* Utility Classes */
-        .u-flex-center { display: flex; align-items: center; justify-content: center; }
-        .u-text-green { color: var(--color-primary-green); }
-        .u-bold { font-weight: 900; }
-        
-        /* Interactive Element Polishing */
-        button, a { cursor: pointer; user-select: none; }
-        
-        /* Image Protection */
-        img { pointer-events: none; user-select: none; }
-
-        /* Performance Optimizations */
-        .app-view, .product-node, .v-shell-main {
-            will-change: transform, opacity;
-            backface-visibility: hidden;
-        }
-
-        /* Responsive Fixes for Small Screens */
-        @media (max-width: 480px) {
-            .view-title { font-size: 34px; }
-            .cart-master-layout { border-radius: 0; }
-            .cart-review-col, .cart-checkout-col { padding: 30px 20px; }
-        }
-    </style>
+    
 </body>
 </html>
