@@ -3,862 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>robi-twice | Official Merch Store & Live Experience</title>
-    
+    <title>robi-twice | Official Merch & Live</title>
     <style>
-        /* --- GLOBAL RESET & BASE --- */
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            scroll-behavior: smooth;
-        }
-
+        /* --- DESIGN & BACKGROUND --- */
         body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            background-color: #050505; 
-            color: #ffffff; 
-            overflow-x: hidden;
-            line-height: 1.6;
-            background-image: url('logo.png'); 
-            background-repeat: repeat; 
-            background-position: center; 
-            background-size: 180px; 
-            background-attachment: fixed;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            margin: 0; background-color: #000; color: #fff; overflow-x: hidden;
+            background-image: url('logo.png'); background-repeat: repeat; 
+            background-position: center; background-size: 160px; background-attachment: fixed;
         }
-
-        /* Dark Glassmorphism Overlay */
         body::before {
-            content: ""; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.98) 100%);
-            z-index: -1;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.92); z-index: -1;
         }
 
-        /* --- SCROLLBAR CUSTOMIZATION --- */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #5c8d67; border-radius: 5px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4a7354; }
-
-        /* --- NAVIGATION BEREICH --- */
+        /* --- NAVIGATION --- */
         header { 
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 25px 8%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 9999; 
-            border-bottom: 2px solid #5c8d67;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            background-color: #111; padding: 15px 5%; display: flex; 
+            justify-content: space-between; align-items: center; 
+            position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid #5c8d67;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
         }
-
-        .header-left, .header-right {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .logo-nav { 
-            font-size: 36px; 
-            font-weight: 900; 
-            cursor: pointer; 
-            text-shadow: 0 0 20px rgba(92, 141, 103, 0.8); 
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #fff;
-            transition: 0.5s;
-        }
-        
-        .logo-nav:hover {
-            transform: scale(1.05);
-            text-shadow: 0 0 35px rgba(92, 141, 103, 1);
-        }
-
         .nav-btn { 
-            background: linear-gradient(145deg, #1a1a1a, #222);
-            color: #eee; 
-            padding: 14px 28px; 
-            border: 1px solid #333; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-weight: 700; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background-color: #2a2a2a; color: white; padding: 10px 20px; 
+            border: 1px solid #444; border-radius: 8px; cursor: pointer; 
+            font-weight: bold; transition: 0.3s; font-size: 14px;
         }
+        .nav-btn:hover { background-color: #5c8d67; border-color: #fff; transform: translateY(-2px); }
+        .logo-nav { 
+            font-size: 28px; font-weight: bold; cursor: pointer; 
+            position: absolute; left: 50%; transform: translateX(-50%);
+            text-shadow: 0 0 15px #5c8d67; letter-spacing: 2px;
+        }
+
+        /* --- VIDEO AREA --- */
+        .video-wrapper { 
+            display: flex; justify-content: center; align-items: center; 
+            gap: 25px; max-width: 1400px; margin: 40px auto; flex-wrap: wrap; padding: 0 20px;
+        }
+        .side-vid { 
+            flex: 1; min-width: 300px; max-width: 380px; aspect-ratio: 16/9; 
+            background: #111; border: 2px solid #333; border-radius: 12px; overflow: hidden;
+        }
+        .main-stream { 
+            flex: 2; min-width: 350px; max-width: 850px; aspect-ratio: 16/9; 
+            border: 3px solid #5c8d67; border-radius: 15px; overflow: hidden; 
+            position: relative; animation: glow-pulse 2s infinite alternate;
+        }
+        @keyframes glow-pulse { from { box-shadow: 0 0 10px rgba(92, 141, 103, 0.2); } to { box-shadow: 0 0 35px rgba(92, 141, 103, 0.7); } }
         
-        .nav-btn:hover { 
-            background: #5c8d67; 
-            color: #fff;
-            border-color: #fff; 
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(92, 141, 103, 0.5);
+        #offline-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #000; z-index: 10; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center;
         }
+        .neon-msg { color: #fff; text-shadow: 0 0 10px #5c8d67, 0 0 30px #5c8d67; font-size: 2.2rem; font-weight: bold; }
 
-        .cart-badge {
-            background: #ff4444;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 50%;
-            font-size: 12px;
-            margin-left: 5px;
-            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
-        }
+        /* --- SHOP SECTIONS --- */
+        .page-section { display: none; padding: 60px 5%; animation: fadeIn 0.5s ease; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- VIDEO & STREAM LAYOUT --- */
-        .hero-video-section {
-            padding: 60px 5%;
-            text-align: center;
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        .product-card { 
+            background: rgba(25, 25, 25, 0.95); border: 1px solid #333; 
+            border-radius: 20px; overflow: hidden; transition: 0.3s;
+            text-align: center; padding-bottom: 20px;
         }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            color: #5c8d67;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 800;
-        }
-
-        .video-container-main { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            gap: 35px; 
-            max-width: 1600px; 
-            margin: 0 auto; 
-            flex-wrap: wrap; 
-        }
+        .img-box { width: 100%; height: 350px; background: #fff; display: flex; justify-content: center; align-items: center; }
+        .img-box img { max-width: 85%; max-height: 85%; object-fit: contain; }
         
-        .side-video-box { 
-            flex: 1; 
-            min-width: 320px; 
-            max-width: 420px; 
-            aspect-ratio: 16/9; 
-            background: #000; 
-            border: 2px solid #1a1a1a; 
-            border-radius: 20px; 
-            overflow: hidden;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.6);
-            transition: 0.4s;
-        }
+        .product-price { font-size: 22px; color: #5c8d67; font-weight: bold; margin: 10px 0; display: block; }
+        input, textarea, select { width: 90%; padding: 12px; margin: 10px 0; background: #0b0b0b; color: #fff; border: 1px solid #444; border-radius: 8px; box-sizing: border-box; }
+        .action-btn { width: 90%; padding: 15px; background: #5c8d67; color: #fff; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; }
 
-        .side-video-box:hover {
-            border-color: #333;
-            transform: scale(1.02);
-        }
-        
-        .main-live-box { 
-            flex: 2; 
-            min-width: 400px; 
-            max-width: 950px; 
-            aspect-ratio: 16/9; 
-            border: 4px solid #5c8d67; 
-            border-radius: 25px; 
-            overflow: hidden; 
-            position: relative; 
-            animation: pulse-border 4s infinite;
-            background: #000;
-        }
+        .delete-btn { color: #ff4444; cursor: pointer; font-size: 0.8rem; text-decoration: underline; margin-left: 15px; }
 
-        @keyframes pulse-border { 
-            0% { box-shadow: 0 0 15px rgba(92, 141, 103, 0.4); } 
-            50% { box-shadow: 0 0 50px rgba(92, 141, 103, 0.9); } 
-            100% { box-shadow: 0 0 15px rgba(92, 141, 103, 0.4); } 
-        }
-        
-        .offline-message {
-            position: absolute; 
-            top: 0; left: 0; width: 100%; height: 100%; 
-            background: linear-gradient(45deg, #000, #0a0a0a); 
-            z-index: 10; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center;
-        }
-        
-        .neon-text { 
-            color: #fff; 
-            text-shadow: 0 0 10px #5c8d67, 0 0 20px #5c8d67, 0 0 40px #5c8d67; 
-            font-size: 3rem; 
-            font-weight: 900; 
-            text-transform: uppercase;
-        }
-
-        /* --- SHOP SEKTION --- */
-        .shop-container { 
-            display: none; 
-            padding: 100px 8%; 
-            animation: slideUp 0.7s cubic-bezier(0.23, 1, 0.32, 1); 
-        }
-        
-        .active-section { display: block; }
-
-        @keyframes slideUp { 
-            from { opacity: 0; transform: translateY(50px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        .product-flex-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); 
-            gap: 60px; 
-            max-width: 1500px;
-            margin: auto;
-        }
-        
-        .item-card { 
-            background: rgba(20, 20, 20, 0.9); 
-            border: 1px solid #222; 
-            border-radius: 30px; 
-            overflow: hidden; 
-            transition: 0.5s;
-            text-align: center; 
-            padding-bottom: 30px;
-            position: relative;
-        }
-        
-        .item-card:hover { 
-            transform: translateY(-15px); 
-            border-color: #5c8d67; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-        
-        .product-image-holder { 
-            width: 100%; 
-            height: 400px; 
-            background: #ffffff; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 30px;
-        }
-        
-        .product-image-holder img { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain; 
-            transition: 0.5s;
-        }
-        
-        .item-card:hover .product-image-holder img {
-            transform: scale(1.1);
-        }
-
-        .price-tag { 
-            font-size: 28px; 
-            color: #5c8d67; 
-            font-weight: 800; 
-            margin: 20px 0; 
-            display: block; 
-        }
-
-        /* --- FORMULAR & CHECKOUT --- */
-        .master-form-box {
-            max-width: 850px; 
-            margin: 0 auto; 
-            background: #0a0a0a; 
-            padding: 50px; 
-            border-radius: 30px; 
-            border: 2px solid #5c8d67;
-            position: relative;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
-        }
-        
-        .form-row-split { 
-            display: flex; 
-            gap: 25px; 
-            margin-bottom: 20px; 
-        }
-        
-        .input-wrapper { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            text-align: left; 
-        }
-        
-        .field-label { 
-            font-size: 12px; 
-            color: #5c8d67; 
-            margin-bottom: 8px; 
-            margin-left: 10px; 
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1.5px;
-        }
-
-        .standard-input, .standard-textarea, .standard-select { 
-            width: 100%; 
-            padding: 16px 20px; 
-            background: #000; 
-            color: #fff; 
-            border: 1px solid #222; 
-            border-radius: 15px; 
-            font-size: 16px;
-            transition: 0.4s;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-        }
-        
-        .standard-input:focus, .standard-select:focus { 
-            border-color: #5c8d67; 
-            background: #050505; 
-            outline: none; 
-            box-shadow: 0 0 15px rgba(92, 141, 103, 0.3);
-        }
-        
-        .order-btn { 
-            width: 100%; 
-            padding: 22px; 
-            background: linear-gradient(90deg, #5c8d67, #4a7354);
-            color: #fff; 
-            border: none; 
-            border-radius: 50px; 
-            cursor: pointer; 
-            font-weight: 900; 
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: 0.4s;
-            margin-top: 30px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-        
-        .order-btn:hover { 
-            transform: scale(1.02) translateY(-3px); 
-            box-shadow: 0 15px 30px rgba(92, 141, 103, 0.4);
-        }
-
-        .cart-item-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: rgba(255,255,255,0.03);
-            margin-bottom: 15px;
-            border-radius: 15px;
-            border: 1px solid #1a1a1a;
-        }
-
-        .remove-icon { 
-            color: #ff4444; 
-            cursor: pointer; 
-            border: 1px solid #ff4444; 
-            padding: 5px 12px; 
-            border-radius: 8px; 
-            font-size: 12px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .remove-icon:hover {
-            background: #ff4444;
-            color: #fff;
-        }
-
-        /* --- FOOTER & MISC --- */
-        footer { 
-            text-align: center; 
-            padding: 80px 5%; 
-            color: #444; 
-            background: #030303;
-            border-top: 1px solid #111; 
-            margin-top: 100px;
-        }
-
-        .payment-icons {
-            margin: 20px 0;
-            opacity: 0.6;
-            font-size: 24px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .support-info {
-            background: rgba(92, 141, 103, 0.1);
-            border: 1px dashed #5c8d67;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        /* --- MOBILE OPTIMIZATION --- */
-        @media (max-width: 768px) {
-            header { padding: 15px 4%; flex-direction: column; gap: 15px; }
-            .logo-nav { position: static; transform: none; margin: 10px 0; }
-            .form-row-split { flex-direction: column; gap: 15px; }
-            .hero-video-section { padding: 30px 3%; }
-            .neon-text { font-size: 1.8rem; }
-        }
+        iframe { width: 100%; height: 100%; border: none; }
+        footer { text-align: center; padding: 50px; color: #555; border-top: 1px solid #1a1a1a; margin-top: 50px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-left">
-            <button class="nav-btn" onclick="navigationHandler('home_section')">🎥 Live</button>
-            <button class="nav-btn" onclick="navigationHandler('shop_section')">👕 Shop</button>
+        <div>
+            <button class="nav-btn" onclick="showSection('home')">LIVE & VIDEOS</button>
+            <button class="nav-btn" onclick="showSection('shop')">MERCH SHOP</button>
         </div>
-        
-        <div class="logo-nav" onclick="navigationHandler('home_section')">robi-twice</div>
-        
-        <div class="header-right">
-            <button class="nav-btn" onclick="navigationHandler('support_section')">📬 Support</button>
-            <button class="nav-btn" onclick="navigationHandler('cart_section')">
-                🛒 Warenkorb <span id="cart_badge_id" class="cart-badge">0</span>
-            </button>
+        <div class="logo-nav" onclick="showSection('home')">robi-twice</div>
+        <div>
+            <button class="nav-btn" onclick="showSection('support')">SUPPORT</button>
+            <button class="nav-btn" onclick="showSection('cart')">🛒 WARENKORB (<span id="cart-count">0</span>)</button>
         </div>
     </header>
 
-    <section id="home_section" class="shop-container active-section">
-        <h2 class="section-title">Latest Media & Live Stream</h2>
-        
-        <div class="video-container-main">
-            <div class="side-video-box" id="left_vid_slot">
-                </div>
-            
-            <div class="main-live-box">
-                <iframe id="main_yt_player" src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ" allowfullscreen></iframe>
-                
-                <div id="live_status_overlay" class="offline-message">
-                    <div class="neon-text">Offline</div>
-                    <p style="color: #555; margin-top: 15px; font-weight: bold; letter-spacing: 2px;">
-                        ABONNIERE DEN KANAL FÜR BENACHRICHTIGUNGEN
-                    </p>
+    <section id="home" class="page-section active">
+        <h2 style="text-align: center; color: #5c8d67;">AKTUELLE VIDEOS & LIVE</h2>
+        <div class="video-wrapper">
+            <div class="side-vid" id="vid-left"></div>
+            <div class="main-stream">
+                <iframe id="live-iframe" src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ" allowfullscreen></iframe>
+                <div id="offline-overlay">
+                    <div class="neon-msg">Offline</div>
                 </div>
             </div>
-
-            <div class="side-video-box" id="right_vid_slot">
-                </div>
+            <div class="side-vid" id="vid-right"></div>
         </div>
     </section>
 
-    <section id="shop_section" class="shop-container">
-        <h1 class="section-title">Merchandise Kollektion</h1>
-        
-        <div class="product-flex-grid">
-            
-            <div class="item-card">
-                <div class="product-image-holder">
-                    <img src="tshirt.png" alt="T-Shirt" onerror="this.src='https://via.placeholder.com/400x400?text=Shirt+PNG+missing'">
-                </div>
-                <h3>SIGNATURE PREMIUM T-SHIRT</h3>
-                <p style="color: #666; padding: 0 20px;">Hochwertiger Print auf 100% Bio-Baumwolle.</p>
-                <span class="price-tag">29,90 €</span>
-                
-                <div style="padding: 0 30px;">
-                    <label class="field-label">Wähle deine Größe</label>
-                    <select id="prod_size_1" class="standard-select" style="margin-bottom: 20px;">
-                        <option value="S">Small (S)</option>
-                        <option value="M" selected>Medium (M)</option>
-                        <option value="L">Large (L)</option>
-                        <option value="XL">X-Large (XL)</option>
-                    </select>
-                    <button class="order-btn" onclick="logic_addToCart('Signature Shirt', 29.90, 'prod_size_1')">In den Warenkorb</button>
-                </div>
+    <section id="shop" class="page-section">
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="img-box"><img src="tshirt.png" alt="Shirt"></div>
+                <h3>Signature T-Shirt</h3>
+                <span class="product-price">29,90 €</span>
+                <select id="size1"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+                <button class="action-btn" onclick="addToCart('Signature Shirt', 29.90, 'size1')">In den Warenkorb</button>
             </div>
-
-            <div class="item-card">
-                <div class="product-image-holder">
-                    <img src="hoodie.png" alt="Hoodie" onerror="this.src='https://via.placeholder.com/400x400?text=Hoodie+missing'">
-                </div>
-                <h3>OVERSIZE COZY HOODIE</h3>
-                <p style="color: #666; padding: 0 20px;">Perfekt für lange Gaming-Nächte.</p>
-                <span class="price-tag">49,90 €</span>
-                
-                <div style="padding: 0 30px;">
-                    <label class="field-label">Wähle deine Größe</label>
-                    <select id="prod_size_2" class="standard-select" style="margin-bottom: 20px;">
-                        <option value="M">Medium (M)</option>
-                        <option value="L" selected>Large (L)</option>
-                        <option value="XL">X-Large (XL)</option>
-                    </select>
-                    <button class="order-btn" onclick="logic_addToCart('Cozy Hoodie', 49.90, 'prod_size_2')">In den Warenkorb</button>
-                </div>
+            <div class="product-card">
+                <div class="img-box"><img src="hoodie.png" alt="Hoodie"></div>
+                <h3>robi-twice Hoodie</h3>
+                <span class="product-price">49,90 €</span>
+                <select id="size2"><option>M</option><option>L</option><option>XL</option></select>
+                <button class="action-btn" onclick="addToCart('Hoodie', 49.90, 'size2')">In den Warenkorb</button>
             </div>
-
-            <div class="item-card">
-                <div class="product-image-holder">
-                    <img src="muetze.png" alt="Beanie" onerror="this.src='https://via.placeholder.com/400x400?text=Beanie+missing'">
-                </div>
-                <h3>STREETSTYLE BEANIE</h3>
-                <span class="price-tag">19,90 €</span>
-                
-                <div style="padding: 0 30px;">
-                    <label class="field-label">Größe</label>
-                    <select id="prod_size_3" class="standard-select" style="margin-bottom: 20px;">
-                        <option value="One-Size">Einheitsgröße</option>
-                    </select>
-                    <button class="order-btn" onclick="logic_addToCart('Logo Beanie', 19.90, 'prod_size_3')">In den Warenkorb</button>
-                </div>
+            <div class="product-card">
+                <div class="img-box"><img src="muetze.png" alt="Beanie"></div>
+                <h3>Logo Beanie</h3>
+                <span class="product-price">19,90 €</span>
+                <select id="size3"><option>Einheitsgröße</option></select>
+                <button class="action-btn" onclick="addToCart('Beanie', 19.90, 'size3')">In den Warenkorb</button>
             </div>
-
         </div>
     </section>
 
-    <section id="support_section" class="shop-container">
-        <div class="master-form-box" style="max-width: 650px;">
-            <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 20px;">Kontaktiere Uns</h2>
-            <p style="text-align: center; margin-bottom: 40px; color: #888;">Hast du Fragen zu deiner Bestellung? Unser Team antwortet innerhalb von 24 Stunden.</p>
-            
-            <form id="contact_form_id">
-                <div class="input-wrapper">
-                    <label class="field-label">Deine E-Mail Adresse</label>
-                    <input type="email" name="email" class="standard-input" placeholder="max@mustermann.de" required>
-                </div>
-                
-                <div class="input-wrapper" style="margin-top: 25px;">
-                    <label class="field-label">Betreff (optional)</label>
-                    <input type="text" name="subject" class="standard-input" placeholder="Frage zu Produkt X">
-                </div>
-
-                <div class="input-wrapper" style="margin-top: 25px;">
-                    <label class="field-label">Deine Nachricht</label>
-                    <textarea name="message" class="standard-textarea" rows="6" placeholder="Schreib uns dein Anliegen..." required></textarea>
-                </div>
-                
-                <button type="submit" id="support_submit_btn" class="order-btn">Anfrage absenden</button>
+    <section id="support" class="page-section">
+        <div style="max-width: 500px; margin: auto; background: rgba(20,20,20,0.9); padding: 30px; border-radius: 15px; border: 1px solid #333;">
+            <h2 style="text-align:center;">SUPPORT</h2>
+            <form id="support-form">
+                <input type="email" name="email" placeholder="Deine E-Mail Adresse" required style="width:100%;">
+                <textarea name="message" rows="5" placeholder="Deine Nachricht an uns..." required style="width:100%;"></textarea>
+                <button type="submit" id="support-btn" class="action-btn" style="width:100%;">NACHRICHT ABSENDEN</button>
             </form>
-            <div id="support_feedback" style="display:none; margin-top:20px; color:#5c8d67; font-weight:bold; text-align:center;"></div>
+            <p id="support-status" style="text-align:center; margin-top:15px; display:none; color:#5c8d67; font-weight:bold;"></p>
         </div>
     </section>
 
-    <section id="cart_section" class="shop-container">
-        <div class="master-form-box">
-            <h2 style="text-align: left; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 15px;">
-                Einkaufstasche
-            </h2>
-            
-            <div id="cart_items_list" style="margin-bottom: 40px;">
-                </div>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 25px; background: #000; border-radius: 20px; border: 1px solid #222;">
-                <span style="font-size: 20px; color: #888;">Gesamtsumme (inkl. MwSt):</span>
-                <h2 id="final_total_price" style="margin: 0; color: #5c8d67; font-size: 32px;">0,00 €</h2>
-            </div>
+    <section id="cart" class="page-section">
+        <div style="max-width: 700px; margin: auto; background: rgba(20,20,20,0.95); padding: 35px; border-radius: 20px; border: 2px solid #5c8d67;">
+            <h2>DEIN WARENKORB</h2>
+            <div id="cart-list-items" style="margin: 20px 0;">Der Warenkorb ist noch leer.</div>
+            <h3 id="total-sum-display" style="text-align: right; color: #5c8d67;">Gesamt: 0,00 €</h3>
 
-            <div id="checkout_address_area" style="display:none; margin-top:60px; border-top: 1px solid #222; padding-top: 40px;">
-                <h3 style="color: #5c8d67; text-transform: uppercase; margin-bottom: 30px; letter-spacing: 2px;">
-                    Lieferdetails & Bezahlung
-                </h3>
-                
-                <form id="main_order_form">
-                    <div class="form-row-split">
-                        <div class="input-wrapper">
-                            <label class="field-label">Vorname*</label>
-                            <input type="text" name="first_name" class="standard-input" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <label class="field-label">Nachname*</label>
-                            <input type="text" name="last_name" class="standard-input" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row-split">
-                        <div class="input-wrapper" style="flex: 3;">
-                            <label class="field-label">Straße*</label>
-                            <input type="text" name="street_name" class="standard-input" required>
-                        </div>
-                        <div class="input-wrapper" style="flex: 1;">
-                            <label class="field-label">Hausnr.*</label>
-                            <input type="text" name="house_no" class="standard-input" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row-split">
-                        <div class="input-wrapper">
-                            <label class="field-label">Postleitzahl*</label>
-                            <input type="text" name="zip_code" class="standard-input" required>
-                        </div>
-                        <div class="input-wrapper">
-                            <label class="field-label">Stadt / Ort*</label>
-                            <input type="text" name="city_name" class="standard-input" required>
-                        </div>
-                    </div>
-
-                    <div class="input-wrapper">
-                        <label class="field-label">E-Mail für Bestätigung*</label>
-                        <input type="email" name="customer_mail" class="standard-input" required>
-                    </div>
-
-                    <div class="support-info">
-                        <strong>Hinweis zur Zahlung:</strong> Im nächsten Schritt wirst du zu unserem Zahlungsdienstleister weitergeleitet. Dort kannst du bequem per <b>Kreditkarte, Lastschrift oder PayPal</b> bezahlen.
-                    </div>
-
-                    <input type="hidden" name="full_order_summary" id="hidden_summary_field">
-                    <button type="submit" id="checkout_final_btn" class="order-btn">Bestellung zahlungspflichtig abschließen</button>
+            <div id="address-section" style="display:none; margin-top:30px; border-top:1px solid #333; padding-top:20px;">
+                <h3 style="margin-bottom: 20px;">LIEFERADRESSE</h3>
+                <form id="final-order-form">
+                    <input type="text" name="First_Name" placeholder="Vorname" required style="width:48%; margin-right:2%;">
+                    <input type="text" name="Last_Name" placeholder="Nachname" required style="width:48%;">
+                    <input type="text" name="Street_Address" placeholder="Straße" required style="width:70%; margin-right:2%;">
+                    <input type="text" name="House_Number" placeholder="Nr." required style="width:26%;">
+                    <input type="text" name="Zip_Code" placeholder="PLZ" required style="width:30%; margin-right:2%;">
+                    <input type="text" name="City" placeholder="Stadt" required style="width:66%;">
+                    <input type="email" name="Customer_Email" placeholder="E-Mail für Bestätigung" required style="width:100%;">
+                    
+                    <input type="hidden" name="Items_Ordered" id="hidden-items-list">
+                    <p style="font-size: 13px; color: #888; margin-top: 15px;">Du kannst im nächsten Schritt mit <b>Kreditkarte, Lastschrift</b> oder PayPal bezahlen.</p>
+                    <button type="submit" id="submit-order-btn" class="action-btn" style="margin-top:20px;">JETZT ZAHLEN</button>
                 </form>
             </div>
-            
-            <button id="show_checkout_btn" class="order-btn" style="background: #222; margin-top:30px;" onclick="logic_openCheckout()">Weiter zur Kasse</button>
+            <button id="show-address-btn" class="action-btn" style="margin-top:20px; width:100%;" onclick="openAddressForm()">ZUR KASSE GEHEN</button>
         </div>
     </section>
 
-    <footer>
-        <div class="logo-nav" style="position: static; transform: none; margin-bottom: 20px;">robi-twice</div>
-        <p>Offizieller Partner für Content-Creator Merch.</p>
-        <div class="payment-icons">
-            <span>💳</span> <span>🅿️</span> <span>🏦</span> <span>💶</span>
-        </div>
-        <p style="font-size: 11px; margin-top: 30px;">
-            &copy; 2026 robi-twice Official. Impressum | Datenschutz | Widerrufsrecht
-        </p>
-    </footer>
+    <footer>&copy; 2026 robi-twice Official.</footer>
 
     <script>
-        // --- GLOBALER SPEICHER ---
-        let GLOBAL_CART = [];
-        const MY_CHANNEL_ID = "UCu1ZS9PqAJDStOS5EJiycEQ"; // Deine Kanal ID
+        let cart = [];
 
-        /**
-         * Schaltet zwischen den Sektionen hin und her
-         */
-        function navigationHandler(targetId) {
-            console.log("Navigiere zu: " + targetId);
-            
-            const allSections = document.querySelectorAll('.shop-container');
-            allSections.forEach(sec => {
-                sec.classList.remove('active-section');
-            });
-            
-            const target = document.getElementById(targetId);
-            target.classList.add('active-section');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
         }
 
-        /**
-         * YouTube Initialisierung & Live-Check
-         */
-        async function initYouTubeEnvironment() {
-            console.log("Initialisiere YouTube Umgebung...");
+        async function loadYT() {
+            // Feste Video-IDs für die Seitenboxen
+            const idLeft = "5Mf7S0pDyP0"; 
+            const idRight = "vvj64ZskM9Y"; 
             
-            // 1. Setze Video-Vorschauen (Beispiel-Videos)
-            const vidLeft = "5Mf7S0pDyP0"; 
-            const vidRight = "vvj64ZskM9Y"; 
-            
-            document.getElementById('left_vid_slot').innerHTML = `<iframe src="https://www.youtube.com/embed/${vidLeft}" title="YouTube video player"></iframe>`;
-            document.getElementById('right_vid_slot').innerHTML = `<iframe src="https://www.youtube.com/embed/${vidRight}" title="YouTube video player"></iframe>`;
+            document.getElementById('vid-left').innerHTML = `<iframe src="https://www.youtube.com/embed/${idLeft}" allowfullscreen></iframe>`;
+            document.getElementById('vid-right').innerHTML = `<iframe src="https://www.youtube.com/embed/${idRight}" allowfullscreen></iframe>`;
 
-            // 2. Prüfe ob Kanal Live ist (RSS Feed Technik)
-            const checkUrl = `https://api.allorigins.win/get?url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + MY_CHANNEL_ID)}`;
+            // HIER IST DEINE KANAL ID EINGEBAUT (2/2)
+            const channelId = "UCu1ZS9PqAJDStOS5EJiycEQ";
+            const api = `https://api.allorigins.win/get?url=${encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId)}`;
             
             try {
-                const response = await fetch(checkUrl);
+                const response = await fetch(api);
                 const data = await response.json();
                 const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(data.contents, "text/xml");
-                const entries = xmlDoc.getElementsByTagName("entry");
+                const xml = parser.parseFromString(data.contents, "text/xml");
+                const entries = xml.getElementsByTagName("entry");
                 
                 if(entries.length > 0) {
                     const latestTitle = entries[0].getElementsByTagName("title")[0].textContent.toLowerCase();
-                    // Wenn "Live" im Titel steht oder ein Stream aktiv ist
                     const isStreaming = latestTitle.includes("live") || latestTitle.includes("stream");
-                    
-                    if(isStreaming) {
-                        document.getElementById('live_status_overlay').style.display = 'none';
-                        console.log("Status: Kanal ist LIVE");
-                    } else {
-                        document.getElementById('live_status_overlay').style.display = 'flex';
-                        console.log("Status: Kanal ist Offline");
-                    }
+                    document.getElementById('offline-overlay').style.display = isStreaming ? 'none' : 'flex';
                 }
-            } catch (err) {
-                console.error("YouTube-Check Fehler:", err);
-                document.getElementById('live_status_overlay').style.display = 'flex';
+            } catch(e) { 
+                document.getElementById('offline-overlay').style.display = 'flex'; 
             }
         }
 
-        /**
-         * Warenkorb Logik
-         */
-        function logic_addToCart(productName, price, sizeSelectId) {
-            const sizeValue = document.getElementById(sizeSelectId).value;
-            
-            const newItem = {
-                id: Date.now(),
-                name: productName,
-                price: price,
-                size: sizeValue
-            };
-            
-            GLOBAL_CART.push(newItem);
-            logic_renderCart();
-            
-            // Kleiner Button-Effekt
-            const btn = event.target;
-            const originalText = btn.innerText;
-            btn.innerText = "✓ Erfolgreich hinzugefügt";
-            btn.style.background = "#fff";
-            btn.style.color = "#000";
-            
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.background = "linear-gradient(90deg, #5c8d67, #4a7354)";
-                btn.style.color = "#fff";
-            }, 1500);
+        function addToCart(name, price, sizeId) {
+            const sizeValue = document.getElementById(sizeId).value;
+            cart.push({name, price, size: sizeValue});
+            updateCartDisplay();
         }
 
-        function logic_removeItem(id) {
-            GLOBAL_CART = GLOBAL_CART.filter(item => item.id !== id);
-            logic_renderCart();
-            
-            if(GLOBAL_CART.length === 0) {
-                document.getElementById('checkout_address_area').style.display = 'none';
-                document.getElementById('show_checkout_btn').style.display = 'block';
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+            if(cart.length === 0) {
+                document.getElementById('address-section').style.display = 'none';
+                document.getElementById('show-address-btn').style.display = 'block';
             }
         }
 
-        function logic_renderCart() {
-            const listContainer = document.getElementById('cart_items_list');
-            const badge = document.getElementById('cart_badge_id');
-            const totalDisplay = document.getElementById('final_total_price');
-            
-            badge.innerText = GLOBAL_CART.length;
-            
-            if(GLOBAL_CART.length === 0) {
-                listContainer.innerHTML = "<p style='text-align:center; padding: 40px; color:#555;'>Dein Warenkorb ist noch leer. Entdecke unsere Kollektion!</p>";
-                totalDisplay.innerText = "0,00 €";
-                return;
+        function updateCartDisplay() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-list-items');
+            let sum = 0;
+            if(cart.length === 0) container.innerHTML = "Warenkorb leer.";
+            else {
+                container.innerHTML = cart.map((item, i) => {
+                    sum += item.price;
+                    return `<div style="padding:10px 0; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center;">
+                        <span>${item.name} (${item.size}) - ${item.price.toFixed(2)} €</span>
+                        <span class="delete-btn" onclick="removeFromCart(${i})">X</span>
+                    </div>`;
+                }).join('');
             }
-            
-            let htmlContent = "";
-            let currentTotal = 0;
-            
-            GLOBAL_CART.forEach(item => {
-                currentTotal += item.price;
-                htmlContent += `
-                    <div class="cart-item-row">
-                        <div>
-                            <strong style="font-size: 18px;">${item.name}</strong><br>
-                            <span style="color:#5c8d67; font-size:14px;">Größe: ${item.size}</span>
-                        </div>
-                        <div style="display:flex; align-items:center; gap:20px;">
-                            <span style="font-weight:bold; font-size:18px;">${item.price.toFixed(2)} €</span>
-                            <span class="remove-icon" onclick="logic_removeItem(${item.id})">Löschen</span>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            listContainer.innerHTML = htmlContent;
-            totalDisplay.innerText = currentTotal.toFixed(2).replace('.', ',') + " €";
+            document.getElementById('total-sum-display').innerText = `Gesamt: ${sum.toFixed(2)} €`;
         }
 
-        function logic_openCheckout() {
-            if(GLOBAL_CART.length === 0) {
-                alert("Dein Warenkorb ist leer!");
-                return;
-            }
-            document.getElementById('checkout_address_area').style.display = 'block';
-            document.getElementById('show_checkout_btn').style.display = 'none';
-            
-            // Smooth Scroll zum Formular
-            document.getElementById('checkout_address_area').scrollIntoView({ behavior: 'smooth' });
+        function openAddressForm() {
+            if(cart.length === 0) return alert("Warenkorb leer!");
+            document.getElementById('address-section').style.display = 'block';
+            document.getElementById('show-address-btn').style.display = 'none';
         }
 
-        /**
-         * Formular Übermittlung (Support)
-         */
-        document.getElementById('contact_form_id').addEventListener('submit', async function(e) {
+        document.getElementById('support-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const btn = document.getElementById('support_submit_btn');
-            const feedback = document.getElementById('support_feedback');
-            
-            btn.innerText = "Wird gesendet...";
-            btn.disabled = true;
-            
-            try {
-                const response = await fetch("https://formspree.io/f/xlgpdoak", {
-                    method: "POST",
-                    body: new FormData(this),
-                    headers: { 'Accept': 'application/json' }
-                });
-                
-                if(response.ok) {
-                    feedback.innerText = "Nachricht erfolgreich übermittelt. Wir melden uns!";
-                    feedback.style.display = "block";
-                    this.reset();
-                } else {
-                    throw new Error();
-                }
-            } catch (err) {
-                alert("Fehler beim Senden. Bitte versuche es später erneut.");
-            } finally {
-                btn.innerText = "Anfrage absenden";
-                btn.disabled = false;
+            const btn = document.getElementById('support-btn');
+            btn.innerText = "Sende...";
+            const res = await fetch("https://formspree.io/f/xlgpdoak", { method: "POST", body: new FormData(this), headers: { 'Accept': 'application/json' } });
+            if (res.ok) {
+                document.getElementById('support-status').innerText = "Gesendet!";
+                document.getElementById('support-status').style.display = "block";
+                this.reset(); btn.innerText = "NACHRICHT ABSENDEN";
             }
         });
 
-        /**
-         * Formular Übermittlung (Bestellung)
-         */
-        document.getElementById('main_order_form').addEventListener('submit', async function(e) {
+        document.getElementById('final-order-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const finalBtn = document.getElementById('checkout_final_btn');
-            finalBtn.innerText = "Daten werden verschlüsselt...";
-            finalBtn.disabled = true;
-            
-            // Zusammenfassung für Formspree & PayPal erstellen
-            const summaryString = GLOBAL_CART.map(i => `${i.name} (${i.size})`).join(' | ');
-            document.getElementById('hidden_summary_field').value = summaryString;
-            
-            const totalAmount = GLOBAL_CART.reduce((sum, item) => sum + item.price, 0).toFixed(2);
-            
-            try {
-                // 1. Sende die Adressdaten an dich via Formspree
-                const response = await fetch("https://formspree.io/f/xlgpdoak", {
-                    method: "POST",
-                    body: new FormData(this),
-                    headers: { 'Accept': 'application/json' }
-                });
-                
-                if(response.ok) {
-                    // 2. Wenn Adresse gespeichert wurde -> Weiterleitung zur PayPal Zahlung (Inkl. Kreditkarte)
-                    alert("Lieferadresse wurde erfolgreich hinterlegt. Du wirst nun zur sicheren Zahlung weitergeleitet.");
-                    
-                    const payPalMail = "bananielheinrich@gmail.com";
-                    const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${payPalMail}&amount=${totalAmount}&currency_code=EUR&item_name=robi-twice Merch Bestellung: ${summaryString}&no_shipping=1`;
-                    
-                    window.location.href = paypalUrl;
-                } else {
-                    alert("Ein Fehler ist aufgetreten. Bitte überprüfe deine Eingaben.");
-                }
-            } catch (err) {
-                alert("Verbindung zum Server fehlgeschlagen.");
-            } finally {
-                finalBtn.innerText = "Bestellung zahlungspflichtig abschließen";
-                finalBtn.disabled = false;
+            const btn = document.getElementById('submit-order-btn');
+            btn.innerText = "Sende Daten...";
+            const summary = cart.map(i => `${i.name} (${i.size})`).join(', ');
+            document.getElementById('hidden-items-list').value = summary;
+
+            const res = await fetch("https://formspree.io/f/xlgpdoak", { method: "POST", body: new FormData(this), headers: { 'Accept': 'application/json' } });
+            if (res.ok) {
+                const total = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
+                window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${total}&currency_code=EUR&item_name=Bestellung robi-twice: ${summary}`;
             }
         });
 
-        // --- STARTUP SEQUENZ ---
-        window.onload = () => {
-            console.log("System gestartet...");
-            initYouTubeEnvironment();
-            logic_renderCart();
-            
-            // Überprüfe URL Parameter für einfache Navigation
-            const urlParams = new URLSearchParams(window.location.search);
-            if(urlParams.has('shop')) navigationHandler('shop_section');
-        };
+        window.onload = loadYT;
     </script>
 </body>
 </html>
