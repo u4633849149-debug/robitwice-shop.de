@@ -3,139 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ROBI-TWICE | LIVE HUB 2026</title>
+    <title>ROBI-TWICE | OFFICIAL LIVE HUB</title>
 
     <style>
         :root {
-            --color-primary-green: #5c8d67;
-            --color-bg-base: #000000; 
-            --color-bg-card: #050505; 
-            --color-text-main: #ffffff;
-            --header-height: 100px;
-            --radius-lg: 30px;
-            --radius-md: 15px;
-            --anim-curve: cubic-bezier(0.23, 1, 0.32, 1);
+            --brand-green: #5c8d67;
+            --brand-green-glow: rgba(92, 141, 103, 0.4);
+            --bg-black: #000000;
+            --bg-dark-grey: #050505;
+            --text-white: #ffffff;
+            --radius-main: 30px;
+            --radius-sub: 15px;
+            --transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background-color: var(--color-bg-base);
-            color: var(--color-text-main);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
             background-image: url('logo.png');
             background-repeat: repeat;
-            background-size: 160px;
+            background-size: 150px;
             background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        .page-overlay {
+        /* Dark Shield - Sorgt dafür, dass der Hintergrund extrem dunkel bleibt */
+        .dark-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.94) 0%, rgba(0,0,0,1) 100%);
+            background: radial-gradient(circle at center, rgba(0,0,0,0.95) 0%, rgba(0,0,0,1) 100%);
             z-index: -1;
+            pointer-events: none;
         }
 
+        /* HEADER */
         header {
-            height: var(--header-height);
-            background: rgba(0, 0, 0, 0.95);
+            height: 100px;
+            background: rgba(0, 0, 0, 0.98);
             backdrop-filter: blur(20px);
-            position: sticky; top: 0; z-index: 1000;
-            border-bottom: 2px solid var(--color-primary-green);
-            display: flex; align-items: center; justify-content: space-between; padding: 0 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--brand-green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
         }
 
-        .brand-title { font-size: 32px; font-weight: 900; text-transform: uppercase; letter-spacing: 12px; cursor: pointer; flex: 1; text-align: center; }
+        .nav-left, .nav-right { display: flex; gap: 15px; flex: 1; }
+        .nav-right { justify-content: flex-end; }
 
-        .btn-action {
-            background: #0a0a0a; border: 1px solid #1a1a1a; color: white; padding: 12px 24px;
-            border-radius: 12px; font-weight: 800; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+        .brand-center { flex: 1; text-align: center; }
+        .brand-center h1 {
+            font-size: 32px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            cursor: pointer;
+            transition: var(--transition);
         }
-        .btn-action.active { background: var(--color-primary-green); border-color: white; }
+        .brand-center h1:hover { color: var(--brand-green); letter-spacing: 15px; }
 
-        .view-container { display: none; padding: 40px 5%; animation: fadeIn 0.6s var(--anim-curve); }
+        .nav-btn {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-        /* LIVE MATRIX */
-        .video-triple-grid {
+        .nav-btn.active, .nav-btn:hover {
+            background: var(--brand-green);
+            border-color: white;
+        }
+
+        /* VIEW SYSTEM */
+        .view-section { display: none; padding: 60px 5%; animation: viewFade 0.7s var(--transition); }
+
+        @keyframes viewFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* LIVESTREAM MATRIX */
+        .video-matrix {
             display: grid;
-            grid-template-columns: 1fr 3fr 1fr; /* Mitte extra breit für den Stream */
-            gap: 20px;
+            grid-template-columns: 1fr 2.5fr 1fr;
+            gap: 25px;
             max-width: 1800px;
             margin: 0 auto;
             align-items: center;
         }
 
-        .v-box {
+        .video-shell {
             aspect-ratio: 16/9;
-            background: black;
-            border-radius: var(--radius-md);
+            background: #000;
+            border-radius: var(--radius-sub);
             border: 1px solid #111;
             overflow: hidden;
-            transition: 0.5s;
+            opacity: 0.4;
+            transition: var(--transition);
         }
 
-        .v-box.main {
-            border: 3px solid var(--color-primary-green);
-            box-shadow: 0 0 60px rgba(92, 141, 103, 0.3);
-            border-radius: var(--radius-lg);
+        .video-shell.main {
+            opacity: 1;
+            border: 3px solid var(--brand-green);
+            border-radius: var(--radius-main);
+            box-shadow: 0 0 60px var(--brand-green-glow);
+            transform: scale(1.05);
         }
 
-        iframe { width: 100%; height: 100%; border: none; }
+        .video-shell:hover { opacity: 1; }
+        iframe { width: 100%; height: 100%; border: none; display: block; }
 
         /* TICKER */
-        .ticker-bar {
-            width: 100%; background: var(--color-primary-green); padding: 15px 0;
-            margin-top: 40px; overflow: hidden;
+        .ticker-wrap {
+            width: 100%;
+            background: var(--brand-green);
+            margin-top: 60px;
+            padding: 18px 0;
+            overflow: hidden;
         }
-        .ticker-text {
-            display: inline-block; font-weight: 900; text-transform: uppercase;
-            letter-spacing: 5px; animation: scroll 25s linear infinite;
+
+        .ticker-move {
+            display: inline-block;
+            white-space: nowrap;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            animation: tickerScroll 35s linear infinite;
         }
-        @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+
+        @keyframes tickerScroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
 
         /* STORE */
-        .product-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; max-width: 1400px; margin: 0 auto;
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
-        .product-card {
-            background: var(--color-bg-card); padding: 30px; border-radius: var(--radius-lg);
-            text-align: center; border: 1px solid #111;
-        }
-        .img-wrap { height: 300px; background: white; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; }
-        .img-wrap img { max-width: 80%; }
-        .price { font-size: 28px; color: var(--color-primary-green); font-weight: 900; margin: 15px 0; display: block; }
-        .btn-buy { width: 100%; padding: 15px; background: var(--color-primary-green); border: none; border-radius: 10px; color: white; font-weight: 900; cursor: pointer; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        @media (max-width: 1000px) {
-            .video-triple-grid { grid-template-columns: 1fr; }
-            .v-box:not(.main) { display: none; }
+        .item-card {
+            background: var(--bg-dark-grey);
+            border: 1px solid #111;
+            padding: 40px;
+            border-radius: var(--radius-main);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .item-card:hover {
+            border-color: var(--brand-green);
+            transform: translateY(-10px);
+        }
+
+        .item-img {
+            height: 350px;
+            background: #fff;
+            border-radius: var(--radius-sub);
+            margin-bottom: 25px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .item-img img { max-width: 80%; transition: 0.5s; }
+        .item-card:hover .item-img img { transform: scale(1.1); }
+
+        .item-price { font-size: 32px; color: var(--brand-green); font-weight: 900; margin: 20px 0; display: block; }
+
+        .buy-trigger {
+            width: 100%;
+            padding: 20px;
+            background: var(--brand-green);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 100px 5% 50px;
+            text-align: center;
+            border-top: 1px solid #111;
+            margin-top: 80px;
+        }
+
+        .footer-logo-bg {
+            font-size: 70px;
+            font-weight: 900;
+            color: #080808;
+            letter-spacing: 35px;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+
+        /* MOBILE FIX */
+        @media (max-width: 1100px) {
+            .video-matrix { grid-template-columns: 1fr; }
+            .video-shell:not(.main) { display: none; }
+            .video-shell.main { transform: scale(1); }
         }
     </style>
 </head>
-<body onload="engine.init()">
+<body onload="engine.boot()">
 
-    <div class="page-overlay"></div>
+    <div class="dark-overlay"></div>
 
     <header>
-        <div style="display: flex; gap: 15px;">
-            <button class="btn-action active" id="btn-home" onclick="engine.view('home')">Live</button>
-            <button class="btn-action" id="btn-shop" onclick="engine.view('shop')">Store</button>
+        <div class="nav-left">
+            <button class="nav-btn active" id="tab-home" onclick="engine.view('home')">Live</button>
+            <button class="nav-btn" id="tab-shop" onclick="engine.view('shop')">Store</button>
         </div>
-        <div class="brand-title" onclick="engine.view('home')">robi-twice</div>
-        <div style="display: flex; justify-content: flex-end;">
-            <button class="btn-action" id="btn-cart" onclick="engine.view('cart')">Cart (<span id="cart-count">0</span>)</button>
+
+        <div class="brand-center">
+            <h1 onclick="engine.view('home')">robi-twice</h1>
+        </div>
+
+        <div class="nav-right">
+            <button class="nav-btn" id="tab-cart" onclick="engine.view('cart')">Cart (<span id="count-ui">0</span>)</button>
         </div>
     </header>
 
-    <section id="view-home" class="view-container" style="display: block;">
-        <div class="video-triple-grid">
-            <div class="v-box">
-                <iframe src="https://www.youtube.com/embed?listType=user_uploads&user=UCu1ZS9PqAJDStOS5EJiycEQ&mute=1"></iframe>
+    <main id="view-home" class="view-section" style="display: block;">
+        <div class="video-matrix">
+            <div class="video-shell">
+                <iframe src="https://www.youtube.com/embed/5Mf7S0pDyP0?controls=0&mute=1&autoplay=1&loop=1"></iframe>
             </div>
 
-            <div class="v-box main">
+            <div class="video-shell main">
                 <iframe 
                     src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=0" 
                     allow="autoplay; encrypted-media" 
@@ -143,47 +255,98 @@
                 </iframe>
             </div>
 
-            <div class="v-box">
-                <iframe src="https://www.youtube.com/embed/5Mf7S0pDyP0?mute=1&loop=1"></iframe>
+            <div class="video-shell">
+                <iframe src="https://www.youtube.com/embed/vvj64ZskM9Y?controls=0&mute=1&autoplay=1&loop=1"></iframe>
             </div>
         </div>
 
-        <div class="ticker-bar">
-            <div class="ticker-text">+++ LIVE ON YOUTUBE +++ NEW MERCH DROP IN STORE +++ ROBI-TWICE OFFICIAL HUB 2026 +++</div>
+        <div class="ticker-wrap">
+            <div class="ticker-move">
+                +++ LIVE ON YOUTUBE NOW +++ CHECK THE NEW COLLECTION IN THE STORE +++ FREE WORLDWIDE SHIPPING ON ORDERS OVER 100€ +++ ROBI-TWICE 2026 +++
+            </div>
         </div>
-    </section>
+    </main>
 
-    <section id="view-shop" class="view-container">
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="img-wrap"><img src="tshirt.png" alt="Tee"></div>
+    <main id="view-shop" class="view-section">
+        <div class="store-grid">
+            <div class="item-card">
+                <div class="item-img"><img src="tshirt.png" alt="Shirt"></div>
                 <h3>Signature Tee</h3>
-                <span class="price">29,95 €</span>
-                <button class="btn-buy" onclick="engine.add('Signature Tee', 29.95)">Add to Cart</button>
+                <span class="item-price">29,95 €</span>
+                <button class="buy-trigger" onclick="engine.add('Signature Tee', 29.95)">Add to Cart</button>
             </div>
-            <div class="product-card">
-                <div class="img-wrap"><img src="hoodie.png" alt="Hoodie"></div>
+            <div class="item-card">
+                <div class="item-img"><img src="hoodie.png" alt="Hoodie"></div>
                 <h3>Legacy Hoodie</h3>
-                <span class="price">54,95 €</span>
-                <button class="btn-buy" onclick="engine.add('Legacy Hoodie', 54.95)">Add to Cart</button>
+                <span class="item-price">54,95 €</span>
+                <button class="buy-trigger" onclick="engine.add('Legacy Hoodie', 54.95)">Add to Cart</button>
             </div>
         </div>
-    </section>
+    </main>
+
+    <main id="view-cart" class="view-section">
+        <div style="max-width: 800px; margin: 0 auto; background: #050505; padding: 40px; border-radius: 20px; border: 1px solid #111;">
+            <h2 style="margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">Your Cart</h2>
+            <div id="cart-items-list"></div>
+            <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 24px; font-weight: 900;">Total:</span>
+                <span id="total-price-ui" style="font-size: 30px; font-weight: 900; color: var(--brand-green);">0,00 €</span>
+            </div>
+            <button class="buy-trigger" style="margin-top: 30px; background: white; color: black;" onclick="alert('Proceeding to Checkout...')">Checkout via PayPal</button>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo-bg">robi-twice</div>
+        <p style="color: #222; font-size: 11px; margin-top: 20px; letter-spacing: 3px;">&copy; 2026 ROBI-TWICE OFFICIAL HUB. ALL RIGHTS RESERVED.</p>
+    </footer>
 
     <script>
         const engine = {
-            cart: [],
-            init: () => console.log("Engine Ready"),
+            state: { cart: [] },
+
+            boot: () => console.log("ROBI-TWICE Hub Online"),
+
             view: (id) => {
-                document.querySelectorAll('.view-container').forEach(v => v.style.display = 'none');
-                document.querySelectorAll('.btn-action').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.view-section').forEach(v => v.style.display = 'none');
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 document.getElementById('view-' + id).style.display = 'block';
-                if(document.getElementById('btn-' + id)) document.getElementById('btn-' + id).classList.add('active');
+                if(document.getElementById('tab-' + id)) document.getElementById('tab-' + id).classList.add('active');
+                window.scrollTo(0,0);
             },
+
             add: (name, price) => {
-                engine.cart.push({name, price});
-                document.getElementById('cart-count').innerText = engine.cart.length;
-                alert(name + " im Warenkorb!");
+                engine.state.cart.push({ name, price, id: Date.now() });
+                engine.sync();
+                alert(name + " added!");
+            },
+
+            remove: (id) => {
+                engine.state.cart = engine.state.cart.filter(i => i.id !== id);
+                engine.sync();
+            },
+
+            sync: () => {
+                const list = document.getElementById('cart-items-list');
+                const total = document.getElementById('total-price-ui');
+                const badge = document.getElementById('count-ui');
+                
+                badge.innerText = engine.state.cart.length;
+                let sum = 0;
+                let html = "";
+
+                engine.state.cart.forEach(item => {
+                    sum += item.price;
+                    html += `
+                        <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #111;">
+                            <span>${item.name}</span>
+                            <span>${item.price.toFixed(2)} € <button onclick="engine.remove(${item.id})" style="background:none; border:none; color:red; margin-left:10px; cursor:pointer;">X</button></span>
+                        </div>
+                    `;
+                });
+
+                list.innerHTML = html || "Your cart is empty.";
+                total.innerText = sum.toFixed(2).replace('.', ',') + " €";
             }
         };
     </script>
