@@ -220,8 +220,12 @@
         }
 
         @keyframes pulse-glow {
-            from { box-shadow: 0 0 30px rgba(92, 141, 103, 0.2); }
-            to { box-shadow: 0 0 100px rgba(92, 141, 103, 0.6); }
+            from {
+                box-shadow: 0 0 30px rgba(92, 141, 103, 0.2);
+            }
+            to {
+                box-shadow: 0 0 100px rgba(92, 141, 103, 0.6);
+            }
         }
 
         /* --- NEWS TICKER --- */
@@ -247,8 +251,12 @@
         }
 
         @keyframes ticker-animation {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+            100% {
+                transform: translate3d(-100%, 0, 0);
+            }
         }
 
         /* --- SHOP SEKTION (PRODUKTE) --- */
@@ -267,12 +275,14 @@
             text-transform: uppercase;
             letter-spacing: 5px;
             margin-bottom: 10px;
+            color: #ffffff;
         }
 
         .shop-title-wrapper p {
             color: #5c8d67;
             font-weight: 800;
             letter-spacing: 4px;
+            text-transform: uppercase;
         }
 
         .product-display-grid {
@@ -340,6 +350,7 @@
             font-weight: 900;
             margin-bottom: 15px;
             text-transform: uppercase;
+            color: #ffffff;
         }
 
         .item-price-tag {
@@ -391,11 +402,11 @@
             transform: scale(1.02);
         }
 
-        /* --- WARENKORB / CHECKOUT (DEUTSCH) --- */
+        /* --- WARENKORB / CHECKOUT SEKTION --- */
         #cart-view-section {
             padding: 100px 5%;
-            display: none;
             min-height: 100vh;
+            display: none; /* Initial versteckt */
         }
 
         .checkout-main-box {
@@ -418,6 +429,7 @@
             border-bottom: 3px solid #5c8d67;
             padding-bottom: 15px;
             display: inline-block;
+            color: #ffffff;
         }
 
         .cart-item-list-row {
@@ -432,18 +444,21 @@
             font-size: 18px;
             text-transform: uppercase;
             margin-bottom: 5px;
+            color: #ffffff;
         }
 
         .cart-item-row-info span {
             color: #5c8d67;
             font-weight: 800;
             font-size: 13px;
+            text-transform: uppercase;
         }
 
         .cart-item-price-area {
             display: flex;
             align-items: center;
             gap: 30px;
+            text-align: right;
         }
 
         .delete-item-btn {
@@ -454,6 +469,11 @@
             font-size: 11px;
             font-weight: 900;
             text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+
+        .delete-item-btn:hover {
+            opacity: 0.7;
         }
 
         .form-input-group {
@@ -487,11 +507,6 @@
             background: #050505;
         }
 
-        /* Validierungs-Style (Screenshot 165834) */
-        .form-input-group input:invalid:focus {
-            border-color: #ff4d4d;
-        }
-
         .checkout-total-footer {
             background: #0f0f0f;
             padding: 45px;
@@ -514,12 +529,13 @@
             color: #5c8d67;
         }
 
-        /* --- FOOTER --- */
+        /* --- FOOTER SEKTION --- */
         footer {
             background: #020202;
             padding: 120px 5% 60px;
             text-align: center;
             border-top: 1px solid #111;
+            margin-top: 100px;
         }
 
         .footer-logo-text {
@@ -560,21 +576,40 @@
             text-transform: uppercase;
         }
 
-        /* --- PAGE LOGIC & UTILITIES --- */
-        .page-active { 
-            display: block !important; 
-            animation: pageSlideUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        /* --- UTILITY CLASSES FOR VIEW SWITCHING --- */
+        .view-active {
+            display: block !important;
+            animation: view-entrance-anim 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
         }
 
-        .page-hidden { 
-            display: none !important; 
+        .view-hidden {
+            display: none !important;
         }
 
-        @keyframes pageSlideUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes view-entrance-anim {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
+        /* Responsive Fixes */
+        @media (max-width: 1100px) {
+            .checkout-main-box {
+                grid-template-columns: 1fr;
+            }
+            .video-stage-container {
+                flex-direction: column;
+            }
+            .video-side-frame {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -583,203 +618,186 @@
 
     <header>
         <div class="nav-section-left">
-            <button class="navigation-button" onclick="switchPage('home')">Live Stream</button>
-            <button class="navigation-button" onclick="switchPage('merch')">Kollektion</button>
+            <button class="navigation-button" onclick="navigateTo('home')">Live Stream</button>
+            <button class="navigation-button" onclick="navigateTo('merch')">Kollektion</button>
         </div>
 
-        <div class="main-brand-logo" onclick="switchPage('home')">robi-twice</div>
+        <div class="main-brand-logo" onclick="navigateTo('home')">robi-twice</div>
 
         <div class="nav-section-right">
-            <button class="navigation-button cart-toggle-button" onclick="switchPage('cart')">
-                Warenkorb: <span id="cart-counter-display">0</span>
+            <button class="navigation-button cart-toggle-button" onclick="navigateTo('cart')">
+                Warenkorb: [<span id="cart-counter-display">0</span>]
             </button>
         </div>
     </header>
 
-    <main id="view-home" class="page-active">
-        
+    <main id="view-home" class="view-active">
         <section class="video-hero-wrapper">
             <h2 class="hero-sub-headline">Offizieller Video Feed</h2>
             
             <div class="video-stage-container">
                 <div class="video-side-frame">
-                    <iframe src="https://www.youtube.com/embed/5Mf7S0pDyP0?controls=0&mute=1&rel=0"></iframe>
+                    <iframe 
+                        src="https://www.youtube.com/embed/5Mf7S0pDyP0?controls=0&mute=1&autoplay=1&loop=1&playlist=5Mf7S0pDyP0" 
+                        title="Side Video Left">
+                    </iframe>
                 </div>
 
                 <div class="video-main-frame">
-                    <iframe id="youtube-live-embed" 
-                            src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1&rel=0&showinfo=0" 
-                            allowfullscreen>
+                    <iframe 
+                        id="live-embed-frame"
+                        src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1" 
+                        allowfullscreen
+                        title="Main Live Feed">
                     </iframe>
                 </div>
 
                 <div class="video-side-frame">
-                    <iframe src="https://www.youtube.com/embed/vvj64ZskM9Y?controls=0&mute=1&rel=0"></iframe>
+                    <iframe 
+                        src="https://www.youtube.com/embed/vvj64ZskM9Y?controls=0&mute=1&autoplay=1&loop=1&playlist=vvj64ZskM9Y" 
+                        title="Side Video Right">
+                    </iframe>
                 </div>
             </div>
 
             <div class="news-ticker-bar">
                 <div class="ticker-content-loop">
-                    +++ NEUE KOLLEKTION JETZT VERFÜGBAR +++ SCHNELLER VERSAND +++ PREMIUM QUALITÄT +++ NÄCHSTER LIVE-STREAM: BALD +++ SUPPORT ROBI-TWICE +++ NEUE KOLLEKTION JETZT VERFÜGBAR +++
+                    +++ NEUE KOLLEKTION JETZT VERFÜGBAR +++ SCHNELLER VERSAND INNERHALB DEUTSCHLANDS +++ PREMIUM QUALITÄT +++ SUPPORT ROBI-TWICE +++ NEUE KOLLEKTION JETZT VERFÜGBAR +++
                 </div>
             </div>
         </section>
 
         <section style="padding: 100px 10%; text-align: center;">
-            <h3 style="color: #5c8d67; font-size: 14px; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 40px;">Willkommen</h3>
-            <p style="color: #666; font-size: 18px; max-width: 900px; margin: 0 auto; line-height: 2.3; font-weight: 400;">
-                Hier entsteht der offizielle Hub für die robi-twice Community. Erlebe tägliche Streams, interaktive Events und sichere dir exklusives Merchandise in höchster Qualität. Jedes Teil unserer Kollektion wurde mit Liebe zum Detail entworfen, um dir den besten Style zu garantieren.
+            <p style="color: #666; font-size: 18px; max-width: 800px; margin: 0 auto; line-height: 2;">
+                Willkommen auf der offiziellen Plattform. Hier findest du den täglichen Live-Stream sowie exklusiven Zugriff auf limitierte Merchandise-Drops. Qualität und Community stehen bei uns an erster Stelle.
             </p>
         </section>
-
     </main>
 
-    <main id="view-merch" class="page-hidden">
+    <main id="view-merch" class="view-hidden">
         <section id="merch-view-section">
-            
             <div class="shop-title-wrapper">
-                <h2>Der Shop</h2>
-                <p>OFFIZIELLE KOLLEKTION 2026</p>
+                <h2>Kollektion</h2>
+                <p>Limited Edition 2026</p>
             </div>
 
             <div class="product-display-grid">
                 
-                <div class="item-card-container">
+                <article class="item-card-container">
                     <div class="item-image-box">
-                        <img src="tshirt.png" alt="Signature Shirt">
+                        <img src="tshirt.png" alt="Signature T-Shirt">
                     </div>
                     <div class="item-meta-info">
-                        <span class="item-badge">Essentials</span>
-                        <h3 class="item-headline">Signature Shirt</h3>
+                        <span class="item-badge">Drop #01</span>
+                        <h3 class="item-headline">Signature T-Shirt</h3>
                         <span class="item-price-tag">29,90 €</span>
-                        
-                        <select id="size-selection-1" class="item-size-select">
+                        <select id="size-1" class="item-size-select">
                             <option value="S">Größe: S</option>
                             <option value="M">Größe: M</option>
                             <option value="L">Größe: L</option>
                             <option value="XL">Größe: XL</option>
                         </select>
-                        
-                        <button class="add-to-cart-action-btn" onclick="processAddToCart('Signature Shirt', 29.90, 'size-selection-1')">
+                        <button class="add-to-cart-action-btn" onclick="addItemToBasket('Signature T-Shirt', 29.90, 'size-1')">
                             In den Warenkorb
                         </button>
                     </div>
-                </div>
+                </article>
 
-                <div class="item-card-container">
+                <article class="item-card-container">
                     <div class="item-image-box">
-                        <img src="hoodie.png" alt="Premium Hoodie">
+                        <img src="hoodie.png" alt="Official Hoodie">
                     </div>
                     <div class="item-meta-info">
-                        <span class="item-badge">Premium</span>
-                        <h3 class="item-headline">Premium Hoodie</h3>
+                        <span class="item-badge">Drop #01</span>
+                        <h3 class="item-headline">Official Hoodie</h3>
                         <span class="item-price-tag">54,90 €</span>
-                        
-                        <select id="size-selection-2" class="item-size-select">
+                        <select id="size-2" class="item-size-select">
                             <option value="S">Größe: S</option>
                             <option value="M">Größe: M</option>
                             <option value="L">Größe: L</option>
                             <option value="XL">Größe: XL</option>
                         </select>
-                        
-                        <button class="add-to-cart-action-btn" onclick="processAddToCart('Premium Hoodie', 54.90, 'size-selection-2')">
+                        <button class="add-to-cart-action-btn" onclick="addItemToBasket('Official Hoodie', 54.90, 'size-2')">
                             In den Warenkorb
                         </button>
                     </div>
-                </div>
+                </article>
 
-                <div class="item-card-container">
+                <article class="item-card-container">
                     <div class="item-image-box">
-                        <img src="muetze.png" alt="Official Beanie">
+                        <img src="muetze.png" alt="Logo Beanie">
                     </div>
                     <div class="item-meta-info">
                         <span class="item-badge">Accessoires</span>
-                        <h3 class="item-headline">Official Beanie</h3>
+                        <h3 class="item-headline">Logo Beanie</h3>
                         <span class="item-price-tag">19,90 €</span>
-                        
-                        <select id="size-selection-3" class="item-size-select">
+                        <select id="size-3" class="item-size-select">
                             <option value="OS">Einheitsgröße (OS)</option>
                         </select>
-                        
-                        <button class="add-to-cart-action-btn" onclick="processAddToCart('Official Beanie', 19.90, 'size-selection-3')">
+                        <button class="add-to-cart-action-btn" onclick="addItemToBasket('Logo Beanie', 19.90, 'size-3')">
                             In den Warenkorb
                         </button>
                     </div>
-                </div>
+                </article>
 
             </div>
         </section>
     </main>
 
-    <main id="view-cart" class="page-hidden">
-        <section id="cart-view-section">
-            
+    <main id="view-cart" class="view-hidden">
+        <section id="cart-view-section" style="display: block;">
             <div class="checkout-main-box">
                 
                 <div class="checkout-content-left">
-                    <h2 class="checkout-column-title">Deine Bestellung</h2>
-                    
-                    <div id="cart-items-renderer-list" style="margin-bottom: 40px;">
+                    <h2 class="checkout-column-title">Dein Warenkorb</h2>
+                    <div id="cart-items-container">
                         </div>
-                    
                     <div class="checkout-total-footer">
                         <h3>Gesamtbetrag</h3>
-                        <span id="cart-total-value">0,00 €</span>
+                        <span id="final-sum-display">0,00 €</span>
                     </div>
                 </div>
 
                 <div class="checkout-content-right">
                     <h2 class="checkout-column-title">Versanddetails</h2>
-                    
-                    <form id="store-checkout-form">
-                        
+                    <form id="order-form">
                         <div style="display: flex; gap: 20px;">
                             <div class="form-input-group" style="flex: 1;">
                                 <label>Vorname*</label>
-                                <input type="text" name="firstname" placeholder="Max" required>
+                                <input type="text" name="vname" required placeholder="Max">
                             </div>
                             <div class="form-input-group" style="flex: 1;">
                                 <label>Nachname*</label>
-                                <input type="text" name="lastname" placeholder="Mustermann" required>
+                                <input type="text" name="nname" required placeholder="Mustermann">
                             </div>
                         </div>
 
-                        <div style="display: flex; gap: 20px;">
-                            <div class="form-input-group" style="flex: 3;">
-                                <label>Straße*</label>
-                                <input type="text" name="address" placeholder="Musterstraße" required>
-                            </div>
-                            <div class="form-input-group" style="flex: 1;">
-                                <label>Hausnr.*</label>
-                                <input type="text" name="housenumber" placeholder="42" required>
-                            </div>
+                        <div class="form-input-group">
+                            <label>Straße & Hausnummer*</label>
+                            <input type="text" name="address" required placeholder="Musterstraße 123">
                         </div>
 
                         <div style="display: flex; gap: 20px;">
                             <div class="form-input-group" style="flex: 1;">
-                                <label>PLZ*</label>
-                                <input type="text" name="zip" placeholder="12345" required>
+                                <label>Postleitzahl*</label>
+                                <input type="text" name="plz" required placeholder="12345">
                             </div>
                             <div class="form-input-group" style="flex: 2;">
                                 <label>Stadt*</label>
-                                <input type="text" name="city" placeholder="Berlin" required>
+                                <input type="text" name="city" required placeholder="Berlin">
                             </div>
                         </div>
 
-                        <div class="form-input-group" style="margin-bottom: 40px;">
+                        <div class="form-input-group">
                             <label>E-Mail Adresse*</label>
-                            <input type="email" name="email" placeholder="max@beispiel.de" required>
+                            <input type="email" name="email" required placeholder="max@beispiel.de">
                         </div>
 
-                        <input type="hidden" name="order_content_summary" id="hidden-order-summary">
+                        <input type="hidden" name="order_data" id="order-data-hidden-input">
                         
-                        <button type="submit" class="add-to-cart-action-btn" style="background: #ffffff; color: #000000; border: 2px solid #5c8d67;">
-                            Sicher bezahlen (PayPal)
+                        <button type="submit" class="add-to-cart-action-btn" style="background: white; color: black; margin-top: 20px;">
+                            Sicher bezahlen via PayPal
                         </button>
-
-                        <p style="font-size: 10px; color: #444; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; text-align: center;">
-                            Durch den Klick auf "Sicher bezahlen" wirst du zu PayPal weitergeleitet.
-                        </p>
                     </form>
                 </div>
 
@@ -789,249 +807,194 @@
 
     <footer>
         <div class="footer-logo-text">robi-twice</div>
-        
         <div class="footer-navigation-links">
-            <a href="#" onclick="switchPage('merch')">Shop</a>
+            <a href="#" onclick="navigateTo('home')">Home</a>
+            <a href="#" onclick="navigateTo('merch')">Shop</a>
             <a href="#">Impressum</a>
             <a href="#">Datenschutz</a>
-            <a href="#">AGB</a>
             <a href="#">Kontakt</a>
         </div>
-
-        <p class="copyright-tag">
-            &copy; 2026 ROBI-TWICE OFFICIAL STORE. ALLE RECHTE VORBEHALTEN.
-        </p>
+        <p class="copyright-tag">&copy; 2026 ROBI-TWICE OFFICIAL. ALLE RECHTE VORBEHALTEN.</p>
     </footer>
 
     <script>
         /**
-         * GLOBAL APP STATE & CONFIGURATION
+         * GLOBALER STATUS
          */
-        let userShoppingBasket = [];
-        
-        const STORE_CONFIG = {
-            paypal_business_mail: "bananielheinrich@gmail.com",
-            formspree_endpoint_id: "xlgpdoak",
-            youtube_channel_id: "UCu1ZS9PqAJDStOS5EJiycEQ"
+        let currentBasket = [];
+        const CONFIG = {
+            paypalMail: "bananielheinrich@gmail.com",
+            formspreeId: "xlgpdoak"
         };
 
         /**
-         * INITIALISIERUNG BEIM LADEN DER SEITE
+         * SEITENWECHSEL LOGIK
          */
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log("Robi-Twice Store Engine: System Ready.");
+        function navigateTo(targetView) {
+            console.log("Navigiere zu: " + targetView);
+            const views = ['home', 'merch', 'cart'];
             
-            // Media Controller starten
-            initializeLiveMediaStreams();
-            
-            // Warenkorb UI initialisieren
-            renderBasketToUI();
-            
-            // Regelmäßiger Stream-Check alle 10 Minuten
-            setInterval(checkLiveStreamAvailability, 600000);
-        });
-
-        /**
-         * MEDIA CONTROLLER - PRÜFT LIVE STATUS
-         */
-        async function initializeLiveMediaStreams() {
-            console.log("Initialisiere Video-Feeds...");
-            checkLiveStreamAvailability();
-        }
-
-        async function checkLiveStreamAvailability() {
-            const mainEmbed = document.getElementById('youtube-live-embed');
-            const cid = STORE_CONFIG.youtube_channel_id;
-            
-            try {
-                // Cross-Origin Proxy Check für Live-Status
-                const checkUrl = `https://api.allorigins.win/get?url=${encodeURIComponent('https://www.youtube.com/channel/'+cid+'/live')}`;
-                const apiResponse = await fetch(checkUrl);
-                const apiData = await apiResponse.json();
-                
-                if(!apiData.contents.includes('isLive') && !apiData.contents.includes('watching')) {
-                    console.log("Kanal ist aktuell offline. Zeige Fallback-Video.");
-                    // Hier könnte man ein spezifisches Video laden, falls nicht live
-                }
-            } catch (error) {
-                console.warn("Live-Status konnte nicht verifiziert werden. Standard-Embed aktiv.");
-            }
-        }
-
-        /**
-         * NAVIGATION ENGINE - SWITCHING VIEWS
-         */
-        function switchPage(pageKey) {
-            console.log("Wechsle zur Seite: " + pageKey);
-            
-            const allViews = ['home', 'merch', 'cart'];
-            
-            allViews.forEach(viewId => {
-                const viewElement = document.getElementById('view-' + viewId);
-                
-                if(viewId === pageKey) {
-                    viewElement.classList.remove('page-hidden');
-                    viewElement.classList.add('page-active');
+            views.forEach(v => {
+                const el = document.getElementById('view-' + v);
+                if (v === targetView) {
+                    el.classList.remove('view-hidden');
+                    el.classList.add('view-active');
                 } else {
-                    viewElement.classList.add('page-hidden');
-                    viewElement.classList.remove('page-active');
+                    el.classList.add('view-hidden');
+                    el.classList.remove('view-active');
                 }
             });
 
-            // Immer nach oben scrollen beim Wechsel
-            window.scrollTo({ 
-                top: 0, 
-                behavior: 'smooth' 
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         /**
-         * WARENKORB LOGIK - HINZUFÜGEN
+         * WARENKORB LOGIK: ARTIKEL HINZUFÜGEN
          */
-        function processAddToCart(productName, productPrice, sizeDropdownId) {
-            const selectedSizeValue = document.getElementById(sizeDropdownId).value;
-            
-            const newCartItem = {
-                internal_id: Date.now(),
-                name: productName,
-                price: productPrice,
-                size: selectedSizeValue
+        function addItemToBasket(name, price, selectId) {
+            const size = document.getElementById(selectId).value;
+            const item = {
+                id: Date.now() + Math.random(),
+                name: name,
+                price: price,
+                size: size
             };
 
-            userShoppingBasket.push(newCartItem);
+            currentBasket.push(item);
             
-            // Visuelles Feedback für den Button
-            const targetButton = event.target;
-            const previousText = targetButton.innerText;
-            
-            targetButton.innerText = "IM WARENKORB ✓";
-            targetButton.style.background = "#ffffff";
-            targetButton.style.color = "#000000";
-            
-            setTimeout(() => {
-                targetButton.innerText = previousText;
-                targetButton.style.background = "#5c8d67";
-                targetButton.style.color = "#ffffff";
-            }, 1800);
+            // UI Feedback
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "HINZUGEFÜGT ✓";
+            btn.style.background = "#ffffff";
+            btn.style.color = "#000000";
 
-            // UI Aktualisieren
-            renderBasketToUI();
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = "#5c8d67";
+                btn.style.color = "#ffffff";
+            }, 1500);
+
+            refreshCartUI();
         }
 
         /**
-         * WARENKORB UI RENDERING
+         * WARENKORB LOGIK: ARTIKEL ENTFERNEN
          */
-        function renderBasketToUI() {
-            const counterElement = document.getElementById('cart-counter-display');
-            const listElement = document.getElementById('cart-items-renderer-list');
-            const totalValueElement = document.getElementById('cart-total-value');
+        function removeBasketItem(uniqueId) {
+            currentBasket = currentBasket.filter(item => item.id !== uniqueId);
+            refreshCartUI();
+        }
+
+        /**
+         * WARENKORB UI AKTUALISIEREN
+         */
+        function refreshCartUI() {
+            // Counter Badge
+            document.getElementById('cart-counter-display').innerText = currentBasket.length;
+
+            const listContainer = document.getElementById('cart-items-container');
+            const totalDisplay = document.getElementById('final-sum-display');
             
-            // Counter Badge aktualisieren
-            counterElement.innerText = userShoppingBasket.length;
-            
-            // Liste leeren oder Fallback zeigen
-            if(userShoppingBasket.length === 0) {
-                listElement.innerHTML = `
-                    <div style="text-align: center; padding: 60px 0;">
-                        <p style="color: #333; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">
-                            Dein Warenkorb ist noch leer.
-                        </p>
-                    </div>
-                `;
-                totalValueElement.innerText = "0,00 €";
+            if (currentBasket.length === 0) {
+                listContainer.innerHTML = '<p style="color: #444; padding: 40px 0; text-align: center; text-transform: uppercase; font-weight: 900;">Dein Warenkorb ist leer.</p>';
+                totalDisplay.innerText = "0,00 €";
                 return;
             }
 
-            let cartHTMLContent = "";
-            let runningTotalSum = 0;
+            let htmlOutput = "";
+            let totalSum = 0;
 
-            // Items durchlaufen und HTML bauen
-            userShoppingBasket.forEach((basketItem, arrayPosition) => {
-                runningTotalSum += basketItem.price;
-                
-                cartHTMLContent += `
+            currentBasket.forEach(item => {
+                totalSum += item.price;
+                htmlOutput += `
                     <div class="cart-item-list-row">
                         <div class="cart-item-row-info">
-                            <h4>${basketItem.name}</h4>
-                            <span>GRÖSSE: ${basketItem.size}</span>
+                            <h4>${item.name}</h4>
+                            <span>Größe: ${item.size}</span>
                         </div>
                         <div class="cart-item-price-area">
-                            <span style="font-weight: 900; font-size: 18px;">${basketItem.price.toFixed(2)} €</span>
-                            <button onclick="removeBasketItem(${arrayPosition})" class="delete-item-btn">Entfernen</button>
+                            <span style="font-weight: 900; font-size: 18px; color: #fff;">${item.price.toFixed(2).replace('.', ',')} €</span>
+                            <button onclick="removeBasketItem(${item.id})" class="delete-item-btn">Entfernen</button>
                         </div>
                     </div>
                 `;
             });
 
-            // In DOM schreiben
-            listElement.innerHTML = cartHTMLContent;
-            totalValueElement.innerText = runningTotalSum.toFixed(2).replace('.', ',') + " €";
+            listContainer.innerHTML = htmlOutput;
+            totalDisplay.innerText = totalSum.toFixed(2).replace('.', ',') + " €";
         }
 
         /**
-         * ARTIKEL AUS WARENKORB LÖSCHEN
+         * FORMULAR ÜBERMITTLUNG & PAYPAL WEITERLEITUNG
          */
-        function removeBasketItem(indexPosition) {
-            userShoppingBasket.splice(indexPosition, 1);
-            renderBasketToUI();
-        }
+        document.getElementById('order-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-        /**
-         * CHECKOUT FORMULAR ÜBERMITTLUNG
-         */
-        document.getElementById('store-checkout-form').addEventListener('submit', async function(submitEvent) {
-            submitEvent.preventDefault();
-            
-            // Validierung
-            if(userShoppingBasket.length === 0) {
-                alert("Dein Warenkorb ist leer! Bitte füge zuerst Produkte hinzu.");
+            if (currentBasket.length === 0) {
+                alert("Bitte füge zuerst Artikel zum Warenkorb hinzu.");
                 return;
             }
 
-            const checkoutSubmitBtn = this.querySelector('button');
-            checkoutSubmitBtn.innerText = "DATEN WERDEN ÜBERTRAGEN...";
-            checkoutSubmitBtn.disabled = true;
+            const submitBtn = this.querySelector('button');
+            submitBtn.innerText = "ÜBERTRAGE DATEN...";
+            submitBtn.disabled = true;
 
-            // Bestell-Zusammenfassung generieren
-            const orderSummaryText = userShoppingBasket.map(item => `${item.name} (Größe: ${item.size})`).join(', ');
-            document.getElementById('hidden-order-summary').value = orderSummaryText;
+            // Bestelldaten für E-Mail vorbereiten
+            const orderSummary = currentBasket.map(i => `${i.name} (Größe: ${i.size})`).join(', ');
+            document.getElementById('order-data-hidden-input').value = orderSummary;
 
             try {
-                // Sende Daten an Formspree (E-Mail Benachrichtigung)
-                const apiPostResponse = await fetch(`https://formspree.io/f/${STORE_CONFIG.formspree_endpoint_id}`, {
-                    method: "POST",
+                // Sende Bestelldetails an Formspree
+                const response = await fetch(`https://formspree.io/f/${CONFIG.formspreeId}`, {
+                    method: 'POST',
                     body: new FormData(this),
                     headers: { 'Accept': 'application/json' }
                 });
 
-                if(apiPostResponse.ok) {
-                    console.log("Formular-Daten erfolgreich gesendet. Initialisiere PayPal...");
+                if (response.ok) {
+                    // Weiterleitung zu PayPal
+                    const totalAmount = currentBasket.reduce((acc, obj) => acc + obj.price, 0).toFixed(2);
+                    const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(CONFIG.paypalMail)}&amount=${totalAmount}&currency_code=EUR&item_name=robi-twice Bestellung: ${encodeURIComponent(orderSummary)}`;
                     
-                    const finalOrderTotal = userShoppingBasket.reduce((acc, curr) => acc + curr.price, 0).toFixed(2);
-                    
-                    // PayPal Redirect URL bauen
-                    const paypalRedirectUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(STORE_CONFIG.paypal_business_mail)}&amount=${finalOrderTotal}&currency_code=EUR&item_name=Bestellung von robi-twice Store: ${encodeURIComponent(orderSummaryText)}`;
-                    
-                    // Umleitung
-                    window.location.href = paypalRedirectUrl;
+                    window.location.href = paypalUrl;
                 } else {
-                    throw new Error("API-Übertragungsfehler");
+                    throw new Error("Fehler beim Senden");
                 }
-            } catch (err) {
-                console.error("Checkout Fehler:", err);
-                alert("Es gab ein technisches Problem beim Absenden der Bestellung. Bitte versuche es erneut.");
-                checkoutSubmitBtn.disabled = false;
-                checkoutSubmitBtn.innerText = "Sicher bezahlen (PayPal)";
+            } catch (error) {
+                alert("Es gab ein Problem beim Absenden. Bitte versuche es erneut.");
+                submitBtn.innerText = "Sicher bezahlen via PayPal";
+                submitBtn.disabled = false;
             }
         });
 
-        /**
-         * FINAL SYSTEM LOG
-         */
-        console.log("Robi-Twice Storefront Script v2.5.9 loaded.");
-        console.log("Current Environment: Production");
-        console.log("Code Length Validation: > 1000 Lines");
-
+        // System Log
+        console.log("robi-twice Storefront Engine v3.0 geladen.");
     </script>
+
+    <style>
+        /* Detail-Styles für Formulare */
+        input::placeholder { color: #333; }
+        .checkout-content-left { overflow-y: auto; max-height: 600px; padding-right: 20px; }
+        .checkout-content-left::-webkit-scrollbar { width: 4px; }
+        .checkout-content-left::-webkit-scrollbar-thumb { background: #222; }
+        
+        /* Animation Keyframes für Hover-Effekte */
+        @keyframes subtle-pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        /* Sicherstellung der Video-Kästchen Stabilität */
+        .video-side-frame iframe, .video-main-frame iframe {
+            border-radius: inherit;
+            object-fit: cover;
+        }
+
+        /* Footer Links Detail */
+        .footer-navigation-links a:active { transform: scale(0.95); }
+    </style>
+    
 </body>
 </html>
