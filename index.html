@@ -3,298 +3,466 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Official robi-twice Brand Experience 2026">
     <title>ROBI-TWICE | OFFICIAL HUB</title>
+
     <style>
+        /* ========================================================================================
+           I. GLOBAL DESIGN TOKENS
+           ========================================================================================
+        */
         :root {
             --brand-green: #5c8d67;
-            --brand-glow: rgba(92, 141, 103, 0.5);
-            --dark-bg: #000000;
-            --card-bg: #050505;
-            --text: #ffffff;
+            --brand-green-bright: #7bb589;
+            --brand-glow: rgba(92, 141, 103, 0.4);
+            
+            --bg-deep: #000000;
+            --bg-surface: #050505;
+            --bg-card: #080808;
+            
+            --text-main: #ffffff;
+            --text-muted: #666666;
+            
+            --header-h: 120px;
+            --radius-lg: 30px;
+            --radius-md: 18px;
+            
+            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+            --anim-std: 0.5s;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        /* ========================================================================================
+           II. RESET & BASE
+           ========================================================================================
+        */
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+
+        html { background-color: var(--bg-deep); scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
-            background-color: var(--dark-bg);
-            color: var(--text);
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             background-image: url('logo.png');
             background-repeat: repeat;
-            background-size: 150px;
+            background-size: 170px;
             background-attachment: fixed;
-            overflow-x: hidden;
         }
 
-        .overlay {
+        .dark-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.9) 0%, rgba(0,0,0,1) 100%);
+            background: radial-gradient(circle at center, rgba(0,0,0,0.92) 0%, rgba(0,0,0,1) 100%);
             z-index: -1;
+            pointer-events: none;
         }
 
+        /* ========================================================================================
+           III. HEADER
+           ========================================================================================
+        */
         header {
-            height: 110px;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(20px);
+            width: 100%;
+            height: var(--header-h);
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(30px);
+            position: sticky;
+            top: 0;
+            z-index: 10000;
+            border-bottom: 2px solid var(--brand-green);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 5%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--brand-green);
         }
 
-        .logo h1 {
-            font-size: 35px;
-            letter-spacing: 15px;
-            text-transform: uppercase;
+        .nav-block { display: flex; align-items: center; gap: 25px; flex: 1; }
+        .nav-block.right { justify-content: flex-end; }
+
+        .brand-hub h1 {
+            font-size: 38px;
             font-weight: 900;
-            cursor: pointer;
-        }
-
-        .nav-btns { display: flex; gap: 10px; }
-
-        .btn {
-            background: #0a0a0a;
-            border: 1px solid #222;
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 10px;
             text-transform: uppercase;
-            font-weight: 800;
+            letter-spacing: 16px;
             cursor: pointer;
-            transition: 0.3s;
-            font-size: 12px;
+            transition: var(--anim-std) var(--ease);
         }
 
-        .btn.active, .btn:hover {
+        .brand-hub h1:hover { color: var(--brand-green); letter-spacing: 20px; }
+
+        .nav-btn {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 2.5px;
+            cursor: pointer;
+            transition: 0.3s var(--ease);
+        }
+
+        .nav-btn.active, .nav-btn:hover {
             background: var(--brand-green);
             border-color: #fff;
-            box-shadow: 0 0 15px var(--brand-glow);
         }
 
-        .section { display: none; padding: 50px 5%; animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .cart-pill {
+            background: #fff;
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 900;
+            margin-left: 10px;
+        }
 
-        /* VIDEO MATRIX */
-        .matrix {
+        /* ========================================================================================
+           IV. CONTENT VIEWS
+           ========================================================================================
+        */
+        .app-view { display: none; padding-bottom: 120px; animation: fadeIn 0.7s var(--ease); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* LIVE SECTION */
+        .live-container { padding: 60px 0; }
+        
+        .video-triple-matrix {
             display: grid;
-            grid-template-columns: 1fr 2.5fr 1fr;
-            gap: 20px;
-            align-items: center;
+            grid-template-columns: 1fr 2.4fr 1fr;
+            gap: 30px;
             max-width: 1600px;
             margin: 0 auto;
+            padding: 0 40px;
+            align-items: center;
         }
 
-        .v-box {
+        .v-shell {
             aspect-ratio: 16/9;
             background: #000;
-            border-radius: 15px;
-            overflow: hidden;
+            border-radius: var(--radius-md);
             border: 1px solid #1a1a1a;
+            overflow: hidden;
+            opacity: 0.45;
+            transition: var(--anim-std) var(--ease);
         }
 
-        .v-box.main {
-            border: 3px solid var(--brand-green);
-            box-shadow: 0 0 40px var(--brand-glow);
+        .v-shell.main {
+            opacity: 1;
+            border: 4px solid var(--brand-green);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 0 80px var(--brand-glow);
         }
 
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* SHOP GRID */
-        .grid {
+        .ticker-module {
+            width: 100%;
+            background: var(--brand-green);
+            margin-top: 60px;
+            padding: 20px 0;
+            overflow: hidden;
+        }
+
+        .ticker-wrap {
+            display: inline-block;
+            white-space: nowrap;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 7px;
+            animation: tickerFlow 38s linear infinite;
+        }
+
+        @keyframes tickerFlow { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+
+        /* STORE SECTION */
+        .store-portal { padding: 80px 5%; max-width: 1600px; margin: 0 auto; }
+        
+        .portal-header { text-align: center; margin-bottom: 80px; }
+        .portal-header h2 { font-size: 60px; font-weight: 900; text-transform: uppercase; letter-spacing: 5px; }
+
+        .grid-engine {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 60px;
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid #111;
-            padding: 30px;
-            border-radius: 25px;
+        .product-node {
+            background: var(--bg-card);
+            border: 1px solid #1a1a1a;
+            border-radius: var(--radius-lg);
+            padding: 45px;
+            transition: all var(--anim-std) var(--ease);
             text-align: center;
-            transition: 0.4s;
         }
 
-        .card:hover { transform: translateY(-10px); border-color: var(--brand-green); }
+        .product-node:hover { transform: translateY(-25px); border-color: var(--brand-green); box-shadow: 0 40px 80px rgba(0,0,0,0.8); }
 
-        .img-box {
-            height: 280px;
-            background: #fff;
-            border-radius: 15px;
-            margin-bottom: 20px;
+        .visual-container {
+            width: 100%; height: 420px;
+            background: #ffffff;
+            border-radius: var(--radius-md);
+            margin-bottom: 35px;
             display: flex; align-items: center; justify-content: center;
         }
-        .img-box img { max-width: 80%; max-height: 80%; object-fit: contain; }
+        .visual-container img { max-width: 80%; transition: 0.6s var(--ease); }
+        .product-node:hover .visual-container img { transform: scale(1.1) rotate(-3deg); }
 
-        .price { font-size: 28px; color: var(--brand-green); font-weight: 900; margin: 15px 0; display: block; }
+        .product-title { font-size: 32px; text-transform: uppercase; font-weight: 900; margin-bottom: 12px; }
+        .price-tag { font-size: 38px; color: var(--brand-green); font-weight: 900; margin-bottom: 35px; display: block; }
 
-        /* FORMS & CART */
-        .content-box {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #050505;
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid #111;
+        .buy-trigger {
+            width: 100%; background: var(--brand-green); color: #fff; border: none;
+            padding: 24px; border-radius: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 4px; cursor: pointer;
         }
 
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #1a1a1a;
+        /* SUPPORT SECTION */
+        .support-wrapper { padding: 80px 5%; max-width: 900px; margin: 0 auto; }
+        .support-card { background: var(--bg-card); padding: 60px; border-radius: var(--radius-lg); border: 1px solid #1a1a1a; }
+        
+        /* FORM STYLING (SCREENSHOT STYLE) */
+        .checkout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full-width { grid-column: span 2; }
+        
+        .field-box { position: relative; margin-bottom: 25px; }
+        .field-label { font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        
+        .master-input {
+            width: 100%; padding: 18px; background: #000; 
+            border: 1px solid #333; color: #fff; border-radius: 8px;
+            font-size: 15px; font-weight: 500;
+            transition: 0.3s;
         }
+        .master-input:focus { border-color: var(--brand-green); box-shadow: 0 0 10px var(--brand-glow); }
 
-        .input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            background: #000;
-            border: 1px solid #222;
-            color: #fff;
-            border-radius: 10px;
+        /* CART SECTION */
+        .cart-wrapper { padding: 80px 5%; }
+        .cart-container {
+            max-width: 1400px; margin: 0 auto; background: #080808; border-radius: var(--radius-lg);
+            display: grid; grid-template-columns: 1fr 1.2fr; min-height: 800px; overflow: hidden; border: 1px solid #111;
         }
+        .cart-items-section { padding: 70px; border-right: 1px solid #111; }
+        .checkout-section { padding: 70px; background: #050505; }
 
-        textarea.input { height: 120px; resize: none; }
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-bottom: 1px solid #111; }
 
-        footer {
-            margin-top: 100px;
-            padding: 50px;
-            text-align: center;
-            border-top: 1px solid #111;
-            font-size: 12px;
-            color: #444;
+        /* FOOTER */
+        footer { background: #020202; padding: 120px 0 60px; text-align: center; border-top: 1px solid #111; margin-top: auto; }
+        .footer-logo-text { font-size: 65px; font-weight: 900; color: #0d0d0d; text-transform: uppercase; letter-spacing: 40px; margin-bottom: 60px; }
+
+        @media (max-width: 1200px) {
+            .video-triple-matrix { grid-template-columns: 1fr; }
+            .v-shell:not(.main) { display: none; }
+            .cart-container { grid-template-columns: 1fr; }
+            .checkout-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
         }
     </style>
 </head>
-<body>
+<body onload="engine.init()">
 
-<div class="overlay"></div>
+    <div class="dark-overlay"></div>
 
-<header>
-    <div class="nav-btns">
-        <button class="btn active" id="btn-home" onclick="show('home')">Live</button>
-        <button class="btn" id="btn-shop" onclick="show('shop')">Store</button>
-        <button class="btn" id="btn-support" onclick="show('support')">Support</button>
-    </div>
-    <div class="logo"><h1 onclick="show('home')">robi-twice</h1></div>
-    <div class="nav-btns">
-        <button class="btn" id="btn-cart" onclick="show('cart')">Cart [<span id="count">0</span>]</button>
-    </div>
-</header>
-
-<div id="home" class="section" style="display: block;">
-    <div class="matrix">
-        <div class="v-box"><iframe src="https://www.youtube.com/embed/5Mf7S0pDyP0?mute=1&autoplay=1"></iframe></div>
-        <div class="v-box main"><iframe src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1"></iframe></div>
-        <div class="v-box"><iframe src="https://www.youtube.com/embed/vvj64ZskM9Y?mute=1&autoplay=1"></iframe></div>
-    </div>
-</div>
-
-<div id="shop" class="section">
-    <div class="grid">
-        <div class="card">
-            <div class="img-box"><img src="tshirt.png" alt="Shirt"></div>
-            <h3>Signature Tee</h3>
-            <span class="price">29,95 €</span>
-            <button class="btn" style="width:100%" onclick="add('Signature Tee', 29.95)">In den Warenkorb</button>
+    <header>
+        <div class="nav-block">
+            <button class="nav-btn active" id="tab-home" onclick="engine.view('home')">Live</button>
+            <button class="nav-btn" id="tab-shop" onclick="engine.view('shop')">Store</button>
+            <button class="nav-btn" id="tab-support" onclick="engine.view('support')">Support</button>
         </div>
-        <div class="card">
-            <div class="img-box"><img src="hoodie.png" alt="Hoodie"></div>
-            <h3>Legacy Hoodie</h3>
-            <span class="price">54,95 €</span>
-            <button class="btn" style="width:100%" onclick="add('Legacy Hoodie', 54.95)">In den Warenkorb</button>
+
+        <div class="brand-hub">
+            <h1 onclick="engine.view('home')">robi-twice</h1>
         </div>
-        <div class="card">
-            <div class="img-box"><img src="cap.png" alt="Cap"></div>
-            <h3>Official Logo Cap</h3>
-            <span class="price">24,95 €</span>
-            <button class="btn" style="width:100%" onclick="add('Official Logo Cap', 24.95)">In den Warenkorb</button>
+
+        <div class="nav-block right">
+            <button class="nav-btn" id="tab-cart" onclick="engine.view('cart')">
+                Cart <span class="cart-pill" id="cart-count">0</span>
+            </button>
         </div>
-    </div>
-</div>
+    </header>
 
-<div id="support" class="section">
-    <div class="content-box">
-        <h2 style="text-align: center; margin-bottom: 20px;">Support Kontakt</h2>
-        <form action="https://formspree.io/f/xlgpdoak" method="POST">
-            <input type="text" name="Name" placeholder="Dein Name" class="input" required>
-            <input type="email" name="Email" placeholder="Deine Email" class="input" required>
-            <textarea name="Nachricht" placeholder="Wie können wir helfen?" class="input" required></textarea>
-            <button type="submit" class="btn" style="width:100%">Anfrage senden</button>
-        </form>
-    </div>
-</div>
+    <main id="view-home" class="app-view" style="display: block;">
+        <section class="live-container">
+            <div class="video-triple-matrix">
+                <div class="v-shell"><iframe src="https://www.youtube.com/embed/5Mf7S0pDyP0?controls=0&mute=1&autoplay=1&loop=1"></iframe></div>
+                <div class="v-shell main"><iframe src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1"></iframe></div>
+                <div class="v-shell"><iframe src="https://www.youtube.com/embed/vvj64ZskM9Y?controls=0&mute=1&autoplay=1&loop=1"></iframe></div>
+            </div>
+            <div class="ticker-module">
+                <div class="ticker-wrap">+++ ROBI-TWICE OFFICIAL MERCH DROP 2026 +++ LIMITED QUANTITY +++ WORLDWIDE SHIPPING +++ JOIN THE DISCORD +++</div>
+            </div>
+        </section>
+    </main>
 
-<div id="cart" class="section">
-    <div class="content-box">
-        <h2 style="margin-bottom: 20px;">Dein Warenkorb</h2>
-        <div id="items"></div>
-        <h3 style="margin: 20px 0;">Gesamt: <span id="total">0,00 €</span></h3>
-        <hr style="border:0; border-top:1px solid #222; margin: 20px 0;">
-        <form id="order-form">
-            <input type="text" name="Name" placeholder="Vollständiger Name" class="input" required>
-            <input type="email" name="Email" placeholder="PayPal Email" class="input" required>
-            <input type="text" name="Adresse" placeholder="Versandadresse" class="input" required>
-            <input type="hidden" name="Bestellung" id="order-input">
-            <button type="submit" class="btn" style="width:100%; background:#fff; color:#000;">Jetzt per PayPal bezahlen</button>
-        </form>
-    </div>
-</div>
+    <main id="view-shop" class="app-view">
+        <section class="store-portal">
+            <div class="portal-header"><h2>The Collection</h2></div>
+            <div class="grid-engine">
+                <div class="product-node">
+                    <div class="visual-container"><img src="tshirt.png" alt="Shirt"></div>
+                    <h3 class="product-title">Signature Tee</h3>
+                    <span class="price-tag">29,95 €</span>
+                    <button class="buy-trigger" onclick="engine.add('Signature Tee', 29.95)">Add to Cart</button>
+                </div>
+                <div class="product-node">
+                    <div class="visual-container"><img src="hoodie.png" alt="Hoodie"></div>
+                    <h3 class="product-title">Legacy Hoodie</h3>
+                    <span class="price-tag">54,95 €</span>
+                    <button class="buy-trigger" onclick="engine.add('Legacy Hoodie', 54.95)">Add to Cart</button>
+                </div>
+                <div class="product-node">
+                    <div class="visual-container"><img src="cap.png" alt="Cap"></div>
+                    <h3 class="product-title">Logo Cap</h3>
+                    <span class="price-tag">24,95 €</span>
+                    <button class="buy-trigger" onclick="engine.add('Logo Cap', 24.95)">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
-<footer>&copy; 2026 ROBI-TWICE OFFICIAL. ALL RIGHTS RESERVED.</footer>
+    <main id="view-support" class="app-view">
+        <section class="support-wrapper">
+            <div class="support-card">
+                <h2 style="font-size: 35px; margin-bottom: 40px; text-transform: uppercase;">Support Kontakt</h2>
+                <form id="support-form">
+                    <div class="field-box">
+                        <label class="field-label">Dein Name</label>
+                        <input type="text" name="name" class="master-input" required placeholder="Name">
+                    </div>
+                    <div class="field-box">
+                        <label class="field-label">Email Adresse</label>
+                        <input type="email" name="email" class="master-input" required placeholder="email@example.com">
+                    </div>
+                    <div class="field-box">
+                        <label class="field-label">Deine Nachricht</label>
+                        <textarea name="message" class="master-input" style="height: 180px; resize: none;" required placeholder="Wie können wir helfen?"></textarea>
+                    </div>
+                    <button type="submit" class="buy-trigger">Anfrage senden</button>
+                </form>
+                <div id="support-success" style="display:none; color: var(--brand-green); margin-top: 20px; font-weight: 800; text-align: center;">NACHRICHT ERFOLGREICH GESENDET!</div>
+            </div>
+        </section>
+    </main>
 
-<script>
-    let cart = [];
-    function show(id) {
-        document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-        document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).style.display = 'block';
-        if(document.getElementById('btn-'+id)) document.getElementById('btn-'+id).classList.add('active');
-        window.scrollTo(0,0);
-    }
+    <main id="view-cart" class="app-view">
+        <section class="cart-wrapper">
+            <div class="cart-container">
+                <div class="cart-items-section">
+                    <h2 style="font-size: 40px; margin-bottom: 40px;">Your Cart</h2>
+                    <div id="cart-list-render"></div>
+                    <div style="margin-top: 50px; border-top: 2px solid #111; padding-top: 30px;">
+                        <h3>Total: <span id="cart-total-ui" style="color: var(--brand-green);">0,00 €</span></h3>
+                    </div>
+                </div>
+                <div class="checkout-section">
+                    <h2 style="font-size: 30px; margin-bottom: 30px;">Versandadresse</h2>
+                    <form id="checkout-form">
+                        <div class="checkout-grid">
+                            <div class="field-box">
+                                <label class="field-label">Vorname*</label>
+                                <input type="text" name="vorname" class="master-input" required>
+                            </div>
+                            <div class="field-box">
+                                <label class="field-label">Nachname*</label>
+                                <input type="text" name="nachname" class="master-input" required>
+                            </div>
+                            <div class="field-box full-width">
+                                <label class="field-label">Straße und Hausnummer*</label>
+                                <input type="text" name="strasse" class="master-input" required>
+                            </div>
+                            <div class="field-box">
+                                <label class="field-label">PLZ*</label>
+                                <input type="text" name="plz" class="master-input" required>
+                            </div>
+                            <div class="field-box">
+                                <label class="field-label">Stadt*</label>
+                                <input type="text" name="stadt" class="master-input" required>
+                            </div>
+                            <div class="field-box full-width">
+                                <label class="field-label">Land*</label>
+                                <select name="land" class="master-input">
+                                    <option>Deutschland</option><option>Österreich</option><option>Schweiz</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="order_data" id="order-data-hidden">
+                        <button type="submit" class="buy-trigger" style="background: white; color: black; margin-top: 20px;">Complete to PayPal</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    function add(name, price) {
-        cart.push({name, price});
-        update();
-        alert(name + " wurde hinzugefügt!");
-    }
+    <footer>
+        <div class="footer-logo-text">robi-twice</div>
+        <p>&copy; 2026 ROBI-TWICE ENTERTAINMENT GROUP. ALL RIGHTS RESERVED.</p>
+    </footer>
 
-    function update() {
-        document.getElementById('count').innerText = cart.length;
-        let html = "";
-        let total = 0;
-        cart.forEach((item) => {
-            total += item.price;
-            html += `<div class="cart-item"><span>${item.name}</span><span>${item.price.toFixed(2)} €</span></div>`;
+    <script>
+        const engine = {
+            state: { cart: [] },
+            init: () => { console.log("Engine Online"); },
+            view: (id) => {
+                document.querySelectorAll('.app-view').forEach(v => v.style.display = 'none');
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.getElementById('view-' + id).style.display = 'block';
+                if(document.getElementById('tab-' + id)) document.getElementById('tab-' + id).classList.add('active');
+                window.scrollTo(0,0);
+            },
+            add: (name, price) => {
+                engine.state.cart.push({name, price, id: Date.now()});
+                engine.sync();
+                alert(name + " added!");
+            },
+            remove: (id) => {
+                engine.state.cart = engine.state.cart.filter(i => i.id !== id);
+                engine.sync();
+            },
+            sync: () => {
+                const list = document.getElementById('cart-list-render');
+                const badge = document.getElementById('cart-count');
+                badge.innerText = engine.state.cart.length;
+                let sum = 0;
+                let html = "";
+                engine.state.cart.forEach(i => {
+                    sum += i.price;
+                    html += `<div class="cart-item-row">
+                        <div><strong>${i.name}</strong></div>
+                        <div>${i.price.toFixed(2)} € <button onclick="engine.remove(${i.id})" style="background:none; border:none; color:red; cursor:pointer; margin-left:15px; font-weight:900;">X</button></div>
+                    </div>`;
+                });
+                list.innerHTML = html || "Your cart is empty.";
+                document.getElementById('cart-total-ui').innerText = sum.toFixed(2).replace('.', ',') + " €";
+                document.getElementById('order-data-hidden').value = JSON.stringify(engine.state.cart);
+            }
+        };
+
+        // Support Form Fix (No Redirect)
+        document.getElementById('support-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await fetch('https://formspree.io/f/xlgpdoak', {
+                method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' }
+            });
+            document.getElementById('support-success').style.display = "block";
+            this.reset();
         });
-        document.getElementById('items').innerHTML = html || "Dein Warenkorb ist leer.";
-        document.getElementById('total').innerText = total.toFixed(2).replace('.', ',') + " €";
-        document.getElementById('order-input').value = JSON.stringify(cart);
-    }
 
-    document.getElementById('order-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if(cart.length === 0) return alert("Warenkorb leer!");
-        const data = new FormData(e.target);
-        
-        // Formspree Benachrichtigung senden
-        await fetch('https://formspree.io/f/xlgpdoak', { 
-            method: 'POST', 
-            body: data, 
-            headers: {'Accept': 'application/json'} 
+        // Checkout & PayPal
+        document.getElementById('checkout-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if(engine.state.cart.length === 0) return alert("Cart empty!");
+            await fetch('https://formspree.io/f/xlgpdoak', {
+                method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' }
+            });
+            const total = engine.state.cart.reduce((a,b) => a + b.price, 0).toFixed(2);
+            window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${total}&currency_code=EUR&item_name=RobiTwiceOrder`;
         });
-
-        // PayPal Weiterleitung
-        const sum = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
-        window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${sum}&currency_code=EUR&item_name=RobiTwice-Order`;
-    });
-</script>
+    </script>
 </body>
 </html>
