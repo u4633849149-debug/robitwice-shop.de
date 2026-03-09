@@ -74,10 +74,18 @@
         .img-box img { max-width: 85%; max-height: 85%; object-fit: contain; }
         
         .product-price { font-size: 22px; color: #5c8d67; font-weight: bold; margin: 10px 0; display: block; }
-        input, textarea, select { width: 90%; padding: 12px; margin: 10px 0; background: #0b0b0b; color: #fff; border: 1px solid #444; border-radius: 8px; box-sizing: border-box; }
-        .action-btn { width: 90%; padding: 15px; background: #5c8d67; color: #fff; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; }
 
-        .delete-btn { color: #ff4444; cursor: pointer; font-size: 0.8rem; text-decoration: underline; margin-left: 15px; }
+        /* --- FORM STYLING --- */
+        .form-row { display: flex; gap: 15px; margin-bottom: 10px; }
+        .form-group { flex: 1; display: flex; flex-direction: column; text-align: left; }
+        label { font-size: 12px; color: #888; margin-bottom: 5px; margin-left: 5px; }
+
+        input, textarea, select { width: 100%; padding: 12px; margin: 5px 0; background: #0b0b0b; color: #fff; border: 1px solid #444; border-radius: 8px; box-sizing: border-box; }
+        input:focus { border-color: #5c8d67; outline: none; }
+        .action-btn { width: 100%; padding: 15px; background: #5c8d67; color: #fff; border: none; border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .action-btn:hover { background-color: #4a7354; transform: scale(1.02); }
+
+        .delete-btn { color: #ff4444; cursor: pointer; font-weight: bold; border: 1px solid #ff4444; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
 
         iframe { width: 100%; height: 100%; border: none; }
         footer { text-align: center; padding: 50px; color: #555; border-top: 1px solid #1a1a1a; margin-top: 50px; }
@@ -101,6 +109,7 @@
         <h2 style="text-align: center; color: #5c8d67;">AKTUELLE VIDEOS & LIVE</h2>
         <div class="video-wrapper">
             <div class="side-vid" id="vid-left"></div>
+            
             <div class="main-stream">
                 <iframe id="live-iframe" src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" allowfullscreen></iframe>
                 <div id="offline-overlay">
@@ -108,6 +117,7 @@
                     <p style="color: #888; margin-top: 10px;">Schau bald wieder vorbei!</p>
                 </div>
             </div>
+
             <div class="side-vid" id="vid-right"></div>
         </div>
     </section>
@@ -116,23 +126,23 @@
         <h1 style="text-align: center; margin-bottom: 40px;">OFFIZIELLER MERCH</h1>
         <div class="product-grid">
             <div class="product-card">
-                <div class="img-box"><img src="tshirt.jpg" alt="Shirt"></div>
+                <div class="img-box"><img src="tshirt.png" alt="Shirt"></div>
                 <h3>Signature T-Shirt</h3>
-                <span class="product-price">29,00 €</span>
+                <span class="product-price">29,90 €</span>
                 <select id="size1"><option>S</option><option>M</option><option>L</option><option>XL</option></select>
                 <button class="action-btn" onclick="addToCart('Signature Shirt', 29.90, 'size1')">In den Warenkorb</button>
             </div>
             <div class="product-card">
                 <div class="img-box"><img src="hoodie.png" alt="Hoodie"></div>
                 <h3>robi-twice Hoodie</h3>
-                <span class="product-price">40,00 €</span>
+                <span class="product-price">49,90 €</span>
                 <select id="size2"><option>M</option><option>L</option><option>XL</option></select>
                 <button class="action-btn" onclick="addToCart('Hoodie', 49.90, 'size2')">In den Warenkorb</button>
             </div>
             <div class="product-card">
                 <div class="img-box"><img src="muetze.png" alt="Beanie"></div>
-                <h3>Logo Cap</h3>
-                <span class="product-price">27,00 €</span>
+                <h3>Logo Beanie</h3>
+                <span class="product-price">19,90 €</span>
                 <select id="size3"><option>Einheitsgröße</option></select>
                 <button class="action-btn" onclick="addToCart('Beanie', 19.90, 'size3')">In den Warenkorb</button>
             </div>
@@ -143,9 +153,11 @@
         <div style="max-width: 500px; margin: auto; background: rgba(20,20,20,0.9); padding: 30px; border-radius: 15px; border: 1px solid #333;">
             <h2 style="text-align:center;">SUPPORT</h2>
             <form id="support-form">
-                <input type="email" name="email" placeholder="Deine E-Mail Adresse" required style="width:100%;">
-                <textarea name="message" rows="5" placeholder="Deine Nachricht an uns..." required style="width:100%;"></textarea>
-                <button type="submit" id="support-btn" class="action-btn" style="width:100%;">NACHRICHT ABSENDEN</button>
+                <label>Deine E-Mail Adresse</label>
+                <input type="email" name="email" required>
+                <label>Deine Nachricht an uns...</label>
+                <textarea name="message" rows="5" required></textarea>
+                <button type="submit" id="support-btn" class="action-btn">NACHRICHT ABSENDEN</button>
             </form>
             <p id="support-status" style="text-align:center; margin-top:15px; display:none; color:#5c8d67; font-weight:bold;"></p>
         </div>
@@ -158,17 +170,29 @@
             <h3 id="total-sum-display" style="text-align: right; color: #5c8d67;">Gesamt: 0,00 €</h3>
 
             <div id="address-section" style="display:none; margin-top:30px; border-top:1px solid #333; padding-top:20px;">
-                <h3>LIEFERADRESSE ANGEBEN</h3>
+                <h3 style="margin-bottom: 20px;">VERSANDADRESSE</h3>
                 <form id="final-order-form">
-                    <input type="text" name="Full_Name" placeholder="Vorname & Nachname" required style="width:100%;">
-                    <input type="text" name="Street" placeholder="Straße & Hausnummer" required style="width:100%;">
-                    <input type="text" name="City" placeholder="PLZ & Ort" required style="width:100%;">
-                    <input type="email" name="Customer_Email" placeholder="E-Mail für Bestätigung" required style="width:100%;">
-                    <input type="hidden" name="Items_Ordered" id="hidden-items-list">
-                    <button type="submit" id="submit-order-btn" class="action-btn" style="background:#5c8d67; width:100%; margin-top:15px;">DATEN BESTÄTIGEN & ZU PAYPAL</button>
+                    <div class="form-row">
+                        <div class="form-group"><label>Vorname*</label><input type="text" name="Vorname" required></div>
+                        <div class="form-group"><label>Nachname*</label><input type="text" name="Nachname" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 3;"><label>Straße*</label><input type="text" name="Strasse" required></div>
+                        <div class="form-group" style="flex: 1;"><label>Hausnr.*</label><input type="text" name="Hausnummer" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Postleitzahl*</label><input type="text" name="PLZ" required></div>
+                        <div class="form-group"><label>Stadt*</label><input type="text" name="Stadt" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>E-Mail für Bestätigung*</label>
+                        <input type="email" name="Email_Kunde" required>
+                    </div>
+                    <input type="hidden" name="Bestellung" id="hidden-items-list">
+                    <button type="submit" id="submit-order-btn" class="action-btn" style="margin-top: 20px;">DATEN BESTÄTIGEN & ZU PAYPAL</button>
                 </form>
             </div>
-            <button id="show-address-btn" class="action-btn" style="margin-top:20px; width:100%;" onclick="openAddressForm()">ZUR KASSE GEHEN</button>
+            <button id="show-address-btn" class="action-btn" style="margin-top:20px;" onclick="openAddressForm()">ZUR KASSE GEHEN</button>
         </div>
     </section>
 
@@ -229,7 +253,7 @@
                     sum += item.price;
                     return `<div style="padding:10px 0; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center;">
                         <span>${item.name} (${item.size}) - ${item.price.toFixed(2)} €</span>
-                        <span class="delete-btn" onclick="removeFromCart(${i})">ENTFERNEN</span>
+                        <span class="delete-btn" onclick="removeFromCart(${i})">X</span>
                     </div>`;
                 }).join('');
             }
@@ -242,34 +266,21 @@
             document.getElementById('show-address-btn').style.display = 'none';
         }
 
-        // --- SUPPORT FORMULAR (OHNE WEITERLEITUNG) ---
         document.getElementById('support-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('support-btn');
             const status = document.getElementById('support-status');
-            btn.innerText = "Wird gesendet...";
-            
+            btn.innerText = "Sende...";
             const formData = new FormData(this);
-            try {
-                const response = await fetch("https://formspree.io/f/xlgpdoak", {
-                    method: "POST",
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (response.ok) {
-                    status.innerText = "Nachricht erfolgreich gesendet!";
-                    status.style.display = "block";
-                    this.reset();
-                    btn.innerText = "NACHRICHT ABSENDEN";
-                } else {
-                    alert("Fehler beim Senden. Bitte versuche es später noch einmal.");
-                }
-            } catch (err) {
-                alert("Netzwerkfehler.");
+            const response = await fetch("https://formspree.io/f/xlgpdoak", { method: "POST", body: formData, headers: { 'Accept': 'application/json' } });
+            if (response.ok) {
+                status.innerText = "Nachricht erfolgreich gesendet!";
+                status.style.display = "block";
+                this.reset();
+                btn.innerText = "NACHRICHT ABSENDEN";
             }
         });
 
-        // --- CHECKOUT FORMULAR ---
         document.getElementById('final-order-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submit-order-btn');
@@ -277,19 +288,11 @@
             const summary = cart.map(i => `${i.name} (${i.size})`).join(', ');
             document.getElementById('hidden-items-list').value = summary;
 
-            const response = await fetch("https://formspree.io/f/xlgpdoak", {
-                method: "POST",
-                body: new FormData(this),
-                headers: { 'Accept': 'application/json' }
-            });
-
+            const response = await fetch("https://formspree.io/f/xlgpdoak", { method: "POST", body: new FormData(this), headers: { 'Accept': 'application/json' } });
             if (response.ok) {
-                alert("Danke! Deine Lieferadresse wurde an uns gesendet. Jetzt schließe bitte die Zahlung über PayPal ab. Es kein an parr tage dauern bis ihr Paket an kommt!!");
+                alert("Danke! Deine Lieferadresse wurde an uns gesendet. Jetzt schließe bitte die Zahlung über PayPal ab.");
                 const finalTotal = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
                 window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${finalTotal}&currency_code=EUR&item_name=Bestellung robi-twice: ${summary}`;
-            } else {
-                alert("Fehler beim Senden.");
-                btn.innerText = "DATEN BESTÄTIGEN & ZU PAYPAL";
             }
         });
 
