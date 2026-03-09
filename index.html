@@ -3,36 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ROBI-TWICE | OFFICIAL LIVE HUB</title>
+    <meta name="description" content="Official robi-twice Brand Experience 2026">
+    <title>ROBI-TWICE | OFFICIAL HUB</title>
 
     <style>
+        /* ========================================================================================
+           I. GLOBAL DESIGN TOKENS
+           ========================================================================================
+        */
         :root {
-            --brand-green: #5c8d67;
-            --brand-green-glow: rgba(92, 141, 103, 0.4);
-            --bg-black: #000000;
-            --bg-dark-grey: #050505;
-            --text-white: #ffffff;
-            --radius-main: 30px;
-            --radius-sub: 15px;
-            --transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            --color-primary-green: #5c8d67;
+            --color-primary-bright: #7bb589;
+            --color-primary-dark: #3e6146;
+            --color-primary-glow: rgba(92, 141, 103, 0.45);
+            
+            /* DARK THEME MOD */
+            --color-bg-base: #000000; 
+            --color-bg-surface: #020202; 
+            --color-bg-input: #000000;
+            --color-bg-card: #040404; 
+            
+            --color-text-main: #ffffff;
+            --color-text-muted: #666666;
+            --color-text-dim: #222222;
+            
+            --border-width-std: 1px;
+            --border-color-soft: #111111;
+            --border-color-strong: #1a1a1a;
+            
+            --header-height: 120px;
+            --max-width-container: 1600px;
+            --radius-massive: 50px;
+            --radius-large: 30px;
+            --radius-medium: 18px;
+            --radius-small: 10px;
+            
+            --anim-speed-fast: 0.2s;
+            --anim-speed-std: 0.5s;
+            --anim-speed-slow: 0.8s;
+            --anim-curve: cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ========================================================================================
+           II. CORE RESET & BASE STYLES
+           ========================================================================================
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-font-smoothing: antialiased;
+        }
 
-        body {
-            background-color: var(--bg-black);
-            color: var(--text-white);
-            font-family: 'Inter', -apple-system, sans-serif;
-            min-height: 100vh;
-            background-image: url('logo.png');
-            background-repeat: repeat;
-            background-size: 150px;
-            background-attachment: fixed;
+        html {
+            background-color: var(--color-bg-base);
+            scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
-        /* Dark Shield - Sorgt dafür, dass der Hintergrund extrem dunkel bleibt */
-        .dark-overlay {
+        body {
+            background-color: var(--color-bg-base);
+            color: var(--color-text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('logo.png');
+            background-repeat: repeat;
+            background-size: 170px;
+            background-attachment: fixed;
+        }
+
+        .page-darkness-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, rgba(0,0,0,0.95) 0%, rgba(0,0,0,1) 100%);
@@ -40,315 +83,287 @@
             pointer-events: none;
         }
 
-        /* HEADER */
+        /* ========================================================================================
+           III. HEADER & NAVIGATION
+           ========================================================================================
+        */
         header {
-            height: 100px;
+            width: 100%;
+            height: var(--header-height);
             background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--brand-green);
+            z-index: 10000;
+            border-bottom: 2px solid var(--color-primary-green);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 5%;
         }
 
-        .nav-left, .nav-right { display: flex; gap: 15px; flex: 1; }
-        .nav-right { justify-content: flex-end; }
+        .header-left, .header-right { display: flex; gap: 20px; flex: 1; }
+        .header-right { justify-content: flex-end; }
 
-        .brand-center { flex: 1; text-align: center; }
-        .brand-center h1 {
-            font-size: 32px;
+        .logo-center { flex: 1; text-align: center; }
+        .logo-center h1 {
+            font-size: 38px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 12px;
+            letter-spacing: 16px;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all var(--anim-speed-std) var(--anim-curve);
         }
-        .brand-center h1:hover { color: var(--brand-green); letter-spacing: 15px; }
+        .logo-center h1:hover { color: var(--color-primary-green); letter-spacing: 20px; }
 
-        .nav-btn {
+        .btn-nav {
             background: #0a0a0a;
             border: 1px solid #1a1a1a;
             color: white;
-            padding: 12px 25px;
-            border-radius: 12px;
+            padding: 15px 30px;
+            border-radius: 14px;
             font-weight: 800;
             text-transform: uppercase;
-            font-size: 12px;
+            font-size: 13px;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        .nav-btn.active, .nav-btn:hover {
-            background: var(--brand-green);
+        .btn-nav.active, .btn-nav:hover {
+            background: var(--color-primary-green);
             border-color: white;
         }
 
-        /* VIEW SYSTEM */
-        .view-section { display: none; padding: 60px 5%; animation: viewFade 0.7s var(--transition); }
-
-        @keyframes viewFade {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .cart-badge {
+            background: #fff;
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 7px;
+            margin-left: 8px;
         }
 
-        /* LIVESTREAM MATRIX */
+        /* ========================================================================================
+           IV. VIEWS
+           ========================================================================================
+        */
+        .view-section {
+            display: none;
+            padding: 60px 0;
+            animation: fadeIn 0.7s var(--anim-curve);
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* LIVE SECTION */
         .video-matrix {
             display: grid;
-            grid-template-columns: 1fr 2.5fr 1fr;
-            gap: 25px;
-            max-width: 1800px;
+            grid-template-columns: 1fr 2.4fr 1fr;
+            gap: 30px;
+            max-width: var(--max-width-container);
             margin: 0 auto;
+            padding: 0 40px;
             align-items: center;
         }
 
-        .video-shell {
+        .v-shell {
             aspect-ratio: 16/9;
             background: #000;
-            border-radius: var(--radius-sub);
-            border: 1px solid #111;
+            border-radius: var(--radius-medium);
+            border: 1px solid var(--border-color-strong);
             overflow: hidden;
-            opacity: 0.4;
-            transition: var(--transition);
+            opacity: 0.5;
+            transition: 0.5s;
         }
 
-        .video-shell.main {
+        .v-shell.main {
             opacity: 1;
-            border: 3px solid var(--brand-green);
-            border-radius: var(--radius-main);
-            box-shadow: 0 0 60px var(--brand-green-glow);
-            transform: scale(1.05);
+            border: 4px solid var(--color-primary-green);
+            border-radius: var(--radius-large);
+            box-shadow: 0 0 80px var(--color-primary-glow);
         }
 
-        .video-shell:hover { opacity: 1; }
-        iframe { width: 100%; height: 100%; border: none; display: block; }
+        iframe { width: 100%; height: 100%; border: none; }
 
-        /* TICKER */
-        .ticker-wrap {
+        .ticker-bar {
             width: 100%;
-            background: var(--brand-green);
+            background: var(--color-primary-green);
             margin-top: 60px;
-            padding: 18px 0;
+            padding: 20px 0;
             overflow: hidden;
         }
-
-        .ticker-move {
+        .ticker-text {
             display: inline-block;
             white-space: nowrap;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 6px;
-            animation: tickerScroll 35s linear infinite;
+            letter-spacing: 7px;
+            animation: tickerFlow 38s linear infinite;
         }
+        @keyframes tickerFlow { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
 
-        @keyframes tickerScroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* STORE */
-        .store-grid {
+        /* STORE SECTION */
+        .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            max-width: 1400px;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 60px;
+            max-width: var(--max-width-container);
             margin: 0 auto;
+            padding: 0 5%;
         }
 
-        .item-card {
-            background: var(--bg-dark-grey);
-            border: 1px solid #111;
-            padding: 40px;
-            border-radius: var(--radius-main);
+        .product-node {
+            background: var(--color-bg-card);
+            padding: 45px;
+            border-radius: var(--radius-large);
             text-align: center;
-            transition: var(--transition);
+            border: 1px solid var(--border-color-strong);
+            transition: 0.4s;
         }
+        .product-node:hover { transform: translateY(-20px); border-color: var(--color-primary-green); }
 
-        .item-card:hover {
-            border-color: var(--brand-green);
-            transform: translateY(-10px);
-        }
-
-        .item-img {
-            height: 350px;
+        .visual-box {
+            height: 400px;
             background: #fff;
-            border-radius: var(--radius-sub);
-            margin-bottom: 25px;
+            border-radius: var(--radius-medium);
+            margin-bottom: 30px;
             display: flex; align-items: center; justify-content: center;
         }
-        .item-img img { max-width: 80%; transition: 0.5s; }
-        .item-card:hover .item-img img { transform: scale(1.1); }
+        .visual-box img { max-width: 80%; }
 
-        .item-price { font-size: 32px; color: var(--brand-green); font-weight: 900; margin: 20px 0; display: block; }
+        .price-tag { font-size: 38px; color: var(--color-primary-green); font-weight: 900; margin-bottom: 30px; display: block; }
 
-        .buy-trigger {
-            width: 100%;
-            padding: 20px;
-            background: var(--brand-green);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
+        .btn-add {
+            width: 100%; padding: 25px; background: var(--color-primary-green); border: none;
+            border-radius: 20px; color: white; font-weight: 900; text-transform: uppercase; cursor: pointer;
         }
 
-        /* FOOTER */
+        /* CART SECTION */
+        .cart-ui-wrapper {
+            max-width: 1400px; margin: 0 auto; background: #080808; border-radius: var(--radius-large);
+            display: grid; grid-template-columns: 1.5fr 1fr; border: 1px solid #111; overflow: hidden;
+        }
+        .cart-list { padding: 60px; border-right: 1px solid #111; }
+        .checkout-form-side { padding: 60px; background: #050505; }
+        
+        .input-style {
+            width: 100%; padding: 22px; background: #000; border: 1px solid #222;
+            color: white; border-radius: 18px; margin-bottom: 20px;
+        }
+
         footer {
-            padding: 100px 5% 50px;
-            text-align: center;
-            border-top: 1px solid #111;
-            margin-top: 80px;
+            padding: 100px 0; text-align: center; border-top: 1px solid #111; margin-top: auto;
         }
-
-        .footer-logo-bg {
-            font-size: 70px;
-            font-weight: 900;
-            color: #080808;
-            letter-spacing: 35px;
-            text-transform: uppercase;
-            pointer-events: none;
-        }
-
-        /* MOBILE FIX */
-        @media (max-width: 1100px) {
-            .video-matrix { grid-template-columns: 1fr; }
-            .video-shell:not(.main) { display: none; }
-            .video-shell.main { transform: scale(1); }
-        }
+        .footer-logo { font-size: 60px; font-weight: 900; color: #0a0a0a; letter-spacing: 40px; }
     </style>
 </head>
-<body onload="engine.boot()">
+<body onload="engine.init()">
 
-    <div class="dark-overlay"></div>
+    <div class="page-darkness-overlay"></div>
 
     <header>
-        <div class="nav-left">
-            <button class="nav-btn active" id="tab-home" onclick="engine.view('home')">Live</button>
-            <button class="nav-btn" id="tab-shop" onclick="engine.view('shop')">Store</button>
+        <div class="header-left">
+            <button class="btn-nav active" id="nav-home" onclick="engine.view('home')">Live</button>
+            <button class="btn-nav" id="nav-shop" onclick="engine.view('shop')">Store</button>
         </div>
-
-        <div class="brand-center">
+        <div class="logo-center">
             <h1 onclick="engine.view('home')">robi-twice</h1>
         </div>
-
-        <div class="nav-right">
-            <button class="nav-btn" id="tab-cart" onclick="engine.view('cart')">Cart (<span id="count-ui">0</span>)</button>
+        <div class="header-right">
+            <button class="btn-nav" onclick="engine.view('cart')">Cart <span class="cart-badge" id="cart-count">0</span></button>
         </div>
     </header>
 
-    <main id="view-home" class="view-section" style="display: block;">
+    <section id="view-home" class="view-section" style="display: block;">
         <div class="video-matrix">
-            <div class="video-shell">
-                <iframe src="https://www.youtube.com/embed/5Mf7S0pDyP0?controls=0&mute=1&autoplay=1&loop=1"></iframe>
-            </div>
+            <div class="v-shell"><iframe src="https://www.youtube.com/embed/5Mf7S0pDyP0?mute=1&autoplay=1"></iframe></div>
+            <div class="v-shell main"><iframe src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1"></iframe></div>
+            <div class="v-shell"><iframe src="https://www.youtube.com/embed/vvj64ZskM9Y?mute=1&autoplay=1"></iframe></div>
+        </div>
+        <div class="ticker-bar">
+            <div class="ticker-text">+++ ROBI-TWICE OFFICIAL MERCH DROP 2026 +++ WORLDWIDE SHIPPING +++ LIMITED QUANTITY +++</div>
+        </div>
+    </section>
 
-            <div class="video-shell main">
-                <iframe 
-                    src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=0" 
-                    allow="autoplay; encrypted-media" 
-                    allowfullscreen>
-                </iframe>
+    <section id="view-shop" class="view-section">
+        <div class="product-grid">
+            <div class="product-node">
+                <div class="visual-box"><img src="tshirt.png" alt="Shirt"></div>
+                <h2>Signature Tee</h2>
+                <span class="price-tag">29,95 €</span>
+                <button class="btn-add" onclick="engine.add('Signature Tee', 29.95)">Add to Cart</button>
             </div>
-
-            <div class="video-shell">
-                <iframe src="https://www.youtube.com/embed/vvj64ZskM9Y?controls=0&mute=1&autoplay=1&loop=1"></iframe>
+            <div class="product-node">
+                <div class="visual-box"><img src="hoodie.png" alt="Hoodie"></div>
+                <h2>Legacy Hoodie</h2>
+                <span class="price-tag">54,95 €</span>
+                <button class="btn-add" onclick="engine.add('Legacy Hoodie', 54.95)">Add to Cart</button>
             </div>
         </div>
+    </section>
 
-        <div class="ticker-wrap">
-            <div class="ticker-move">
-                +++ LIVE ON YOUTUBE NOW +++ CHECK THE NEW COLLECTION IN THE STORE +++ FREE WORLDWIDE SHIPPING ON ORDERS OVER 100€ +++ ROBI-TWICE 2026 +++
+    <section id="view-cart" class="view-section">
+        <div class="cart-ui-wrapper">
+            <div class="cart-list">
+                <h2 style="margin-bottom: 40px;">Your Items</h2>
+                <div id="render-cart"></div>
+                <h3 style="margin-top: 40px;">Total: <span id="total-val">0,00 €</span></h3>
+            </div>
+            <div class="checkout-form-side">
+                <h2>Checkout</h2>
+                <form id="order-form" style="margin-top: 30px;">
+                    <input type="text" name="name" placeholder="Full Name" class="input-style" required>
+                    <input type="email" name="email" placeholder="Email" class="input-style" required>
+                    <input type="text" name="address" placeholder="Address" class="input-style" required>
+                    <input type="hidden" name="items" id="hidden-items">
+                    <button type="submit" class="btn-add" style="background: white; color: black;">Pay via PayPal</button>
+                </form>
             </div>
         </div>
-    </main>
-
-    <main id="view-shop" class="view-section">
-        <div class="store-grid">
-            <div class="item-card">
-                <div class="item-img"><img src="tshirt.png" alt="Shirt"></div>
-                <h3>Signature Tee</h3>
-                <span class="item-price">29,95 €</span>
-                <button class="buy-trigger" onclick="engine.add('Signature Tee', 29.95)">Add to Cart</button>
-            </div>
-            <div class="item-card">
-                <div class="item-img"><img src="hoodie.png" alt="Hoodie"></div>
-                <h3>Legacy Hoodie</h3>
-                <span class="item-price">54,95 €</span>
-                <button class="buy-trigger" onclick="engine.add('Legacy Hoodie', 54.95)">Add to Cart</button>
-            </div>
-        </div>
-    </main>
-
-    <main id="view-cart" class="view-section">
-        <div style="max-width: 800px; margin: 0 auto; background: #050505; padding: 40px; border-radius: 20px; border: 1px solid #111;">
-            <h2 style="margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">Your Cart</h2>
-            <div id="cart-items-list"></div>
-            <div style="margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 24px; font-weight: 900;">Total:</span>
-                <span id="total-price-ui" style="font-size: 30px; font-weight: 900; color: var(--brand-green);">0,00 €</span>
-            </div>
-            <button class="buy-trigger" style="margin-top: 30px; background: white; color: black;" onclick="alert('Proceeding to Checkout...')">Checkout via PayPal</button>
-        </div>
-    </main>
+    </section>
 
     <footer>
-        <div class="footer-logo-bg">robi-twice</div>
-        <p style="color: #222; font-size: 11px; margin-top: 20px; letter-spacing: 3px;">&copy; 2026 ROBI-TWICE OFFICIAL HUB. ALL RIGHTS RESERVED.</p>
+        <div class="footer-logo">robi-twice</div>
+        <p>&copy; 2026 ROBI-TWICE OFFICIAL</p>
     </footer>
 
     <script>
         const engine = {
-            state: { cart: [] },
-
-            boot: () => console.log("ROBI-TWICE Hub Online"),
-
+            cart: [],
+            init: () => console.log("Engine Ready"),
             view: (id) => {
                 document.querySelectorAll('.view-section').forEach(v => v.style.display = 'none');
-                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.btn-nav').forEach(b => b.classList.remove('active'));
                 document.getElementById('view-' + id).style.display = 'block';
-                if(document.getElementById('tab-' + id)) document.getElementById('tab-' + id).classList.add('active');
-                window.scrollTo(0,0);
+                if(document.getElementById('nav-' + id)) document.getElementById('nav-' + id).classList.add('active');
             },
-
             add: (name, price) => {
-                engine.state.cart.push({ name, price, id: Date.now() });
+                engine.cart.push({name, price, id: Date.now()});
                 engine.sync();
                 alert(name + " added!");
             },
-
-            remove: (id) => {
-                engine.state.cart = engine.state.cart.filter(i => i.id !== id);
-                engine.sync();
-            },
-
             sync: () => {
-                const list = document.getElementById('cart-items-list');
-                const total = document.getElementById('total-price-ui');
-                const badge = document.getElementById('count-ui');
-                
-                badge.innerText = engine.state.cart.length;
+                const list = document.getElementById('render-cart');
+                const badge = document.getElementById('cart-count');
+                const total = document.getElementById('total-val');
+                badge.innerText = engine.cart.length;
                 let sum = 0;
                 let html = "";
-
-                engine.state.cart.forEach(item => {
-                    sum += item.price;
-                    html += `
-                        <div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #111;">
-                            <span>${item.name}</span>
-                            <span>${item.price.toFixed(2)} € <button onclick="engine.remove(${item.id})" style="background:none; border:none; color:red; margin-left:10px; cursor:pointer;">X</button></span>
-                        </div>
-                    `;
+                engine.cart.forEach(i => {
+                    sum += i.price;
+                    html += `<div style="display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid #111;"><span>${i.name}</span><span>${i.price.toFixed(2)} €</span></div>`;
                 });
-
-                list.innerHTML = html || "Your cart is empty.";
+                list.innerHTML = html || "Cart is empty.";
                 total.innerText = sum.toFixed(2).replace('.', ',') + " €";
+                document.getElementById('hidden-items').value = JSON.stringify(engine.cart);
             }
         };
+
+        document.getElementById('order-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            await fetch('https://formspree.io/f/xlgpdoak', { method: 'POST', body: formData, headers: {'Accept': 'application/json'} });
+            const sum = engine.cart.reduce((a,b) => a + b.price, 0).toFixed(2);
+            window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${sum}&currency_code=EUR&item_name=Robi-Twice-Order`;
+        });
     </script>
 </body>
 </html>
