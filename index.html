@@ -4,142 +4,162 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Official Robi-Twice Merch Store and Live Entertainment Hub">
+    <meta name="author" content="robi-twice">
+    <meta name="description" content="Official Robi-Twice Hub 2026 - Videos, Store, Community">
     
-    <title>robi-twice | Official Production Hub 2026</title>
-    
+    <title>ROBI-TWICE | OFFICIAL BRAND HUB 2026</title>
+
     <style>
+        /* CSS VARIABLES: Das Fundament des Designs */
         :root {
-            /* Farb-Palette */
-            --p-green: #5c8d67;
-            --p-green-bright: #7bb589;
-            --p-green-dark: #3e6146;
-            --p-green-glow: rgba(92, 141, 103, 0.45);
-            --p-green-soft: rgba(92, 141, 103, 0.15);
+            /* Farben */
+            --brand-green: #5c8d67;
+            --brand-green-hover: #7bb589;
+            --brand-green-dark: #3e6146;
+            --brand-green-glow: rgba(92, 141, 103, 0.4);
+            --brand-green-soft: rgba(92, 141, 103, 0.1);
             
-            --bg-black-hex: #050505;
-            --bg-dark-card: #0a0a0a;
-            --bg-input: #000000;
+            --base-black: #050505;
+            --card-black: #0a0a0a;
+            --input-black: #000000;
+            --border-grey: #1a1a1a;
+            --border-light: #333333;
             
             --text-pure: #ffffff;
-            --text-ghost: rgba(255, 255, 255, 0.7);
-            --text-muted: #555555;
+            --text-ghost: rgba(255, 255, 255, 0.6);
             --text-dark: #111111;
             
-            --border-dim: #1a1a1a;
-            --border-heavy: #333333;
-            
             /* Metriken */
-            --header-height: 115px;
-            --max-page-width: 1600px;
-            --radius-xl: 45px;
-            --radius-lg: 30px;
-            --radius-md: 18px;
-            --radius-sm: 10px;
+            --header-height: 120px;
+            --footer-height: 400px;
+            --max-site-width: 1700px;
+            --radius-full: 50px;
+            --radius-large: 35px;
+            --radius-medium: 20px;
+            --radius-small: 12px;
             
-            /* Animationen */
-            --e-out: cubic-bezier(0.19, 1, 0.22, 1);
-            --t-fast: 0.2s var(--e-out);
-            --t-std: 0.45s var(--e-out);
-            --t-slow: 0.8s var(--e-out);
+            /* Animation Timing */
+            --t-fast: 0.15s;
+            --t-std: 0.4s;
+            --t-slow: 0.8s;
+            --ease: cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        /* ###################################################################
-           #                         2. GLOBAL CORE RESET                    #
-           ###################################################################
-        */
+        /* RESET & CORE DEFAULTS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            outline: none;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html {
             scroll-behavior: smooth;
+            background-color: var(--base-black);
             overflow-x: hidden;
-            background: var(--bg-black-hex);
+            height: 100%;
         }
 
         body {
-            background-color: var(--bg-black-hex);
+            background-color: var(--base-black);
             color: var(--text-pure);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            background-image: url('logo.png'); /* Pattern aus deinen Screenshots */
+            background-repeat: repeat;
+            background-size: 170px;
+            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background-image: url('logo.png'); /* Pattern aus Screenshot */
-            background-repeat: repeat;
-            background-size: 160px;
-            background-attachment: fixed;
         }
 
-        /* Ambient-Overlay für Tiefenwirkung */
-        .ambient-shield {
+        /* Overlay für Lesbarkeit des Patterns */
+        .page-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.98) 100%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.96) 100%);
             z-index: -1;
             pointer-events: none;
         }
 
-        /* Custom Scrollbar Suite */
-        ::-webkit-scrollbar { width: 10px; height: 10px; }
-        ::-webkit-scrollbar-track { background: #020202; }
-        ::-webkit-scrollbar-thumb { 
-            background: var(--p-green); 
-            border-radius: 5px; 
-            border: 2px solid #020202;
+        /* SCROLLBAR STYLING */
+        ::-webkit-scrollbar {
+            width: 12px;
         }
-        ::-webkit-scrollbar-thumb:hover { background: var(--p-green-bright); }
+        ::-webkit-scrollbar-track {
+            background: var(--base-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--brand-green);
+            border-radius: 6px;
+            border: 3px solid var(--base-black);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--brand-green-hover);
+        }
 
-        /* ###################################################################
-           #                         3. HEADER & NAV SYSTEM                  #
-           ###################################################################
+        /* ====================================================================================
+            2. NAVIGATION & HEADER SYSTEM
+            ==================================================================== 
         */
         header {
             width: 100%;
             height: var(--header-height);
             background: rgba(5, 5, 5, 0.98);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
-            z-index: 9000;
-            border-bottom: 2px solid var(--p-green);
+            z-index: 10000;
+            border-bottom: 2px solid var(--brand-green);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 6%;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.9);
+            padding: 0 5%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
 
-        .h-side { flex: 1; display: flex; gap: 20px; }
-        .h-side-right { justify-content: flex-end; }
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex: 1;
+        }
 
-        .brand-hub { flex: 1; text-align: center; }
-        .brand-hub h1 {
-            font-size: 36px;
+        .header-right {
+            justify-content: flex-end;
+        }
+
+        .logo-center {
+            flex: 1;
+            text-align: center;
+        }
+
+        .logo-center h1 {
+            font-size: 38px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 15px;
+            letter-spacing: 12px;
             cursor: pointer;
-            transition: var(--t-std);
-            white-space: nowrap;
+            transition: var(--t-std) var(--ease);
+            color: var(--text-pure);
         }
 
-        .brand-hub h1:hover {
-            color: var(--p-green);
-            letter-spacing: 18px;
-            text-shadow: 0 0 35px var(--p-green-glow);
+        .logo-center h1:hover {
+            color: var(--brand-green);
+            letter-spacing: 15px;
+            text-shadow: 0 0 30px var(--brand-green-glow);
         }
 
-        .nav-link-btn {
+        /* NAVIGATION BUTTONS */
+        .btn-nav {
             background: #0d0d0d;
             border: 1px solid #222;
-            color: white;
+            color: var(--text-pure);
             padding: 14px 28px;
             border-radius: 14px;
             font-weight: 800;
@@ -147,657 +167,676 @@
             font-size: 13px;
             letter-spacing: 2px;
             cursor: pointer;
-            transition: var(--t-std);
+            transition: all 0.3s var(--ease);
             position: relative;
             overflow: hidden;
         }
 
-        .nav-link-btn:hover {
-            background: var(--p-green);
+        .btn-nav:hover {
+            background: var(--brand-green);
             border-color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
-        .cart-indicator {
-            background: var(--p-green);
+        .btn-nav.active {
+            background: var(--brand-green);
+            border-color: var(--brand-green);
+        }
+
+        .cart-btn {
+            background: var(--brand-green);
             border: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        #cart-count-badge {
-            background: white;
-            color: black;
+        .cart-badge {
+            background: #fff;
+            color: #000;
             padding: 2px 8px;
             border-radius: 6px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 900;
         }
 
-        /* ###################################################################
-           #                         4. LIVE HUB (VIDEO UNIT)                #
-           ###################################################################
+        /* ====================================================================================
+            3. VIEW MANAGEMENT (THE LOGIC ENGINE)
+            ==================================================================== 
         */
-        .live-video-suite {
+        .view-section {
+            display: none; /* Deaktiviert alle Views standardmäßig */
             width: 100%;
-            padding: 40px 0 0 0;
-            background: transparent;
+            animation: fadeInView 0.6s var(--ease) forwards;
+            padding-bottom: 100px;
         }
 
-        .v-matrix {
+        @keyframes fadeInView {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Initial View */
+        #view-home {
+            display: block;
+        }
+
+        /* ====================================================================================
+            4. LIVE MODULE (BILD 2 SYNC)
+            ==================================================================== 
+        */
+        .live-wrapper {
+            padding: 50px 0;
+            width: 100%;
+        }
+
+        .video-matrix {
             display: grid;
-            grid-template-columns: 1fr 2.2fr 1fr;
-            gap: 25px;
-            max-width: var(--max-page-width);
+            grid-template-columns: 1fr 2.5fr 1fr;
+            gap: 30px;
+            max-width: var(--max-site-width);
             margin: 0 auto;
             padding: 0 40px;
             align-items: center;
         }
 
-        .v-box-aux {
+        .video-box-side {
             aspect-ratio: 16/9;
             background: #000;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-dim);
+            border-radius: var(--radius-medium);
+            border: 1px solid var(--border-grey);
             overflow: hidden;
-            opacity: 0.5;
-            transition: var(--t-std);
+            opacity: 0.4;
+            transition: var(--t-std) var(--ease);
         }
 
-        .v-box-aux:hover { opacity: 1; border-color: var(--p-green); }
+        .video-box-side:hover {
+            opacity: 1;
+            border-color: var(--brand-green);
+            transform: scale(1.02);
+        }
 
-        .v-box-main {
+        .video-box-main {
             aspect-ratio: 16/9;
             background: #000;
-            border-radius: var(--radius-lg);
-            border: 3px solid var(--p-green);
+            border-radius: var(--radius-large);
+            border: 3px solid var(--brand-green);
             overflow: hidden;
-            box-shadow: 0 0 60px rgba(92, 141, 103, 0.3);
+            box-shadow: 0 0 70px rgba(92, 141, 103, 0.35);
             position: relative;
         }
 
-        .v-iframe { width: 100%; height: 100%; border: none; }
-
-        /* ###################################################################
-           #                         5. NEWS TICKER ENGINE                   #
-           ###################################################################
-        */
-        .global-ticker {
+        .iframe-element {
             width: 100%;
-            background: var(--p-green);
-            margin-top: 40px;
-            padding: 16px 0;
+            height: 100%;
+            border: none;
+        }
+
+        /* GREEN TICKER MODULE */
+        .news-ticker-bar {
+            width: 100%;
+            background: var(--brand-green);
+            margin-top: 50px;
+            padding: 18px 0;
             overflow: hidden;
             border-top: 1px solid rgba(255,255,255,0.1);
             border-bottom: 1px solid rgba(0,0,0,0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
-        .ticker-stream {
+        .ticker-content {
             display: inline-block;
             white-space: nowrap;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 6px;
-            font-size: 15px;
-            animation: ticker-animation 40s linear infinite;
+            font-size: 16px;
+            animation: tickerFlow 35s linear infinite;
         }
 
-        @keyframes ticker-animation {
+        @keyframes tickerFlow {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
 
-        /* ###################################################################
-           #                         6. COLLECTION SECTION                   #
-           ###################################################################
+        /* ====================================================================================
+            5. STORE MODULE (BILD 184719)
+            ==================================================================== 
         */
-        #section-shop {
+        .store-hub {
             padding: 80px 5%;
-            width: 100%;
-            display: block; /* Garantiert sichtbar */
+            max-width: var(--max-site-width);
+            margin: 0 auto;
         }
 
-        .shop-intro {
+        .section-headline {
             text-align: center;
             margin-bottom: 80px;
         }
 
-        .shop-intro h2 {
-            font-size: 60px;
+        .section-headline h2 {
+            font-size: 65px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 5px;
-            line-height: 1;
+            margin-bottom: 10px;
         }
 
-        .shop-intro .tagline {
-            color: var(--p-green);
-            font-weight: 800;
+        .section-headline p {
+            color: var(--brand-green);
             text-transform: uppercase;
-            letter-spacing: 12px;
-            font-size: 16px;
-            margin-top: 15px;
+            letter-spacing: 15px;
+            font-weight: 800;
+            font-size: 18px;
         }
 
-        .product-grid-system {
+        .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 50px;
-            max-width: var(--max-page-width);
-            margin: 0 auto;
         }
 
-        .item-card {
-            background: var(--bg-dark-card);
-            border: 1px solid var(--border-dim);
-            border-radius: var(--radius-xl);
-            padding: 35px;
-            transition: var(--t-std);
-            position: relative;
+        .product-card {
+            background: var(--card-black);
+            border: 1px solid var(--border-grey);
+            border-radius: var(--radius-large);
+            padding: 40px;
+            transition: var(--t-std) var(--ease);
             text-align: center;
+            position: relative;
         }
 
-        .item-card:hover {
-            transform: translateY(-20px) scale(1.02);
-            border-color: var(--p-green);
-            box-shadow: 0 40px 90px rgba(0,0,0,0.8);
+        .product-card:hover {
+            transform: translateY(-20px);
+            border-color: var(--brand-green);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
         }
 
-        .item-card::after {
-            content: "ORIGINAL GEAR";
-            position: absolute;
-            top: 25px; right: 25px;
-            font-size: 9px; font-weight: 900;
-            color: var(--text-muted);
-            border: 1px solid var(--border-dim);
-            padding: 4px 8px; border-radius: 4px;
-        }
-
-        .item-visual {
+        .product-visual {
             width: 100%;
-            height: 380px;
-            background: #ffffff;
-            border-radius: var(--radius-lg);
+            height: 400px;
+            background: #fff;
+            border-radius: var(--radius-medium);
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 45px;
-            margin-bottom: 30px;
-            transition: var(--t-std);
+            padding: 40px;
+            overflow: hidden;
         }
 
-        .item-visual img {
+        .product-visual img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            transition: var(--t-slow);
+            transition: var(--t-slow) var(--ease);
         }
 
-        .item-card:hover .item-visual img {
-            transform: scale(1.15) rotate(-3deg);
+        .product-card:hover .product-visual img {
+            transform: scale(1.1) rotate(-2deg);
         }
 
-        .item-meta h3 {
-            font-size: 28px;
-            font-weight: 900;
+        .product-info h3 {
+            font-size: 30px;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            font-weight: 900;
+            margin-bottom: 10px;
         }
 
-        .item-meta .price-tag {
-            font-size: 32px;
-            color: var(--p-green);
+        .product-price {
+            font-size: 36px;
+            color: var(--brand-green);
             font-weight: 900;
             margin-bottom: 30px;
             display: block;
         }
 
-        .select-size-wrap {
-            margin-bottom: 25px;
-        }
-
-        .size-dropdown {
+        .size-selector {
             width: 100%;
             background: #000;
             border: 1px solid #222;
-            color: white;
+            color: #fff;
             padding: 18px;
-            border-radius: var(--radius-md);
-            font-weight: 700;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            font-weight: 800;
             cursor: pointer;
-            appearance: none;
-            text-align: center;
+            font-size: 16px;
         }
 
-        .add-to-cart-btn {
+        .add-cart-btn {
             width: 100%;
-            background: var(--p-green);
+            background: var(--brand-green);
+            color: #fff;
             border: none;
-            color: white;
             padding: 22px;
-            border-radius: var(--radius-md);
+            border-radius: 18px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 3px;
             cursor: pointer;
-            transition: var(--t-std);
+            transition: 0.3s;
         }
 
-        .add-to-cart-btn:hover {
-            background: var(--p-green-bright);
+        .add-cart-btn:hover {
+            background: var(--brand-green-hover);
             letter-spacing: 5px;
-            box-shadow: 0 0 30px var(--p-green-glow);
         }
 
-        /* ###################################################################
-           #                         7. CART SYSTEM (BILD 1)                 #
-           ###################################################################
+        /* ====================================================================================
+            6. CART & CHECKOUT MODULE (BILD 1)
+            ==================================================================== 
         */
-        #section-cart {
-            display: none;
+        .cart-wrapper {
             padding: 80px 5%;
-            animation: fadeIn 0.6s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .cart-layout-container {
-            max-width: 1300px;
+        .cart-container {
+            max-width: 1400px;
             margin: 0 auto;
             background: #080808;
-            border: 1px solid var(--border-dim);
-            border-radius: 50px;
-            padding: 80px;
+            border: 1px solid var(--border-grey);
+            border-radius: var(--radius-full);
             display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 80px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.6);
+            grid-template-columns: 1.5fr 1fr;
+            min-height: 800px;
+            overflow: hidden;
+            box-shadow: 0 60px 120px rgba(0,0,0,0.7);
         }
 
-        .cart-list-side {
+        .cart-items-section {
+            padding: 70px;
             border-right: 1px solid #111;
-            padding-right: 60px;
+        }
+
+        .checkout-section {
+            padding: 70px;
+            background: #050505;
         }
 
         .cart-title {
-            font-size: 45px;
+            font-size: 48px;
             font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 50px;
-            letter-spacing: 2px;
         }
 
-        .cart-item-entry {
+        .cart-item-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 35px 0;
+            padding: 30px 0;
             border-bottom: 1px solid #111;
         }
 
-        .cart-item-entry h4 { font-size: 24px; text-transform: uppercase; font-weight: 900; }
-        .cart-item-entry p { color: var(--p-green); font-weight: 800; font-size: 14px; margin-top: 5px; }
+        .cart-item-details h4 {
+            font-size: 24px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
 
-        .cart-item-price { font-size: 26px; font-weight: 900; }
+        .cart-item-details p {
+            color: var(--brand-green);
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .cart-item-price {
+            font-size: 28px;
+            font-weight: 900;
+        }
 
         .btn-remove {
-            background: transparent;
+            background: none;
             border: none;
             color: #ff4444;
             text-transform: uppercase;
-            font-size: 11px;
             font-weight: 900;
+            font-size: 11px;
             cursor: pointer;
             margin-top: 10px;
-            display: block;
         }
 
-        .cart-total-footer {
+        .cart-summary-total {
             margin-top: 60px;
             background: #000;
             padding: 40px;
             border-radius: 30px;
-            border: 1px solid #111;
-        }
-
-        .total-flex {
             display: flex;
             justify-content: space-between;
-            font-size: 38px;
+            align-items: center;
+        }
+
+        .cart-summary-total span:first-child {
+            font-size: 32px;
             font-weight: 900;
-            color: var(--p-green);
+            text-transform: uppercase;
         }
 
-        /* Checkout Formular */
-        .checkout-gate {
-            display: flex;
-            flex-direction: column;
+        .cart-summary-total span:last-child {
+            font-size: 40px;
+            font-weight: 900;
+            color: var(--brand-green);
         }
 
-        .form-master {
+        /* CHECKOUT FORM */
+        .checkout-form {
             display: flex;
             flex-direction: column;
             gap: 25px;
         }
 
-        .input-group {
+        .form-field {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        .input-group label {
+        .form-field label {
             font-size: 12px;
             text-transform: uppercase;
             font-weight: 900;
-            color: #444;
+            color: #555;
             letter-spacing: 2px;
         }
 
-        .input-group input {
+        .form-field input {
             padding: 22px;
             background: #000;
             border: 1px solid #222;
             border-radius: 18px;
-            color: white;
+            color: #fff;
             font-size: 16px;
-            transition: var(--t-std);
+            transition: 0.3s;
         }
 
-        .input-group input:focus {
-            border-color: var(--p-green);
-            background: #050505;
+        .form-field input:focus {
+            border-color: var(--brand-green);
         }
 
-        .final-submit-btn {
-            width: 100%;
+        .pay-submit-btn {
+            margin-top: 30px;
             padding: 26px;
-            background: white;
-            color: black;
+            background: #fff;
+            color: #000;
             border: none;
             border-radius: 20px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 5px;
             cursor: pointer;
-            margin-top: 40px;
-            transition: var(--t-std);
+            transition: var(--t-std) var(--ease);
         }
 
-        .final-submit-btn:hover {
-            background: var(--p-green);
-            color: white;
-            transform: scale(1.03);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        .pay-submit-btn:hover {
+            background: var(--brand-green);
+            color: #fff;
+            transform: scale(1.02);
         }
 
-        /* ###################################################################
-           #                         8. FOOTER UNIT (BILD 3)                 #
-           ###################################################################
+        /* ====================================================================================
+            7. FOOTER MODULE (BILD 3)
+            ==================================================================== 
         */
         footer {
             background: #020202;
-            padding: 120px 0 60px 0;
-            border-top: 1px solid #111;
+            padding: 120px 0 60px;
             text-align: center;
+            border-top: 1px solid #111;
             margin-top: auto;
         }
 
-        .f-massive-logo {
-            font-size: 55px;
+        .footer-logo-text {
+            font-size: 65px;
             font-weight: 900;
             color: #0d0d0d;
             text-transform: uppercase;
-            letter-spacing: 35px;
-            margin-bottom: 70px;
-            user-select: none;
+            letter-spacing: 40px;
+            margin-bottom: 80px;
+            pointer-events: none;
         }
 
-        .f-nav {
+        .footer-navigation {
             display: flex;
             justify-content: center;
-            gap: 60px;
-            margin-bottom: 70px;
+            gap: 50px;
+            margin-bottom: 60px;
             flex-wrap: wrap;
         }
 
-        .f-nav a {
+        .footer-navigation a {
             color: #333;
             text-decoration: none;
-            font-size: 14px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            transition: var(--t-fast);
+            font-size: 14px;
+            letter-spacing: 4px;
+            transition: 0.3s;
         }
 
-        .f-nav a:hover { color: var(--p-green); }
+        .footer-navigation a:hover {
+            color: var(--brand-green);
+        }
 
-        .payment-gateway-strip {
+        .payment-icons {
             display: flex;
             justify-content: center;
             gap: 40px;
             margin-bottom: 60px;
-            opacity: 0.15;
+            opacity: 0.2;
             filter: grayscale(1);
         }
 
-        .payment-gateway-strip img { height: 25px; }
+        .payment-icons img {
+            height: 25px;
+        }
 
-        .legal-copyright {
+        .copyright-notice {
             font-size: 12px;
             color: #222;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
         }
 
-        /* ###################################################################
-           #                         9. RESPONSIVE QUERIES                   #
-           ###################################################################
+        /* ====================================================================================
+            8. RESPONSIVE DESIGN MATRIX
+            ==================================================================== 
         */
         @media (max-width: 1200px) {
-            .v-matrix { grid-template-columns: 1fr; }
-            .v-box-aux { display: none; }
-            .cart-layout-container { grid-template-columns: 1fr; padding: 40px; }
-            .cart-list-side { border-right: none; padding-right: 0; }
-            .brand-hub h1 { font-size: 24px; letter-spacing: 8px; }
+            .video-matrix { grid-template-columns: 1fr; }
+            .video-box-side { display: none; }
+            .cart-container { grid-template-columns: 1fr; }
+            .cart-items-section { border-right: none; padding: 40px; }
+            .cart-items-section { border-bottom: 1px solid #111; }
+            .brand-hub h1 { font-size: 28px; letter-spacing: 8px; }
         }
 
-        @media (max-width: 600px) {
-            .shop-intro h2 { font-size: 36px; }
-            .h-side { gap: 10px; }
-            .nav-link-btn { padding: 10px 15px; font-size: 10px; }
+        @media (max-width: 768px) {
+            header { padding: 0 20px; }
+            .header-left, .header-right { display: none; } /* Mobile Nav logic hier einfügen wenn nötig */
+            .logo-center h1 { font-size: 24px; letter-spacing: 5px; }
+            .section-headline h2 { font-size: 40px; }
+            .product-grid { grid-template-columns: 1fr; }
+            .footer-logo-text { font-size: 30px; letter-spacing: 15px; }
         }
     </style>
 </head>
-<body id="production-body">
+<body id="app-root">
 
-    <div class="ambient-shield"></div>
+    <div class="page-overlay"></div>
 
-    <header id="global-header">
-        <div class="h-side">
-            <button class="nav-link-btn" onclick="window.appEngine.navigate('shop')">Home</button>
-            <button class="nav-link-btn" onclick="window.appEngine.navigate('shop')">Store</button>
+    <header>
+        <div class="header-left">
+            <button class="btn-nav active" id="nav-home" onclick="window.engine.changeView('home')">Live</button>
+            <button class="btn-nav" id="nav-shop" onclick="window.engine.changeView('shop')">Store</button>
         </div>
 
-        <div class="brand-hub">
-            <h1 onclick="window.appEngine.navigate('shop')">robi-twice</h1>
+        <div class="logo-center">
+            <h1 onclick="window.engine.changeView('home')">robi-twice</h1>
         </div>
 
-        <div class="h-side h-side-right">
-            <button class="nav-link-btn cart-indicator" onclick="window.appEngine.navigate('cart')">
-                Cart <span id="cart-count-badge">0</span>
+        <div class="header-right">
+            <button class="btn-nav cart-btn" id="nav-cart" onclick="window.engine.changeView('cart')">
+                Cart <span class="cart-badge" id="cart-ui-count">0</span>
             </button>
         </div>
     </header>
 
-    <main id="section-shop">
-        
-        <section class="live-video-suite">
-            <div class="v-matrix">
-                <div class="v-box-aux">
-                    <iframe class="v-iframe" src="https://www.youtube.com/embed/5Mf7S0pDyP0?controls=0&mute=1&autoplay=1&loop=1&playlist=5Mf7S0pDyP0"></iframe>
-                </div>
-                
-                <div class="v-box-main">
-                    <iframe class="v-iframe" src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1" allowfullscreen></iframe>
+    <main id="view-home" class="view-section">
+        <section class="live-wrapper">
+            <div class="video-matrix">
+                <div class="video-box-side">
+                    <iframe class="iframe-element" src="https://www.youtube.com/embed/5Mf7S0pDyP0?controls=0&mute=1&autoplay=1&loop=1&playlist=5Mf7S0pDyP0"></iframe>
                 </div>
 
-                <div class="v-box-aux">
-                    <iframe class="v-iframe" src="https://www.youtube.com/embed/vvj64ZskM9Y?controls=0&mute=1&autoplay=1&loop=1&playlist=vvj64ZskM9Y"></iframe>
+                <div class="video-box-main">
+                    <iframe class="iframe-element" src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1" allowfullscreen></iframe>
+                </div>
+
+                <div class="video-box-side">
+                    <iframe class="iframe-element" src="https://www.youtube.com/embed/vvj64ZskM9Y?controls=0&mute=1&autoplay=1&loop=1&playlist=vvj64ZskM9Y"></iframe>
                 </div>
             </div>
 
-            <div class="global-ticker">
-                <div class="ticker-stream">
-                    +++ ROBI-TWICE OFFICIAL MERCH DROP 2026 +++ WORLDWIDE SHIPPING +++ LIMITED QUANTITY +++ GET YOUR GEAR NOW +++ SUPPORT THE CHANNEL +++ EXCLUSIVE DESIGNS +++
+            <div class="news-ticker-bar">
+                <div class="ticker-content">
+                    +++ ROBI-TWICE OFFICIAL MERCH DROP 2026 +++ WORLDWIDE SHIPPING +++ LIMITED QUANTITY +++ JOIN THE DISCORD +++ NEW VIDEO EVERY SUNDAY +++
                 </div>
             </div>
         </section>
+    </main>
 
-        <section style="margin-top: 100px;">
-            <div class="shop-intro">
+    <main id="view-shop" class="view-section">
+        <section class="store-hub">
+            <div class="section-headline">
                 <h2>The Collection</h2>
-                <div class="tagline">Premium Apparel 2026</div>
+                <p>Premium Apparel 2026</p>
             </div>
 
-            <div class="product-grid-system">
-                
-                <article class="item-card">
-                    <div class="item-visual">
+            <div class="product-grid">
+                <article class="product-card">
+                    <div class="product-visual">
                         <img src="tshirt.png" alt="Signature Tee">
                     </div>
-                    <div class="item-meta">
+                    <div class="product-info">
                         <h3>Signature Tee</h3>
-                        <span class="price-tag">29,95 €</span>
-                        <div class="select-size-wrap">
-                            <select id="size-1" class="size-dropdown">
-                                <option value="S">Größe: S</option>
-                                <option value="M">Größe: M</option>
-                                <option value="L">Größe: L</option>
-                                <option value="XL">Größe: XL</option>
-                            </select>
-                        </div>
-                        <button class="add-to-cart-btn" onclick="window.appEngine.addToCart('Signature Tee', 29.95, 'size-1')">Add to Cart</button>
+                        <span class="product-price">29,95 €</span>
+                        <select id="size-shirt" class="size-selector">
+                            <option value="S">Größe: S</option>
+                            <option value="M">Größe: M</option>
+                            <option value="L">Größe: L</option>
+                            <option value="XL">Größe: XL</option>
+                        </select>
+                        <button class="add-cart-btn" onclick="window.engine.addToCart('Signature Tee', 29.95, 'size-shirt')">Add to Cart</button>
                     </div>
                 </article>
 
-                <article class="item-card">
-                    <div class="item-visual">
+                <article class="product-card">
+                    <div class="product-visual">
                         <img src="hoodie.png" alt="Legacy Hoodie">
                     </div>
-                    <div class="item-meta">
+                    <div class="product-info">
                         <h3>Legacy Hoodie</h3>
-                        <span class="price-tag">54,95 €</span>
-                        <div class="select-size-wrap">
-                            <select id="size-2" class="size-dropdown">
-                                <option value="S">Größe: S</option>
-                                <option value="M">Größe: M</option>
-                                <option value="L">Größe: L</option>
-                                <option value="XL">Größe: XL</option>
-                            </select>
-                        </div>
-                        <button class="add-to-cart-btn" onclick="window.appEngine.addToCart('Legacy Hoodie', 54.95, 'size-2')">Add to Cart</button>
+                        <span class="product-price">54,95 €</span>
+                        <select id="size-hoodie" class="size-selector">
+                            <option value="S">Größe: S</option>
+                            <option value="M">Größe: M</option>
+                            <option value="L">Größe: L</option>
+                            <option value="XL">Größe: XL</option>
+                        </select>
+                        <button class="add-cart-btn" onclick="window.engine.addToCart('Legacy Hoodie', 54.95, 'size-hoodie')">Add to Cart</button>
                     </div>
                 </article>
 
-                <article class="item-card">
-                    <div class="item-visual">
-                        <img src="muetze.png" alt="Urban Beanie">
+                <article class="product-card">
+                    <div class="product-visual">
+                        <img src="muetze.png" alt="Beanie">
                     </div>
-                    <div class="item-meta">
+                    <div class="product-info">
                         <h3>Urban Beanie</h3>
-                        <span class="price-tag">24,95 €</span>
-                        <div class="select-size-wrap">
-                            <select id="size-3" class="size-dropdown">
-                                <option value="OneSize">One Size</option>
-                            </select>
-                        </div>
-                        <button class="add-to-cart-btn" onclick="window.appEngine.addToCart('Urban Beanie', 24.95, 'size-3')">Add to Cart</button>
+                        <span class="product-price">24,95 €</span>
+                        <select id="size-beanie" class="size-selector">
+                            <option value="OneSize">One Size</option>
+                        </select>
+                        <button class="add-cart-btn" onclick="window.engine.addToCart('Urban Beanie', 24.95, 'size-beanie')">Add to Cart</button>
                     </div>
                 </article>
+            </div>
+        </section>
+    </main>
+
+    <main id="view-cart" class="view-section">
+        <section class="cart-wrapper">
+            <div class="cart-container">
+                
+                <div class="cart-items-section">
+                    <h2 class="cart-title">Your Cart</h2>
+                    <div id="cart-render-list">
+                        </div>
+                    
+                    <div class="cart-summary-total">
+                        <span>Grand Total:</span>
+                        <span id="cart-total-value">0,00 €</span>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h2 class="cart-title">Checkout</h2>
+                    <form id="master-checkout-form" class="checkout-form">
+                        <div class="form-field">
+                            <label>Full Name</label>
+                            <input type="text" name="customer_name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-field">
+                            <label>Shipping Address</label>
+                            <input type="text" name="customer_address" required placeholder="Main Street 1, 12345 City">
+                        </div>
+                        <div class="form-field">
+                            <label>Email Address</label>
+                            <input type="email" name="customer_email" required placeholder="john@example.com">
+                        </div>
+                        
+                        <input type="hidden" name="_subject" value="New Order from robi-twice Hub">
+                        <input type="hidden" name="order_details" id="hidden-order-summary">
+
+                        <button type="submit" class="pay-submit-btn">Continue to PayPal</button>
+                    </form>
+                </div>
 
             </div>
         </section>
     </main>
 
-    <main id="section-cart">
-        <div class="cart-layout-container">
-            
-            <div class="cart-list-side">
-                <h2 class="cart-title">Warenkorb</h2>
-                <div id="cart-items-wrapper">
-                    </div>
-                
-                <div class="cart-total-footer">
-                    <div class="total-flex">
-                        <span>Gesamt:</span>
-                        <span id="final-total-display">0,00 €</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="checkout-gate">
-                <h2 class="cart-title">Checkout</h2>
-                <form id="checkout-main-form" class="form-master">
-                    <div class="input-group">
-                        <label>Vorname</label>
-                        <input type="text" name="firstname" required placeholder="z.B. Max">
-                    </div>
-                    <div class="input-group">
-                        <label>Nachname</label>
-                        <input type="text" name="lastname" required placeholder="z.B. Mustermann">
-                    </div>
-                    <div class="input-group">
-                        <label>Lieferadresse</label>
-                        <input type="text" name="shipping_address" required placeholder="Straße, PLZ, Stadt">
-                    </div>
-                    <div class="input-group">
-                        <label>E-Mail</label>
-                        <input type="email" name="customer_email" required placeholder="name@beispiel.de">
-                    </div>
-                    
-                    <input type="hidden" name="full_order_summary" id="order-payload-field">
-                    
-                    <button type="submit" class="final-submit-btn">Mit PayPal bezahlen</button>
-                </form>
-            </div>
-
-        </div>
-    </main>
-
-    <footer id="global-footer">
-        <div class="f-massive-logo">robi-twice</div>
-        <nav class="f-nav">
-            <a href="#" onclick="window.appEngine.navigate('shop')">Shop</a>
+    <footer>
+        <div class="footer-logo-text">robi-twice</div>
+        <nav class="footer-navigation">
+            <a href="#" onclick="window.engine.changeView('home')">Home</a>
+            <a href="#" onclick="window.engine.changeView('shop')">Store</a>
             <a href="#">Impressum</a>
-            <a href="#">Datenschutz</a>
-            <a href="#">AGB</a>
-            <a href="#">Kontakt</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
         </nav>
-        
-        <div class="payment-gateway-strip">
+
+        <div class="payment-icons">
             <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Google_Pay_logo.svg" alt="GPay">
         </div>
 
-        <p class="legal-copyright">&copy; 2026 ROBI-TWICE ENTERTAINMENT GROUP. ALL RIGHTS RESERVED.</p>
+        <p class="copyright-notice">&copy; 2026 ROBI-TWICE ENTERTAINMENT GROUP. ALL RIGHTS RESERVED.</p>
     </footer>
 
     <script>
         /**
-         * ROBI-TWICE ENGINE v15.0
-         * Kapselung in window.appEngine um Button-Konflikte zu vermeiden
+         * GLOBAL ENGINE OBJECT
+         * Wir kapseln alles, um globale Variablen-Konflikte zu vermeiden.
          */
-        window.appEngine = {
+        window.engine = {
+            // STATE DATA
             state: {
+                currentView: 'home',
                 cart: [],
                 config: {
                     paypalEmail: "bananielheinrich@gmail.com",
@@ -805,193 +844,220 @@
                 }
             },
 
-            /**
-             * Initialisierungs-Routine
-             */
+            // INITIALIZATION
             init: function() {
-                console.log("%c ROBI-TWICE ENGINE LOADED ", "background: #5c8d67; color: #fff; font-weight: 900;");
-                this.setupEventListeners();
-                this.refreshUI();
+                console.log("%c >>> ROBI-TWICE ENGINE BOOTING... ", "background: #5c8d67; color: white; font-weight: bold;");
+                this.bindEvents();
+                this.updateCartUI();
+                console.log("%c >>> ENGINE READY. ", "color: #5c8d67; font-weight: bold;");
             },
 
-            /**
-             * Event-Zuweisung für statische Elemente
-             */
-            setupEventListeners: function() {
-                const form = document.getElementById('checkout-main-form');
-                if(form) {
-                    form.addEventListener('submit', (e) => this.processCheckout(e));
+            // EVENT BINDING
+            bindEvents: function() {
+                const checkoutForm = document.getElementById('master-checkout-form');
+                if (checkoutForm) {
+                    checkoutForm.addEventListener('submit', (e) => this.handleCheckout(e));
                 }
             },
 
-            /**
-             * Routing Logik (SPA)
-             */
-            navigate: function(viewId) {
-                const shopView = document.getElementById('section-shop');
-                const cartView = document.getElementById('section-cart');
+            // VIEW NAVIGATION LOGIC
+            changeView: function(viewId) {
+                console.log("Navigating to view: " + viewId);
                 
-                if(viewId === 'cart') {
-                    shopView.style.display = 'none';
-                    cartView.style.display = 'block';
-                } else {
-                    shopView.style.display = 'block';
-                    cartView.style.display = 'none';
+                // Alle Views verstecken
+                const views = document.querySelectorAll('.view-section');
+                views.forEach(v => v.style.display = 'none');
+
+                // Nav Buttons Style zurücksetzen
+                const navBtns = document.querySelectorAll('.btn-nav');
+                navBtns.forEach(b => b.classList.remove('active'));
+
+                // Gewählte View anzeigen
+                const activeView = document.getElementById('view-' + viewId);
+                if (activeView) {
+                    activeView.style.display = 'block';
                 }
+
+                // Nav Button aktivieren
+                const activeBtn = document.getElementById('nav-' + viewId);
+                if (activeBtn) {
+                    activeBtn.classList.add('active');
+                }
+
+                // Scroll to Top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                this.state.currentView = viewId;
             },
 
-            /**
-             * Warenkorb Logik
-             */
+            // CART OPERATIONS
             addToCart: function(name, price, sizeSelectId) {
-                const sizeValue = document.getElementById(sizeSelectId).value;
-                const productEntry = {
-                    uid: Date.now() + Math.random(),
+                const size = document.getElementById(sizeSelectId).value;
+                const item = {
+                    id: 'it-' + Date.now(),
                     name: name,
-                    price: price,
-                    size: sizeValue
+                    price: parseFloat(price),
+                    size: size
                 };
 
-                this.state.cart.push(productEntry);
-                this.refreshUI();
+                this.state.cart.push(item);
+                this.updateCartUI();
 
-                // Button Effekt
+                // Button Feedback
                 const btn = event.target;
                 const originalText = btn.innerText;
-                btn.innerText = "ADDED ✓";
+                btn.innerText = "SUCCESS ✓";
                 btn.style.background = "#ffffff";
                 btn.style.color = "#000000";
                 
                 setTimeout(() => {
                     btn.innerText = originalText;
-                    btn.style.background = "var(--p-green)";
+                    btn.style.background = "var(--brand-green)";
                     btn.style.color = "#ffffff";
                 }, 1000);
             },
 
-            removeItem: function(uid) {
-                this.state.cart = this.state.cart.filter(item => item.uid !== uid);
-                this.refreshUI();
+            removeFromCart: function(id) {
+                this.state.cart = this.state.cart.filter(item => item.id !== id);
+                this.updateCartUI();
             },
 
-            /**
-             * UI-Synchronisation
-             */
-            refreshUI: function() {
-                const badge = document.getElementById('cart-count-badge');
-                const container = document.getElementById('cart-items-wrapper');
-                const totalDisplay = document.getElementById('final-total-display');
+            // UI RE-RENDERING
+            updateCartUI: function() {
+                const countBadge = document.getElementById('cart-ui-count');
+                const renderList = document.getElementById('cart-render-list');
+                const totalDisplay = document.getElementById('cart-total-value');
                 
-                // Badge Update
-                badge.innerText = this.state.cart.length;
+                // Badge
+                countBadge.innerText = this.state.cart.length;
 
-                // Cart List Update
-                if(this.state.cart.length === 0) {
-                    container.innerHTML = `<p style="color: #333; padding: 40px 0; font-weight: 800; text-transform: uppercase;">Warenkorb ist leer.</p>`;
+                // Cart List
+                if (this.state.cart.length === 0) {
+                    renderList.innerHTML = `<p style="color: #444; padding: 40px 0; font-weight: 800; text-transform: uppercase;">Your cart is currently empty.</p>`;
                     totalDisplay.innerText = "0,00 €";
                     return;
                 }
 
-                let htmlCollector = "";
-                let sumCounter = 0;
+                let listHtml = "";
+                let totalSum = 0;
 
                 this.state.cart.forEach(item => {
-                    sumCounter += item.price;
-                    htmlCollector += `
-                        <div class="cart-item-entry">
-                            <div>
+                    totalSum += item.price;
+                    listHtml += `
+                        <div class="cart-item-row">
+                            <div class="cart-item-details">
                                 <h4>${item.name}</h4>
-                                <p>Größe: ${item.size}</p>
-                                <button class="btn-remove" onclick="window.appEngine.removeItem(${item.uid})">Entfernen</button>
+                                <p>Size: ${item.size}</p>
+                                <button class="btn-remove" onclick="window.engine.removeFromCart('${item.id}')">Remove Item</button>
                             </div>
                             <div class="cart-item-price">${item.price.toFixed(2).replace('.', ',')} €</div>
                         </div>
                     `;
                 });
 
-                container.innerHTML = htmlCollector;
-                totalDisplay.innerText = sumCounter.toFixed(2).replace('.', ',') + " €";
+                renderList.innerHTML = listHtml;
+                totalDisplay.innerText = totalSum.toFixed(2).replace('.', ',') + " €";
             },
 
-            /**
-             * Checkout Pipeline
-             */
-            processCheckout: async function(e) {
+            // CHECKOUT PIPELINE
+            handleCheckout: async function(e) {
                 e.preventDefault();
                 
-                if(this.state.cart.length === 0) {
-                    alert("Ihr Warenkorb ist leer.");
+                if (this.state.cart.length === 0) {
+                    alert("Your cart is empty!");
                     return;
                 }
 
                 const submitBtn = e.target.querySelector('button');
-                submitBtn.innerText = "PROCESSING...";
+                submitBtn.innerText = "SENDING ORDER...";
                 submitBtn.disabled = true;
 
-                // Order Summary String erzeugen
+                // Create Order Summary for Email
                 const summary = this.state.cart.map(i => `${i.name} [Size: ${i.size}]`).join(' | ');
-                document.getElementById('order-payload-field').value = summary;
+                document.getElementById('hidden-order-summary').value = summary;
 
+                // Send to Formspree
                 try {
-                    const response = await fetch(`https://formspree.io/f/${this.state.state.config.formspreeId}`, {
+                    const response = await fetch(`https://formspree.io/f/${this.state.config.formspreeId}`, {
                         method: 'POST',
                         body: new FormData(e.target),
                         headers: { 'Accept': 'application/json' }
                     });
 
-                    if(response.ok) {
-                        const totalAmount = this.state.cart.reduce((a, b) => a + b.price, 0).toFixed(2);
-                        const paypalLink = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${this.state.state.config.paypalEmail}&amount=${totalAmount}&currency_code=EUR&item_name=robi-twice Merch Bestellung: ${encodeURIComponent(summary)}`;
-                        window.location.href = paypalLink;
+                    if (response.ok) {
+                        // Success -> Go to PayPal
+                        const total = this.state.cart.reduce((a, b) => a + b.price, 0).toFixed(2);
+                        const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${this.state.config.paypalEmail}&amount=${total}&currency_code=EUR&item_name=Order from robi-twice Hub: ${encodeURIComponent(summary)}`;
+                        
+                        window.location.href = paypalUrl;
                     } else {
-                        throw new Error("Formspree Error");
+                        throw new Error("API Error");
                     }
-                } catch(err) {
-                    alert("Es gab einen Fehler bei der Übermittlung. Bitte versuchen Sie es erneut.");
-                    submitBtn.innerText = "Mit PayPal bezahlen";
+                } catch (err) {
+                    alert("Checkout Error. Please try again.");
+                    submitBtn.innerText = "Continue to PayPal";
                     submitBtn.disabled = false;
                 }
             }
         };
 
-        /**
-         * INITIALIZATION EXECUTION
-         */
+        // RUN ENGINE ON LOAD
         document.addEventListener('DOMContentLoaded', () => {
-            window.appEngine.init();
+            window.engine.init();
         });
     </script>
 
     <style>
         /* Fokus-Zustände für Accessibility */
-        .nav-link-btn:focus, .add-to-cart-btn:focus, .final-submit-btn:focus {
-            box-shadow: 0 0 0 3px var(--p-green-bright);
+        input:focus, select:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px var(--brand-green-glow);
         }
 
-        /* Hover-Effekt für Formular-Inputs */
-        .input-group input:hover { border-color: #444; }
-
-        /* Smooth-Entry für Cart-Items */
-        .cart-item-entry {
-            animation: itemSlide 0.4s var(--e-out) forwards;
+        /* Hover-Transitions für alle interaktiven Elemente */
+        a, button, select, input {
+            transition: all var(--t-std) var(--ease);
         }
 
-        @keyframes itemSlide {
-            from { opacity: 0; transform: translateX(-15px); }
-            to { opacity: 1; transform: translateX(0); }
+        /* Custom Dropdown Styling für Browser-Konsistenz */
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 16px;
         }
 
-        /* Footer Text-Deko */
-        .f-massive-logo {
-            text-shadow: 0 0 1px rgba(255,255,255,0.05);
+        /* Smooth-Scroll für interne Anker */
+        body {
+            scroll-behavior: smooth;
         }
 
-        /* Ticker Optimierung für Mobile */
-        @media (max-width: 800px) {
-            .ticker-stream { animation-duration: 25s; font-size: 12px; }
+        /* Print Styles */
+        @media print {
+            header, footer, .add-cart-btn { display: none; }
+            .view-section { display: block !important; }
         }
+
+        /* Zusätzliche Animationen */
+        .product-card {
+            animation: cardEntrance 0.8s var(--ease) backwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Debug Hilfsklassen (falls benötigt) */
+        .debug-border { border: 1px solid red !important; }
+        .hidden { display: none !important; }
+        
+        /* Ende der Enterprise Architektur */
     </style>
-
 </body>
 </html>
