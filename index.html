@@ -158,20 +158,22 @@
             background: #000;
             border: 1px solid #222;
             color: #fff;
-            border-radius: 10px;
+            border-radius: 4px;
         }
 
-        /* GRID FÜR ADRESSE (Screenshot Style) */
+        /* GRID FÜR ADRESSE (Wie im Screenshot) */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
         .full-row { grid-column: span 2; }
+        .form-label { font-size: 11px; color: #888; margin-bottom: 5px; display: block; }
         
-        .form-label { font-size: 12px; color: #888; margin-bottom: 5px; display: block; }
+        .radio-group { margin-bottom: 15px; font-size: 14px; }
+        .radio-group label { margin-right: 15px; cursor: pointer; }
 
-        textarea.input { height: 120px; resize: none; }
+        textarea.input { height: 120px; resize: none; border-radius: 10px; }
 
         footer {
             margin-top: 100px;
@@ -234,8 +236,8 @@
     <div class="content-box">
         <h2 style="text-align: center; margin-bottom: 20px;">Support Kontakt</h2>
         <form id="support-form">
-            <input type="text" name="Name" placeholder="Dein Name" class="input" required>
-            <input type="email" name="Email" placeholder="Deine Email" class="input" required>
+            <input type="text" name="Name" placeholder="Dein Name" class="input" style="border-radius:10px" required>
+            <input type="email" name="Email" placeholder="Deine Email" class="input" style="border-radius:10px" required>
             <textarea name="Nachricht" placeholder="Wie können wir helfen?" class="input" required></textarea>
             <button type="submit" class="btn" style="width:100%">Anfrage senden</button>
         </form>
@@ -245,13 +247,18 @@
 
 <div id="cart" class="section">
     <div class="content-box">
-        <h2 style="margin-bottom: 20px;">Dein Warenkorb</h2>
+        <h2 style="margin-bottom: 25px; font-size: 28px;">Versandadresse</h2>
         <div id="items"></div>
         <h3 style="margin: 20px 0;">Gesamt: <span id="total">0,00 €</span></h3>
-        <hr style="border:0; border-top:1px solid #222; margin: 20px 0;">
+        <hr style="border:0; border-top:1px solid #222; margin: 25px 0;">
         
-        <h3 style="margin-bottom: 15px;">Versandadresse</h3>
         <form id="order-form">
+            <div class="radio-group">
+                <span class="form-label">Anrede*</span>
+                <label><input type="radio" name="Anrede" value="Herr" checked> Herr</label>
+                <label><input type="radio" name="Anrede" value="Frau"> Frau</label>
+            </div>
+
             <div class="form-grid">
                 <div>
                     <label class="form-label">Vorname*</label>
@@ -261,6 +268,15 @@
                     <label class="form-label">Nachname*</label>
                     <input type="text" name="Nachname" class="input" required>
                 </div>
+            </div>
+
+            <div class="radio-group">
+                <span class="form-label">Typ*</span>
+                <label><input type="radio" name="Typ" value="Privat" checked> Privat</label>
+                <label><input type="radio" name="Typ" value="Geschäftlich"> Geschäftlich</label>
+            </div>
+
+            <div class="form-grid">
                 <div style="grid-column: span 1.5;">
                     <label class="form-label">Straße*</label>
                     <input type="text" name="Strasse" class="input" required>
@@ -277,24 +293,26 @@
                     <label class="form-label">Stadt*</label>
                     <input type="text" name="Stadt" class="input" required>
                 </div>
-                <div class="full-row">
-                    <label class="form-label">Land*</label>
-                    <select name="Land" class="input" style="background:#000; color:white;">
-                        <option value="Deutschland">Deutschland</option>
-                        <option value="Österreich">Österreich</option>
-                        <option value="Schweiz">Schweiz</option>
-                    </select>
-                </div>
-                <div class="full-row">
-                    <label class="form-label">Telefonnummer (Optional)</label>
-                    <input type="text" name="Telefon" class="input">
-                </div>
+            </div>
+
+            <div class="full-row">
+                <label class="form-label">Land*</label>
+                <select name="Land" class="input" style="background:#000; color:white;">
+                    <option value="Deutschland">Deutschland</option>
+                    <option value="Österreich">Österreich</option>
+                    <option value="Schweiz">Schweiz</option>
+                </select>
+            </div>
+
+            <div class="full-row">
+                <label class="form-label">Telefonnummer</label>
+                <input type="text" name="Telefon" class="input" placeholder="Optional">
             </div>
             
             <input type="hidden" name="Bestellung" id="order-input">
-            <input type="email" name="PayPal-Email" placeholder="PayPal Email für Rechnung" class="input" required>
+            <input type="email" name="PayPal-Email" placeholder="PayPal Email für die Abwicklung" class="input" style="margin-top:10px; border-radius:10px" required>
             
-            <button type="submit" class="btn" style="width:100%; background:#fff; color:#000;">Jetzt per PayPal bezahlen</button>
+            <button type="submit" class="btn" style="width:100%; background:#fff; color:#000; font-size: 14px; margin-top: 10px;">Jetzt per PayPal bezahlen</button>
         </form>
     </div>
 </div>
@@ -303,6 +321,7 @@
 
 <script>
     let cart = [];
+
     function show(id) {
         document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
         document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
@@ -311,10 +330,11 @@
         window.scrollTo(0,0);
     }
 
+    // Funktion ohne das Alert-Fenster
     function add(name, price) {
         cart.push({name, price});
         update();
-        alert(name + " wurde hinzugefügt!");
+        // Hier wurde das alert() entfernt, damit kein Fenster aufploppt
     }
 
     function update() {
@@ -330,7 +350,7 @@
         document.getElementById('order-input').value = JSON.stringify(cart);
     }
 
-    // Support Formular Fix: Kein Redirect zu Formspree
+    // Support Formular Fix: Bleibt auf der Seite
     document.getElementById('support-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         const data = new FormData(this);
@@ -345,7 +365,7 @@
         }
     });
 
-    // Warenkorb Formular
+    // Warenkorb Formular & PayPal
     document.getElementById('order-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         if(cart.length === 0) return alert("Warenkorb leer!");
