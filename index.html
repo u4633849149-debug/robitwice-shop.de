@@ -32,7 +32,6 @@
             z-index: -1;
         }
 
-        /* HEADER */
         header {
             height: 110px;
             background: rgba(0,0,0,0.95);
@@ -55,18 +54,19 @@
             cursor: pointer;
         }
 
-        .nav-btns { display: flex; gap: 15px; }
+        .nav-btns { display: flex; gap: 10px; }
 
         .btn {
             background: #0a0a0a;
             border: 1px solid #222;
             color: #fff;
-            padding: 12px 25px;
+            padding: 12px 20px;
             border-radius: 10px;
             text-transform: uppercase;
             font-weight: 800;
             cursor: pointer;
             transition: 0.3s;
+            font-size: 12px;
         }
 
         .btn.active, .btn:hover {
@@ -75,7 +75,6 @@
             box-shadow: 0 0 15px var(--brand-glow);
         }
 
-        /* CONTENT */
         .section { display: none; padding: 50px 5%; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -107,7 +106,7 @@
         /* SHOP GRID */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             max-width: 1400px;
             margin: 0 auto;
@@ -125,19 +124,19 @@
         .card:hover { transform: translateY(-10px); border-color: var(--brand-green); }
 
         .img-box {
-            height: 300px;
+            height: 280px;
             background: #fff;
             border-radius: 15px;
             margin-bottom: 20px;
             display: flex; align-items: center; justify-content: center;
         }
-        .img-box img { max-width: 80%; max-height: 80%; }
+        .img-box img { max-width: 80%; max-height: 80%; object-fit: contain; }
 
-        .price { font-size: 30px; color: var(--brand-green); font-weight: 900; margin: 15px 0; display: block; }
+        .price { font-size: 28px; color: var(--brand-green); font-weight: 900; margin: 15px 0; display: block; }
 
-        /* CART */
-        .cart-box {
-            max-width: 1000px;
+        /* FORMS & CART */
+        .content-box {
+            max-width: 800px;
             margin: 0 auto;
             background: #050505;
             padding: 40px;
@@ -162,13 +161,15 @@
             border-radius: 10px;
         }
 
+        textarea.input { height: 120px; resize: none; }
+
         footer {
             margin-top: 100px;
             padding: 50px;
             text-align: center;
             border-top: 1px solid #111;
             font-size: 12px;
-            color: #333;
+            color: #444;
         }
     </style>
 </head>
@@ -180,6 +181,7 @@
     <div class="nav-btns">
         <button class="btn active" id="btn-home" onclick="show('home')">Live</button>
         <button class="btn" id="btn-shop" onclick="show('shop')">Store</button>
+        <button class="btn" id="btn-support" onclick="show('support')">Support</button>
     </div>
     <div class="logo"><h1 onclick="show('home')">robi-twice</h1></div>
     <div class="nav-btns">
@@ -198,30 +200,48 @@
 <div id="shop" class="section">
     <div class="grid">
         <div class="card">
-            <div class="img-box"><img src="tshirt.png"></div>
+            <div class="img-box"><img src="tshirt.png" alt="Shirt"></div>
             <h3>Signature Tee</h3>
             <span class="price">29,95 €</span>
             <button class="btn" style="width:100%" onclick="add('Signature Tee', 29.95)">In den Warenkorb</button>
         </div>
         <div class="card">
-            <div class="img-box"><img src="hoodie.png"></div>
+            <div class="img-box"><img src="hoodie.png" alt="Hoodie"></div>
             <h3>Legacy Hoodie</h3>
             <span class="price">54,95 €</span>
             <button class="btn" style="width:100%" onclick="add('Legacy Hoodie', 54.95)">In den Warenkorb</button>
         </div>
+        <div class="card">
+            <div class="img-box"><img src="cap.png" alt="Cap"></div>
+            <h3>Official Logo Cap</h3>
+            <span class="price">24,95 €</span>
+            <button class="btn" style="width:100%" onclick="add('Official Logo Cap', 24.95)">In den Warenkorb</button>
+        </div>
+    </div>
+</div>
+
+<div id="support" class="section">
+    <div class="content-box">
+        <h2 style="text-align: center; margin-bottom: 20px;">Support Kontakt</h2>
+        <form action="https://formspree.io/f/xlgpdoak" method="POST">
+            <input type="text" name="Name" placeholder="Dein Name" class="input" required>
+            <input type="email" name="Email" placeholder="Deine Email" class="input" required>
+            <textarea name="Nachricht" placeholder="Wie können wir helfen?" class="input" required></textarea>
+            <button type="submit" class="btn" style="width:100%">Anfrage senden</button>
+        </form>
     </div>
 </div>
 
 <div id="cart" class="section">
-    <div class="cart-box">
-        <h2>Dein Warenkorb</h2><br>
+    <div class="content-box">
+        <h2 style="margin-bottom: 20px;">Dein Warenkorb</h2>
         <div id="items"></div>
         <h3 style="margin: 20px 0;">Gesamt: <span id="total">0,00 €</span></h3>
         <hr style="border:0; border-top:1px solid #222; margin: 20px 0;">
         <form id="order-form">
-            <input type="text" name="Name" placeholder="Name" class="input" required>
-            <input type="email" name="Email" placeholder="Email" class="input" required>
-            <input type="text" name="Adresse" placeholder="Adresse" class="input" required>
+            <input type="text" name="Name" placeholder="Vollständiger Name" class="input" required>
+            <input type="email" name="Email" placeholder="PayPal Email" class="input" required>
+            <input type="text" name="Adresse" placeholder="Versandadresse" class="input" required>
             <input type="hidden" name="Bestellung" id="order-input">
             <button type="submit" class="btn" style="width:100%; background:#fff; color:#000;">Jetzt per PayPal bezahlen</button>
         </form>
@@ -248,7 +268,7 @@
         document.getElementById('count').innerText = cart.length;
         let html = "";
         let total = 0;
-        cart.forEach((item, index) => {
+        cart.forEach((item) => {
             total += item.price;
             html += `<div class="cart-item"><span>${item.name}</span><span>${item.price.toFixed(2)} €</span></div>`;
         });
