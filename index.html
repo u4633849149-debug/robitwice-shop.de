@@ -78,7 +78,6 @@
         .section { display: none; padding: 50px 5%; animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* VIDEO MATRIX */
         .matrix {
             display: grid;
             grid-template-columns: 1fr 2.5fr 1fr;
@@ -103,7 +102,6 @@
 
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* SHOP GRID */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -134,7 +132,6 @@
 
         .price { font-size: 28px; color: var(--brand-green); font-weight: 900; margin: 15px 0; display: block; }
 
-        /* FORMS & CART */
         .content-box {
             max-width: 800px;
             margin: 0 auto;
@@ -156,22 +153,22 @@
             padding: 15px;
             margin-bottom: 15px;
             background: #000;
-            border: 1px solid #222;
+            border: 1px solid #333;
             color: #fff;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 14px;
         }
 
-        /* GRID FÜR ADRESSE (Wie im Screenshot) */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
         .full-row { grid-column: span 2; }
-        .form-label { font-size: 11px; color: #888; margin-bottom: 5px; display: block; }
+        .form-label { font-size: 11px; color: #888; margin-bottom: 5px; display: block; text-transform: uppercase; }
         
         .radio-group { margin-bottom: 15px; font-size: 14px; }
-        .radio-group label { margin-right: 15px; cursor: pointer; }
+        .radio-group label { margin-right: 15px; cursor: pointer; color: #ccc; }
 
         textarea.input { height: 120px; resize: none; border-radius: 10px; }
 
@@ -236,9 +233,9 @@
     <div class="content-box">
         <h2 style="text-align: center; margin-bottom: 20px;">Support Kontakt</h2>
         <form id="support-form">
-            <input type="text" name="Name" placeholder="Dein Name" class="input" style="border-radius:10px" required>
-            <input type="email" name="Email" placeholder="Deine Email" class="input" style="border-radius:10px" required>
-            <textarea name="Nachricht" placeholder="Wie können wir helfen?" class="input" required></textarea>
+            <input type="text" name="Support_Name" placeholder="Dein Name" class="input" style="border-radius:10px" required>
+            <input type="email" name="Support_Email" placeholder="Deine Email" class="input" style="border-radius:10px" required>
+            <textarea name="Support_Nachricht" placeholder="Wie können wir helfen?" class="input" required></textarea>
             <button type="submit" class="btn" style="width:100%">Anfrage senden</button>
         </form>
         <p id="support-msg" style="display:none; color:var(--brand-green); text-align:center; margin-top:15px;">Danke! Deine Nachricht wurde gesendet.</p>
@@ -247,57 +244,59 @@
 
 <div id="cart" class="section">
     <div class="content-box">
-        <h2 style="margin-bottom: 25px; font-size: 28px;">Versandadresse</h2>
+        <h2 style="margin-bottom: 25px; font-size: 28px;">Deine Bestellung</h2>
         <div id="items"></div>
-        <h3 style="margin: 20px 0;">Gesamt: <span id="total">0,00 €</span></h3>
+        <h3 style="margin: 20px 0;">Gesamtbetrag: <span id="total" style="color:var(--brand-green);">0,00 €</span></h3>
         <hr style="border:0; border-top:1px solid #222; margin: 25px 0;">
         
         <form id="order-form">
+            <h3 style="margin-bottom: 15px; font-size: 18px;">Versandadresse</h3>
+            
             <div class="radio-group">
                 <span class="form-label">Anrede*</span>
-                <label><input type="radio" name="Anrede" value="Herr" checked> Herr</label>
-                <label><input type="radio" name="Anrede" value="Frau"> Frau</label>
+                <label><input type="radio" name="Kunde_Anrede" value="Herr" checked> Herr</label>
+                <label><input type="radio" name="Kunde_Anrede" value="Frau"> Frau</label>
             </div>
 
             <div class="form-grid">
                 <div>
                     <label class="form-label">Vorname*</label>
-                    <input type="text" name="Vorname" class="input" required>
+                    <input type="text" name="Kunde_Vorname" class="input" required>
                 </div>
                 <div>
                     <label class="form-label">Nachname*</label>
-                    <input type="text" name="Nachname" class="input" required>
+                    <input type="text" name="Kunde_Nachname" class="input" required>
                 </div>
             </div>
 
             <div class="radio-group">
                 <span class="form-label">Typ*</span>
-                <label><input type="radio" name="Typ" value="Privat" checked> Privat</label>
-                <label><input type="radio" name="Typ" value="Geschäftlich"> Geschäftlich</label>
+                <label><input type="radio" name="Kunde_Typ" value="Privat" checked> Privat</label>
+                <label><input type="radio" name="Kunde_Typ" value="Geschäftlich"> Geschäftlich</label>
             </div>
 
             <div class="form-grid">
                 <div style="grid-column: span 1.5;">
                     <label class="form-label">Straße*</label>
-                    <input type="text" name="Strasse" class="input" required>
+                    <input type="text" name="Kunde_Strasse" class="input" required>
                 </div>
                 <div style="grid-column: span 0.5;">
                     <label class="form-label">Hausnr.*</label>
-                    <input type="text" name="Hausnr" class="input" required>
+                    <input type="text" name="Kunde_Hausnr" class="input" required>
                 </div>
                 <div>
                     <label class="form-label">Postleitzahl*</label>
-                    <input type="text" name="PLZ" class="input" required>
+                    <input type="text" name="Kunde_PLZ" class="input" required>
                 </div>
                 <div>
                     <label class="form-label">Stadt*</label>
-                    <input type="text" name="Stadt" class="input" required>
+                    <input type="text" name="Kunde_Stadt" class="input" required>
                 </div>
             </div>
 
             <div class="full-row">
                 <label class="form-label">Land*</label>
-                <select name="Land" class="input" style="background:#000; color:white;">
+                <select name="Kunde_Land" class="input" style="background:#000; color:white;">
                     <option value="Deutschland">Deutschland</option>
                     <option value="Österreich">Österreich</option>
                     <option value="Schweiz">Schweiz</option>
@@ -306,11 +305,14 @@
 
             <div class="full-row">
                 <label class="form-label">Telefonnummer</label>
-                <input type="text" name="Telefon" class="input" placeholder="Optional">
+                <input type="text" name="Kunde_Telefon" class="input" placeholder="Optional">
             </div>
             
-            <input type="hidden" name="Bestellung" id="order-input">
-            <input type="email" name="PayPal-Email" placeholder="PayPal Email für die Abwicklung" class="input" style="margin-top:10px; border-radius:10px" required>
+            <input type="hidden" name="BESTELLTE_ARTIKEL" id="order-input">
+            <input type="hidden" name="GESAMTSUMME" id="total-input">
+            
+            <label class="form-label">PayPal Email für Rechnungsabgleich*</label>
+            <input type="email" name="_replyto" placeholder="Deine PayPal Email" class="input" style="border-radius:10px" required>
             
             <button type="submit" class="btn" style="width:100%; background:#fff; color:#000; font-size: 14px; margin-top: 10px;">Jetzt per PayPal bezahlen</button>
         </form>
@@ -330,58 +332,62 @@
         window.scrollTo(0,0);
     }
 
-    // Funktion ohne das Alert-Fenster
     function add(name, price) {
         cart.push({name, price});
         update();
-        // Hier wurde das alert() entfernt, damit kein Fenster aufploppt
     }
 
     function update() {
         document.getElementById('count').innerText = cart.length;
         let html = "";
         let total = 0;
-        cart.forEach((item) => {
+        let emailText = "";
+        
+        cart.forEach((item, index) => {
             total += item.price;
             html += `<div class="cart-item"><span>${item.name}</span><span>${item.price.toFixed(2)} €</span></div>`;
+            emailText += (index + 1) + ". " + item.name + " (" + item.price.toFixed(2) + "€)\n";
         });
+        
         document.getElementById('items').innerHTML = html || "Dein Warenkorb ist leer.";
         document.getElementById('total').innerText = total.toFixed(2).replace('.', ',') + " €";
-        document.getElementById('order-input').value = JSON.stringify(cart);
+        
+        // Hier werden die Daten für die E-Mail gespeichert
+        document.getElementById('order-input').value = emailText;
+        document.getElementById('total-input').value = total.toFixed(2) + " €";
     }
 
-    // Support Formular Fix: Bleibt auf der Seite
     document.getElementById('support-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         const data = new FormData(this);
-        const response = await fetch('https://formspree.io/f/xlgpdoak', {
+        await fetch('https://formspree.io/f/xlgpdoak', {
             method: 'POST',
             body: data,
             headers: { 'Accept': 'application/json' }
         });
-        if (response.ok) {
-            document.getElementById('support-msg').style.display = 'block';
-            this.reset();
-        }
+        document.getElementById('support-msg').style.display = 'block';
+        this.reset();
     });
 
-    // Warenkorb Formular & PayPal
     document.getElementById('order-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         if(cart.length === 0) return alert("Warenkorb leer!");
         
         const data = new FormData(e.target);
         
-        // Hintergrund-Sendung an Formspree
-        await fetch('https://formspree.io/f/xlgpdoak', { 
+        // Diese Zeile schickt ALLES (Adresse + Artikelliste) an Formspree
+        const response = await fetch('https://formspree.io/f/xlgpdoak', { 
             method: 'POST', 
             body: data, 
             headers: {'Accept': 'application/json'} 
         });
 
-        // PayPal Weiterleitung
-        const sum = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
-        window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${sum}&currency_code=EUR&item_name=RobiTwice-Order`;
+        if(response.ok) {
+            const sum = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
+            window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${sum}&currency_code=EUR&item_name=RobiTwice-Order`;
+        } else {
+            alert("Fehler beim Übertragen der Bestelldaten.");
+        }
     });
 </script>
 </body>
