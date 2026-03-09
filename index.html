@@ -109,7 +109,6 @@
         <h2 style="text-align: center; color: #5c8d67;">AKTUELLE VIDEOS & LIVE</h2>
         <div class="video-wrapper">
             <div class="side-vid" id="vid-left"></div>
-            
             <div class="main-stream">
                 <iframe id="live-iframe" src="https://www.youtube.com/embed/live_stream?channel=UCm8u2eBf67RCH16p2oA9uSQ" allowfullscreen></iframe>
                 <div id="offline-overlay">
@@ -117,7 +116,6 @@
                     <p style="color: #888; margin-top: 10px;">Schau bald wieder vorbei!</p>
                 </div>
             </div>
-
             <div class="side-vid" id="vid-right"></div>
         </div>
     </section>
@@ -170,7 +168,7 @@
             <h3 id="total-sum-display" style="text-align: right; color: #5c8d67;">Gesamt: 0,00 €</h3>
 
             <div id="address-section" style="display:none; margin-top:30px; border-top:1px solid #333; padding-top:20px;">
-                <h3 style="margin-bottom: 20px;">VERSANDADRESSE</h3>
+                <h3 style="margin-bottom: 20px;">VERSANDADRESSE & ZAHLUNG</h3>
                 <form id="final-order-form">
                     <div class="form-row">
                         <div class="form-group"><label>Vorname*</label><input type="text" name="Vorname" required></div>
@@ -188,8 +186,18 @@
                         <label>E-Mail für Bestätigung*</label>
                         <input type="email" name="Email_Kunde" required>
                     </div>
+
+                    <div class="form-group" style="margin-top:15px;">
+                        <label>Zahlungsmethode wählen*</label>
+                        <select id="payment-method" name="Zahlungsart" required>
+                            <option value="paypal">PayPal (Sofort-Zahlung)</option>
+                            <option value="bank">Überweisung (Rechnung folgt per Mail)</option>
+                            <option value="kreditkarte">Kreditkarte (Wir senden dir einen Link)</option>
+                        </select>
+                    </div>
+
                     <input type="hidden" name="Bestellung" id="hidden-items-list">
-                    <button type="submit" id="submit-order-btn" class="action-btn" style="margin-top: 20px;">DATEN BESTÄTIGEN & ZU PAYPAL</button>
+                    <button type="submit" id="submit-order-btn" class="action-btn" style="margin-top: 20px;">BESTELLUNG ABSCHLIESSEN</button>
                 </form>
             </div>
             <button id="show-address-btn" class="action-btn" style="margin-top:20px;" onclick="openAddressForm()">ZUR KASSE GEHEN</button>
@@ -284,15 +292,27 @@
         document.getElementById('final-order-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('submit-order-btn');
+            const method = document.getElementById('payment-method').value;
             btn.innerText = "Sende Daten...";
+            
             const summary = cart.map(i => `${i.name} (${i.size})`).join(', ');
             document.getElementById('hidden-items-list').value = summary;
 
             const response = await fetch("https://formspree.io/f/xlgpdoak", { method: "POST", body: new FormData(this), headers: { 'Accept': 'application/json' } });
+            
             if (response.ok) {
-                alert("Danke! Deine Lieferadresse wurde an uns gesendet. Jetzt schließe bitte die Zahlung über PayPal ab.");
                 const finalTotal = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
-                window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${finalTotal}&currency_code=EUR&item_name=Bestellung robi-twice: ${summary}`;
+                
+                if(method === "paypal") {
+                    alert("Daten gesendet! Wir leiten dich nun zu PayPal weiter.");
+                    window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${finalTotal}&currency_code=EUR&item_name=robi-twice Bestellung: ${summary}`;
+                } else {
+                    alert("Danke! Deine Bestellung wurde aufgenommen. Da du " + method + " gewählt hast, senden wir dir in Kürze eine E-Mail mit den Zahlungsdetails.");
+                    // Warenkorb leeren nach Bestellung
+                    cart = [];
+                    updateCartDisplay();
+                    showSection('home');
+                }
             }
         });
 
