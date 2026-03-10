@@ -210,20 +210,20 @@
     <div class="grid">
         <div class="card">
             <div class="img-box"><img src="tshirt.png" alt="Shirt"></div>
-            <h3>robi-twice shirt</h3>
-            <span class="price">32,00 €</span>
+            <h3>Signature Tee</h3>
+            <span class="price">29,95 €</span>
             <button class="btn" style="width:100%" onclick="add('Signature Tee', 29.95)">In den Warenkorb</button>
         </div>
         <div class="card">
             <div class="img-box"><img src="hoodie.png" alt="Hoodie"></div>
-            <h3>robi-twice Hoodie</h3>
-            <span class="price">42,00 €</span>
+            <h3>Legacy Hoodie</h3>
+            <span class="price">54,95 €</span>
             <button class="btn" style="width:100%" onclick="add('Legacy Hoodie', 54.95)">In den Warenkorb</button>
         </div>
         <div class="card">
             <div class="img-box"><img src="cap.png" alt="Cap"></div>
-            <h3>Official robi-twic Cap</h3>
-            <span class="price">29,00 €</span>
+            <h3>Official Logo Cap</h3>
+            <span class="price">24,95 €</span>
             <button class="btn" style="width:100%" onclick="add('Official Logo Cap', 24.95)">In den Warenkorb</button>
         </div>
     </div>
@@ -256,6 +256,8 @@
                 <span class="form-label">Anrede*</span>
                 <label><input type="radio" name="Kunde_Anrede" value="Herr" checked> Herr</label>
                 <label><input type="radio" name="Kunde_Anrede" value="Frau"> Frau</label>
+                <label><input type="radio" name="Kunde_Anrede" value="Junge"> Junge</label>
+                <label><input type="radio" name="Kunde_Anrede" value="Mädchen"> Mädchen</label>
             </div>
 
             <div class="form-grid">
@@ -352,7 +354,6 @@
         document.getElementById('items').innerHTML = html || "Dein Warenkorb ist leer.";
         document.getElementById('total').innerText = total.toFixed(2).replace('.', ',') + " €";
         
-        // Hier werden die Daten für die E-Mail gespeichert
         document.getElementById('order-input').value = emailText;
         document.getElementById('total-input').value = total.toFixed(2) + " €";
     }
@@ -375,7 +376,6 @@
         
         const data = new FormData(e.target);
         
-        // Diese Zeile schickt ALLES (Adresse + Artikelliste) an Formspree
         const response = await fetch('https://formspree.io/f/xlgpdoak', { 
             method: 'POST', 
             body: data, 
