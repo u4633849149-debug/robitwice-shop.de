@@ -170,8 +170,6 @@
         .radio-group { margin-bottom: 15px; font-size: 14px; }
         .radio-group label { margin-right: 15px; cursor: pointer; color: #ccc; }
 
-        textarea.input { height: 120px; resize: none; border-radius: 10px; }
-
         footer {
             margin-top: 100px;
             padding: 50px;
@@ -210,21 +208,21 @@
     <div class="grid">
         <div class="card">
             <div class="img-box"><img src="tshirt.png" alt="Shirt"></div>
-            <h3>Signature Tee</h3>
-            <span class="price">29,95 €</span>
-            <button class="btn" style="width:100%" onclick="add('Signature Tee', 29.95)">In den Warenkorb</button>
+            <h3>robi-twice shirt</h3>
+            <span class="price">32,00 €</span>
+            <button class="btn" style="width:100%" onclick="add('robi-twice shirt', 32.00)">In den Warenkorb</button>
         </div>
         <div class="card">
             <div class="img-box"><img src="hoodie.png" alt="Hoodie"></div>
-            <h3>Legacy Hoodie</h3>
-            <span class="price">54,95 €</span>
-            <button class="btn" style="width:100%" onclick="add('Legacy Hoodie', 54.95)">In den Warenkorb</button>
+            <h3>robi-twice hoodie</h3>
+            <span class="price">41,00 €</span>
+            <button class="btn" style="width:100%" onclick="add('robi-twice hoodie', 41.00)">In den Warenkorb</button>
         </div>
         <div class="card">
             <div class="img-box"><img src="cap.png" alt="Cap"></div>
-            <h3>Official Logo Cap</h3>
-            <span class="price">24,95 €</span>
-            <button class="btn" style="width:100%" onclick="add('Official Logo Cap', 24.95)">In den Warenkorb</button>
+            <h3>robi-twice cap</h3>
+            <span class="price">29,00 €</span>
+            <button class="btn" style="width:100%" onclick="add('robi-twice cap', 29.00)">In den Warenkorb</button>
         </div>
     </div>
 </div>
@@ -235,7 +233,7 @@
         <form id="support-form">
             <input type="text" name="Support_Name" placeholder="Dein Name" class="input" style="border-radius:10px" required>
             <input type="email" name="Support_Email" placeholder="Deine Email" class="input" style="border-radius:10px" required>
-            <textarea name="Support_Nachricht" placeholder="Wie können wir helfen?" class="input" required></textarea>
+            <textarea name="Support_Nachricht" placeholder="Wie können wir helfen?" class="input" style="height:120px; resize:none; border-radius:10px" required></textarea>
             <button type="submit" class="btn" style="width:100%">Anfrage senden</button>
         </form>
         <p id="support-msg" style="display:none; color:var(--brand-green); text-align:center; margin-top:15px;">Danke! Deine Nachricht wurde gesendet.</p>
