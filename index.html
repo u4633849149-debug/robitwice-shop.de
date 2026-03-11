@@ -269,12 +269,6 @@
                 </div>
             </div>
 
-            <div class="radio-group">
-                <span class="form-label">Typ*</span>
-                <label><input type="radio" name="Kunde_Typ" value="Privat" checked> Privat</label>
-                <label><input type="radio" name="Kunde_Typ" value="Geschäftlich"> Geschäftlich</label>
-            </div>
-
             <div class="form-grid">
                 <div style="grid-column: span 1.5;">
                     <label class="form-label">Straße*</label>
@@ -294,20 +288,6 @@
                 </div>
             </div>
 
-            <div class="full-row">
-                <label class="form-label">Land*</label>
-                <select name="Kunde_Land" class="input" style="background:#000; color:white;">
-                    <option value="Deutschland">Deutschland</option>
-                    <option value="Österreich">Österreich</option>
-                    <option value="Schweiz">Schweiz</option>
-                </select>
-            </div>
-
-            <div class="full-row">
-                <label class="form-label">Telefonnummer</label>
-                <input type="text" name="Kunde_Telefon" class="input" placeholder="Optional">
-            </div>
-            
             <input type="hidden" name="BESTELLTE_ARTIKEL" id="order-input">
             <input type="hidden" name="GESAMTSUMME" id="total-input">
             
@@ -323,40 +303,21 @@
 
 <script>
     // ==========================================
-    // HIER DEINE VIDEO-IDs ANPASSEN
+    // HIER EINFACH DIE VIDEO-IDs EINTRAGEN
     // ==========================================
-    const videoSettings = {
-        leftID: "5Mf7S0pDyP0",   // ID für das linke Video
-        rightID: "vvj64ZskM9Y",  // ID für das rechte Video
-        
-        // MODUS FÜR DIE MITTE:
-        // Entweder einen Live-Stream anzeigen oder ein normales Video.
-        useLiveStream: true,    // 'true' für Live-Stream, 'false' für ein normales Video
-        
-        mainVideoID: "7fkH8bLeR0g", // Nur wichtig, wenn useLiveStream auf 'false' steht
-        channelID: "UCu1ZS9PqAJDStOS5EJiycEQ" // Deine YouTube Channel ID (für den Live-Stream)
+    const videoIDs = {
+        left: "5Mf7S0pDyP0",   // Linkes Video
+        main: "Q32PemVHM8g",   // Mittleres Video (Hier deine neue ID!)
+        right: "vvj64ZskM9Y"   // Rechtes Video
     };
 
-    // Funktion zum Laden der Videos beim Start
     function initVideos() {
-        // Links
-        document.getElementById('vid-left').src = "https://www.youtube.com/embed/" + videoSettings.leftID + "?mute=1&autoplay=1";
-        
-        // Mitte (Check ob Live oder Video)
-        if(videoSettings.useLiveStream) {
-            document.getElementById('vid-main').src = "https://www.youtube.com/embed/live_stream?channel=" + videoSettings.channelID + "&autoplay=1&mute=1";
-        } else {
-            document.getElementById('vid-main').src = "https://www.youtube.com/embed/" + videoSettings.mainVideoID + "?autoplay=1&mute=1";
-        }
-
-        // Rechts
-        document.getElementById('vid-right').src = "https://www.youtube.com/embed/" + videoSettings.rightID + "?mute=1&autoplay=1";
+        document.getElementById('vid-left').src = "https://www.youtube.com/embed/" + videoIDs.left + "?mute=1";
+        document.getElementById('vid-main').src = "https://www.youtube.com/embed/" + videoIDs.main + "?mute=1";
+        document.getElementById('vid-right').src = "https://www.youtube.com/embed/" + videoIDs.right + "?mute=1";
     }
 
-    // Startet die Video-Initialisierung
-    window.onload = function() {
-        initVideos();
-    };
+    window.onload = initVideos;
 
     let cart = [];
 
@@ -407,9 +368,7 @@
     document.getElementById('order-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         if(cart.length === 0) return alert("Warenkorb leer!");
-        
         const data = new FormData(e.target);
-        
         const response = await fetch('https://formspree.io/f/xlgpdoak', { 
             method: 'POST', 
             body: data, 
@@ -419,8 +378,6 @@
         if(response.ok) {
             const sum = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
             window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${sum}&currency_code=EUR&item_name=RobiTwice-Order`;
-        } else {
-            alert("Fehler beim Übertragen der Bestelldaten.");
         }
     });
 </script>
