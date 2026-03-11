@@ -198,9 +198,9 @@
 
 <div id="home" class="section" style="display: block;">
     <div class="matrix">
-        <div class="v-box"><iframe src="https://www.youtube.com/embed/5Mf7S0pDyP0?mute=1&autoplay=1"></iframe></div>
-        <div class="v-box main"><iframe src="https://www.youtube.com/embed/live_stream?channel=UCu1ZS9PqAJDStOS5EJiycEQ&autoplay=1&mute=1"></iframe></div>
-        <div class="v-box"><iframe src="https://www.youtube.com/embed/vvj64ZskM9Y?mute=1&autoplay=1"></iframe></div>
+        <div class="v-box"><iframe id="vid-left" allowfullscreen></iframe></div>
+        <div class="v-box main"><iframe id="vid-main" allowfullscreen></iframe></div>
+        <div class="v-box"><iframe id="vid-right" allowfullscreen></iframe></div>
     </div>
 </div>
 
@@ -322,6 +322,42 @@
 <footer>&copy; 2026 ROBI-TWICE OFFICIAL. ALL RIGHTS RESERVED.</footer>
 
 <script>
+    // ==========================================
+    // HIER DEINE VIDEO-IDs ANPASSEN
+    // ==========================================
+    const videoSettings = {
+        leftID: "5Mf7S0pDyP0",   // ID für das linke Video
+        rightID: "vvj64ZskM9Y",  // ID für das rechte Video
+        
+        // MODUS FÜR DIE MITTE:
+        // Entweder einen Live-Stream anzeigen oder ein normales Video.
+        useLiveStream: true,    // 'true' für Live-Stream, 'false' für ein normales Video
+        
+        mainVideoID: "DEINE_VIDEO_ID_HIER", // Nur wichtig, wenn useLiveStream auf 'false' steht
+        channelID: "UCu1ZS9PqAJDStOS5EJiycEQ" // Deine YouTube Channel ID (für den Live-Stream)
+    };
+
+    // Funktion zum Laden der Videos beim Start
+    function initVideos() {
+        // Links
+        document.getElementById('vid-left').src = "https://www.youtube.com/embed/" + videoSettings.leftID + "?mute=1&autoplay=1";
+        
+        // Mitte (Check ob Live oder Video)
+        if(videoSettings.useLiveStream) {
+            document.getElementById('vid-main').src = "https://www.youtube.com/embed/live_stream?channel=" + videoSettings.channelID + "&autoplay=1&mute=1";
+        } else {
+            document.getElementById('vid-main').src = "https://www.youtube.com/embed/" + videoSettings.mainVideoID + "?autoplay=1&mute=1";
+        }
+
+        // Rechts
+        document.getElementById('vid-right').src = "https://www.youtube.com/embed/" + videoSettings.rightID + "?mute=1&autoplay=1";
+    }
+
+    // Startet die Video-Initialisierung
+    window.onload = function() {
+        initVideos();
+    };
+
     let cart = [];
 
     function show(id) {
