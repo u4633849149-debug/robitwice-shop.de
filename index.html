@@ -105,12 +105,21 @@
 
         iframe { width: 100%; height: 100%; border: none; }
 
+        /* FIX: STORE GRID AUF GENAU 3 SPALTEN */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr); /* Erzwingt 3 Spalten */
             gap: 30px;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        /* Responsive Anpassung für Handys */
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
         }
 
         .card {
@@ -208,28 +217,28 @@
 
 <div id="shop" class="section">
     <div class="grid">
-        <!-- T-Shirt -->
+        <!-- 1. Shirt -->
         <div class="card">
             <div class="img-box"><img src="tshirt.png" alt="Shirt"></div>
             <h3>robi-twice shirt</h3>
             <span class="price">32,00 €</span>
             <button class="btn" style="width:100%" onclick="add('robi-twice shirt', 32.00)">In den Warenkorb</button>
         </div>
-        <!-- Hoodie -->
+        <!-- 2. Hoodie -->
         <div class="card">
             <div class="img-box"><img src="hoodie.png" alt="Hoodie"></div>
             <h3>robi-twice hoodie</h3>
             <span class="price">45,00 €</span>
             <button class="btn" style="width:100%" onclick="add('robi-twice hoodie', 45.00)">In den Warenkorb</button>
         </div>
-        <!-- NEU: Pullover -->
+        <!-- 3. Pullover -->
         <div class="card">
             <div class="img-box"><img src="pullover.png" alt="Pullover"></div>
             <h3>robi-twice pullover</h3>
             <span class="price">39,00 €</span>
             <button class="btn" style="width:100%" onclick="add('robi-twice pullover', 39.00)">In den Warenkorb</button>
         </div>
-        <!-- Cap -->
+        <!-- 4. Cap (Wird in die neue Reihe rutschen) -->
         <div class="card">
             <div class="img-box"><img src="cap.png" alt="Cap"></div>
             <h3>robi-twice cap</h3>
@@ -261,7 +270,6 @@
         
         <form id="order-form">
             <h3 style="margin-bottom: 15px; font-size: 18px;">Versandadresse</h3>
-            
             <div class="radio-group">
                 <span class="form-label">Anrede*</span>
                 <label><input type="radio" name="Kunde_Anrede" value="Herr" checked> Herr</label>
@@ -269,43 +277,20 @@
                 <label><input type="radio" name="Kunde_Anrede" value="Junge"> Junge</label>
                 <label><input type="radio" name="Kunde_Anrede" value="Mädchen"> Mädchen</label>
             </div>
-
             <div class="form-grid">
-                <div>
-                    <label class="form-label">Vorname*</label>
-                    <input type="text" name="Kunde_Vorname" class="input" required>
-                </div>
-                <div>
-                    <label class="form-label">Nachname*</label>
-                    <input type="text" name="Kunde_Nachname" class="input" required>
-                </div>
+                <div><label class="form-label">Vorname*</label><input type="text" name="Kunde_Vorname" class="input" required></div>
+                <div><label class="form-label">Nachname*</label><input type="text" name="Kunde_Nachname" class="input" required></div>
             </div>
-
             <div class="form-grid">
-                <div style="grid-column: span 1.5;">
-                    <label class="form-label">Straße*</label>
-                    <input type="text" name="Kunde_Strasse" class="input" required>
-                </div>
-                <div style="grid-column: span 0.5;">
-                    <label class="form-label">Hausnr.*</label>
-                    <input type="text" name="Kunde_Hausnr" class="input" required>
-                </div>
-                <div>
-                    <label class="form-label">Postleitzahl*</label>
-                    <input type="text" name="Kunde_PLZ" class="input" required>
-                </div>
-                <div>
-                    <label class="form-label">Stadt*</label>
-                    <input type="text" name="Kunde_Stadt" class="input" required>
-                </div>
+                <div style="grid-column: span 1.5;"><label class="form-label">Straße*</label><input type="text" name="Kunde_Strasse" class="input" required></div>
+                <div style="grid-column: span 0.5;"><label class="form-label">Hausnr.*</label><input type="text" name="Kunde_Hausnr" class="input" required></div>
+                <div><label class="form-label">Postleitzahl*</label><input type="text" name="Kunde_PLZ" class="input" required></div>
+                <div><label class="form-label">Stadt*</label><input type="text" name="Kunde_Stadt" class="input" required></div>
             </div>
-
             <input type="hidden" name="BESTELLTE_ARTIKEL" id="order-input">
             <input type="hidden" name="GESAMTSUMME" id="total-input">
-            
             <label class="form-label">PayPal Email für Rechnungsabgleich*</label>
             <input type="email" name="_replyto" placeholder="Deine PayPal Email" class="input" style="border-radius:10px" required>
-            
             <button type="submit" class="btn" style="width:100%; background:#fff; color:#000; font-size: 14px; margin-top: 10px;">Jetzt per PayPal bezahlen</button>
         </form>
     </div>
@@ -348,16 +333,13 @@
         let html = "";
         let total = 0;
         let emailText = "";
-        
         cart.forEach((item, index) => {
             total += item.price;
             html += `<div class="cart-item"><span>${item.name}</span><span>${item.price.toFixed(2)} €</span></div>`;
             emailText += (index + 1) + ". " + item.name + " (" + item.price.toFixed(2) + "€)\n";
         });
-        
         document.getElementById('items').innerHTML = html || "Dein Warenkorb ist leer.";
         document.getElementById('total').innerText = total.toFixed(2).replace('.', ',') + " €";
-        
         document.getElementById('order-input').value = emailText;
         document.getElementById('total-input').value = total.toFixed(2) + " €";
     }
