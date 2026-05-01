@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- HIER EINFÜGEN -->
     <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
     
     <title>ROBI-TWICE | OFFICIAL HUB</title>
@@ -108,7 +107,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             max-width: 1400px;
             margin: 0 auto;
@@ -168,7 +167,6 @@
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
-        .full-row { grid-column: span 2; }
         .form-label { font-size: 11px; color: #888; margin-bottom: 5px; display: block; text-transform: uppercase; }
         
         .radio-group { margin-bottom: 15px; font-size: 14px; }
@@ -210,18 +208,28 @@
 
 <div id="shop" class="section">
     <div class="grid">
+        <!-- T-Shirt -->
         <div class="card">
             <div class="img-box"><img src="tshirt.png" alt="Shirt"></div>
             <h3>robi-twice shirt</h3>
             <span class="price">32,00 €</span>
             <button class="btn" style="width:100%" onclick="add('robi-twice shirt', 32.00)">In den Warenkorb</button>
         </div>
+        <!-- Hoodie -->
         <div class="card">
             <div class="img-box"><img src="hoodie.png" alt="Hoodie"></div>
             <h3>robi-twice hoodie</h3>
             <span class="price">45,00 €</span>
-            <button class="btn" style="width:100%" onclick="add('robi-twice hoodie', 41.00)">In den Warenkorb</button>
+            <button class="btn" style="width:100%" onclick="add('robi-twice hoodie', 45.00)">In den Warenkorb</button>
         </div>
+        <!-- NEU: Pullover -->
+        <div class="card">
+            <div class="img-box"><img src="pullover.png" alt="Pullover"></div>
+            <h3>robi-twice pullover</h3>
+            <span class="price">39,00 €</span>
+            <button class="btn" style="width:100%" onclick="add('robi-twice pullover', 39.00)">In den Warenkorb</button>
+        </div>
+        <!-- Cap -->
         <div class="card">
             <div class="img-box"><img src="cap.png" alt="Cap"></div>
             <h3>robi-twice cap</h3>
@@ -306,13 +314,10 @@
 <footer>&copy; 2026 ROBI-TWICE OFFICIAL. ALL RIGHTS RESERVED.</footer>
 
 <script>
-    // ==========================================
-    // HIER EINFACH DIE VIDEO-IDs EINTRAGEN
-    // ==========================================
     const videoIDs = {
-        left: "Ub3LbB7qzhY",   // Linkes Video
-        main: "EluBuyiV66Q",   // Mittleres Video (Hier deine neue ID!)
-        right: "FLf78DtrUTY"   // Rechtes Video
+        left: "Ub3LbB7qzhY",
+        main: "EluBuyiV66Q",
+        right: "FLf78DtrUTY"
     };
 
     function initVideos() {
