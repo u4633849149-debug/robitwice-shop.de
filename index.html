@@ -4,23 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" sizes="42x42">
     
     <title>ROBI-TWICE | OFFICIAL HUB</title>
+    
     <style>
+        /* =========================================
+           1. GLOBALE STYLES & VARIABLEN
+           ========================================= */
         :root {
             --brand-green: #5c8d67;
             --brand-glow: rgba(92, 141, 103, 0.5);
             --dark-bg: #000000;
             --card-bg: #050505;
-            --text: #ffffff;
+            --text-color: #ffffff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
         body {
             background-color: var(--dark-bg);
-            color: var(--text);
+            color: var(--text-color);
             background-image: url('logo.png');
             background-repeat: repeat;
             background-size: 150px;
@@ -30,11 +40,17 @@
 
         .overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: radial-gradient(circle, rgba(0,0,0,0.9) 0%, rgba(0,0,0,1) 100%);
             z-index: -1;
         }
 
+        /* =========================================
+           2. HEADER & NAVIGATION
+           ========================================= */
         header {
             height: 110px;
             background: rgba(0,0,0,0.95);
@@ -57,34 +73,75 @@
             cursor: pointer;
         }
 
-        .nav-btns { display: flex; gap: 10px; }
+        .nav-btns {
+            display: flex;
+            gap: 15px;
+        }
 
         .btn {
             background: #0a0a0a;
             border: 1px solid #222;
-            color: #fff;
-            padding: 12px 20px;
+            color: #ffffff;
+            padding: 12px 25px;
             border-radius: 10px;
             text-transform: uppercase;
             font-weight: 800;
             cursor: pointer;
-            transition: 0.3s;
-            font-size: 12px;
+            transition: all 0.3s ease;
+            font-size: 13px;
         }
 
         .btn.active, .btn:hover {
             background: var(--brand-green);
-            border-color: #fff;
+            border-color: #ffffff;
             box-shadow: 0 0 15px var(--brand-glow);
+            transform: translateY(-2px);
         }
 
-        .section { display: none; padding: 50px 5%; animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* =========================================
+           3. AUDIO STEUERUNG
+           ========================================= */
+        #music-control {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 9999;
+            cursor: pointer;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 50%;
+            border: 2px solid var(--brand-green);
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+        }
 
+        #music-control:hover {
+            box-shadow: 0 0 20px var(--brand-green);
+        }
+
+        /* =========================================
+           4. SEKTIONEN & LAYOUT
+           ========================================= */
+        .section {
+            display: none;
+            padding: 60px 5%;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Video Grid */
         .matrix {
             display: grid;
             grid-template-columns: 1fr 2.5fr 1fr;
-            gap: 20px;
+            gap: 25px;
             align-items: center;
             max-width: 1600px;
             margin: 0 auto;
@@ -103,91 +160,118 @@
             box-shadow: 0 0 40px var(--brand-glow);
         }
 
-        iframe { width: 100%; height: 100%; border: none; }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
-        /* FIX: STORE GRID AUF GENAU 3 SPALTEN */
+        /* Store Grid */
         .grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Erzwingt 3 Spalten */
-            gap: 30px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 35px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Responsive Anpassung für Handys */
-        @media (max-width: 900px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
+        /* Responsive Design */
+        @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 700px) { 
             .grid { grid-template-columns: 1fr; }
+            .matrix { grid-template-columns: 1fr; }
         }
 
+        /* Produkt Karten */
         .card {
             background: var(--card-bg);
             border: 1px solid #111;
-            padding: 30px;
-            border-radius: 25px;
+            padding: 35px;
+            border-radius: 30px;
             text-align: center;
-            transition: 0.4s;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .card:hover { transform: translateY(-10px); border-color: var(--brand-green); }
+        .card:hover {
+            transform: scale(1.03);
+            border-color: var(--brand-green);
+        }
 
         .img-box {
-            height: 280px;
-            background: #fff;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            display: flex; align-items: center; justify-content: center;
+            height: 300px;
+            background: #ffffff;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        .img-box img { max-width: 80%; max-height: 80%; object-fit: contain; }
 
-        .price { font-size: 28px; color: var(--brand-green); font-weight: 900; margin: 15px 0; display: block; }
+        .img-box img {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+        }
 
+        .price {
+            font-size: 30px;
+            color: var(--brand-green);
+            font-weight: 900;
+            margin: 20px 0;
+            display: block;
+        }
+
+        /* =========================================
+           5. FORMULARE & WARENKORB
+           ========================================= */
         .content-box {
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
             background: #050505;
-            padding: 40px;
-            border-radius: 20px;
+            padding: 50px;
+            border-radius: 25px;
             border: 1px solid #111;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #1a1a1a;
         }
 
         .input {
             width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            background: #000;
+            padding: 18px;
+            margin-bottom: 20px;
+            background: #000000;
             border: 1px solid #333;
-            color: #fff;
-            border-radius: 6px;
-            font-size: 14px;
+            color: #ffffff;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input:focus {
+            border-color: var(--brand-green);
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 20px;
         }
-        .form-label { font-size: 11px; color: #888; margin-bottom: 5px; display: block; text-transform: uppercase; }
-        
-        .radio-group { margin-bottom: 15px; font-size: 14px; }
-        .radio-group label { margin-right: 15px; cursor: pointer; color: #ccc; }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 18px;
+        }
 
         footer {
-            margin-top: 100px;
-            padding: 50px;
+            margin-top: 120px;
+            padding: 60px;
             text-align: center;
             border-top: 1px solid #111;
-            font-size: 12px;
-            color: #444;
+            font-size: 13px;
+            color: #555;
+            letter-spacing: 2px;
         }
     </style>
 </head>
@@ -195,50 +279,77 @@
 
 <div class="overlay"></div>
 
+<!-- Hintergrundmusik Element -->
+<audio id="bg-music" loop>
+    <source src="musik.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Musik Steuerung Button -->
+<div id="music-control" onclick="toggleMusic()">
+    <span id="music-icon" style="font-size: 24px;">🔇</span>
+</div>
+
 <header>
     <div class="nav-btns">
         <button class="btn active" id="btn-home" onclick="show('home')">Live</button>
         <button class="btn" id="btn-shop" onclick="show('shop')">Store</button>
         <button class="btn" id="btn-support" onclick="show('support')">Support</button>
     </div>
-    <div class="logo"><h1 onclick="show('home')">robi-twice</h1></div>
+    
+    <div class="logo">
+        <h1 onclick="show('home')">robi-twice</h1>
+    </div>
+    
     <div class="nav-btns">
-        <button class="btn" id="btn-cart" onclick="show('cart')">Cart [<span id="count">0</span>]</button>
+        <button class="btn" id="btn-cart" onclick="show('cart')">
+            Cart [<span id="count">0</span>]
+        </button>
     </div>
 </header>
 
+<!-- HOME SEKTION -->
 <div id="home" class="section" style="display: block;">
     <div class="matrix">
-        <div class="v-box"><iframe id="vid-left" allowfullscreen></iframe></div>
-        <div class="v-box main"><iframe id="vid-main" allowfullscreen></iframe></div>
-        <div class="v-box"><iframe id="vid-right" allowfullscreen></iframe></div>
+        <div class="v-box">
+            <iframe id="vid-left" allowfullscreen></iframe>
+        </div>
+        <div class="v-box main">
+            <iframe id="vid-main" allowfullscreen></iframe>
+        </div>
+        <div class="v-box">
+            <iframe id="vid-right" allowfullscreen></iframe>
+        </div>
     </div>
 </div>
 
+<!-- STORE SEKTION -->
 <div id="shop" class="section">
     <div class="grid">
-        <!-- 1. Shirt -->
+        <!-- Produkt 1 -->
         <div class="card">
             <div class="img-box"><img src="tshirt.png" alt="Shirt"></div>
             <h3>robi-twice shirt</h3>
             <span class="price">32,00 €</span>
             <button class="btn" style="width:100%" onclick="add('robi-twice shirt', 32.00)">In den Warenkorb</button>
         </div>
-        <!-- 2. Hoodie -->
+        
+        <!-- Produkt 2 -->
         <div class="card">
             <div class="img-box"><img src="hoodie.png" alt="Hoodie"></div>
             <h3>robi-twice hoodie</h3>
             <span class="price">45,00 €</span>
             <button class="btn" style="width:100%" onclick="add('robi-twice hoodie', 45.00)">In den Warenkorb</button>
         </div>
-        <!-- 3. Pullover -->
+        
+        <!-- Produkt 3 -->
         <div class="card">
             <div class="img-box"><img src="pullover.png" alt="Pullover"></div>
             <h3>robi-twice pullover</h3>
             <span class="price">39,00 €</span>
             <button class="btn" style="width:100%" onclick="add('robi-twice pullover', 39.00)">In den Warenkorb</button>
         </div>
-        <!-- 4. Cap (Wird in die neue Reihe rutschen) -->
+        
+        <!-- Produkt 4 -->
         <div class="card">
             <div class="img-box"><img src="cap.png" alt="Cap"></div>
             <h3>robi-twice cap</h3>
@@ -248,129 +359,228 @@
     </div>
 </div>
 
+<!-- SUPPORT SEKTION -->
 <div id="support" class="section">
     <div class="content-box">
-        <h2 style="text-align: center; margin-bottom: 20px;">Support Kontakt</h2>
+        <h2 style="text-align: center; margin-bottom: 30px; font-size: 32px;">Support Kontakt</h2>
         <form id="support-form">
-            <input type="text" name="Support_Name" placeholder="Dein Name" class="input" style="border-radius:10px" required>
-            <input type="email" name="Support_Email" placeholder="Deine Email" class="input" style="border-radius:10px" required>
-            <textarea name="Support_Nachricht" placeholder="Wie können wir helfen?" class="input" style="height:120px; resize:none; border-radius:10px" required></textarea>
-            <button type="submit" class="btn" style="width:100%">Anfrage senden</button>
+            <input type="text" name="Name" placeholder="Dein vollständiger Name" class="input" required>
+            <input type="email" name="Email" placeholder="Deine E-Mail Adresse" class="input" required>
+            <textarea name="Nachricht" placeholder="Wie können wir dir helfen?" class="input" style="height:150px; resize:none;" required></textarea>
+            <button type="submit" class="btn" style="width:100%; padding: 20px;">Anfrage jetzt senden</button>
         </form>
-        <p id="support-msg" style="display:none; color:var(--brand-green); text-align:center; margin-top:15px;">Danke! Deine Nachricht wurde gesendet.</p>
+        <p id="support-msg" style="display:none; color:var(--brand-green); text-align:center; margin-top:20px; font-weight: bold;">
+            Vielen Dank! Deine Nachricht wurde erfolgreich übermittelt.
+        </p>
     </div>
 </div>
 
+<!-- CART SEKTION -->
 <div id="cart" class="section">
     <div class="content-box">
-        <h2 style="margin-bottom: 25px; font-size: 28px;">Deine Bestellung</h2>
-        <div id="items"></div>
-        <h3 style="margin: 20px 0;">Gesamtbetrag: <span id="total" style="color:var(--brand-green);">0,00 €</span></h3>
-        <hr style="border:0; border-top:1px solid #222; margin: 25px 0;">
+        <h2 style="margin-bottom: 30px; font-size: 32px;">Dein Warenkorb</h2>
+        
+        <div id="items">
+            <!-- Hier landen die Produkte via JavaScript -->
+        </div>
+        
+        <div style="margin: 30px 0; border-top: 1px solid #222; padding-top: 20px;">
+            <h3 style="font-size: 24px;">Gesamtsumme: <span id="total" style="color:var(--brand-green);">0,00 €</span></h3>
+        </div>
         
         <form id="order-form">
-            <h3 style="margin-bottom: 15px; font-size: 18px;">Versandadresse</h3>
-            <div class="radio-group">
-                <span class="form-label">Anrede*</span>
-                <label><input type="radio" name="Kunde_Anrede" value="Herr" checked> Herr</label>
-                <label><input type="radio" name="Kunde_Anrede" value="Frau"> Frau</label>
-                <label><input type="radio" name="Kunde_Anrede" value="Junge"> Junge</label>
-                <label><input type="radio" name="Kunde_Anrede" value="Mädchen"> Mädchen</label>
-            </div>
+            <h4 style="margin-bottom: 20px; text-transform: uppercase; color: #888; font-size: 14px;">Versandinformationen</h4>
+            
             <div class="form-grid">
-                <div><label class="form-label">Vorname*</label><input type="text" name="Kunde_Vorname" class="input" required></div>
-                <div><label class="form-label">Nachname*</label><input type="text" name="Kunde_Nachname" class="input" required></div>
+                <input type="text" name="Vorname" placeholder="Vorname" class="input" required>
+                <input type="text" name="Nachname" placeholder="Nachname" class="input" required>
             </div>
+            
+            <input type="text" name="Strasse" placeholder="Straße und Hausnummer" class="input" required>
+            
             <div class="form-grid">
-                <div style="grid-column: span 1.5;"><label class="form-label">Straße*</label><input type="text" name="Kunde_Strasse" class="input" required></div>
-                <div style="grid-column: span 0.5;"><label class="form-label">Hausnr.*</label><input type="text" name="Kunde_Hausnr" class="input" required></div>
-                <div><label class="form-label">Postleitzahl*</label><input type="text" name="Kunde_PLZ" class="input" required></div>
-                <div><label class="form-label">Stadt*</label><input type="text" name="Kunde_Stadt" class="input" required></div>
+                <input type="text" name="PLZ" placeholder="Postleitzahl" class="input" required>
+                <input type="text" name="Stadt" placeholder="Stadt" class="input" required>
             </div>
-            <input type="hidden" name="BESTELLTE_ARTIKEL" id="order-input">
-            <input type="hidden" name="GESAMTSUMME" id="total-input">
-            <label class="form-label">PayPal Email für Rechnungsabgleich*</label>
-            <input type="email" name="_replyto" placeholder="Deine PayPal Email" class="input" style="border-radius:10px" required>
-            <button type="submit" class="btn" style="width:100%; background:#fff; color:#000; font-size: 14px; margin-top: 10px;">Jetzt per PayPal bezahlen</button>
+            
+            <input type="email" name="_replyto" placeholder="Deine PayPal E-Mail (für die Zahlung)" class="input" required>
+            
+            <!-- Versteckte Felder für Formspree -->
+            <input type="hidden" name="Artikelliste" id="order-input">
+            <input type="hidden" name="Endbetrag" id="total-input">
+            
+            <button type="submit" class="btn" style="width:100%; background:#ffffff; color:#000000; font-size: 16px; padding: 20px; margin-top: 10px;">
+                Kostenpflichtig mit PayPal bestellen
+            </button>
         </form>
     </div>
 </div>
 
-<footer>&copy; 2026 ROBI-TWICE OFFICIAL. ALL RIGHTS RESERVED.</footer>
+<footer>
+    &copy; 2026 ROBI-TWICE OFFICIAL HUB. ALL RIGHTS RESERVED.
+</footer>
 
 <script>
+    /* =========================================
+       6. JAVASCRIPT FUNKTIONALITÄT
+       ========================================= */
+
+    // Video Konfiguration
     const videoIDs = {
         left: "Ub3LbB7qzhY",
         main: "EluBuyiV66Q",
         right: "FLf78DtrUTY"
     };
 
-    function initVideos() {
+    // Musik Variablen
+    const bgMusic = document.getElementById('bg-music');
+    const musicIcon = document.getElementById('music-icon');
+    let isPlaying = false;
+
+    // Initialisierung
+    window.onload = function() {
         document.getElementById('vid-left').src = "https://www.youtube.com/embed/" + videoIDs.left + "?mute=1";
         document.getElementById('vid-main').src = "https://www.youtube.com/embed/" + videoIDs.main + "?mute=1";
         document.getElementById('vid-right').src = "https://www.youtube.com/embed/" + videoIDs.right + "?mute=1";
+    };
+
+    // Musik Logik
+    function toggleMusic() {
+        if (isPlaying) {
+            bgMusic.pause();
+            musicIcon.innerText = "🔇";
+        } else {
+            bgMusic.play();
+            musicIcon.innerText = "🔊";
+        }
+        isPlaying = !isPlaying;
     }
 
-    window.onload = initVideos;
+    // Erster Klick startet Musik (Browser-Vorgabe)
+    document.body.addEventListener('click', () => {
+        if(!isPlaying) {
+            bgMusic.play();
+            isPlaying = true;
+            musicIcon.innerText = "🔊";
+        }
+    }, { once: true });
 
-    let cart = [];
-
-    function show(id) {
-        document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-        document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).style.display = 'block';
-        if(document.getElementById('btn-'+id)) document.getElementById('btn-'+id).classList.add('active');
+    // Sektionen umschalten
+    function show(sectionId) {
+        // Alle Sektionen ausblenden
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.display = 'none';
+        });
+        
+        // Alle Buttons zurücksetzen
+        document.querySelectorAll('.btn').forEach(button => {
+            button.classList.remove('active');
+        });
+        
+        // Gewünschte Sektion einblenden
+        document.getElementById(sectionId).style.display = 'block';
+        
+        // Button markieren
+        if(document.getElementById('btn-' + sectionId)) {
+            document.getElementById('btn-' + sectionId).classList.add('active');
+        }
+        
+        // Nach oben scrollen
         window.scrollTo(0,0);
     }
 
-    function add(name, price) {
-        cart.push({name, price});
-        update();
+    // Warenkorb Logik
+    let cart = [];
+
+    function add(productName, price) {
+        cart.push({ name: productName, price: price });
+        updateCart();
+        
+        // Kleines Feedback für den User
+        const countSpan = document.getElementById('count');
+        countSpan.style.color = "var(--brand-green)";
+        setTimeout(() => { countSpan.style.color = "white"; }, 500);
     }
 
-    function update() {
-        document.getElementById('count').innerText = cart.length;
+    function updateCart() {
+        const countElement = document.getElementById('count');
+        const itemsContainer = document.getElementById('items');
+        const totalElement = document.getElementById('total');
+        
+        countElement.innerText = cart.length;
+        
         let html = "";
-        let total = 0;
-        let emailText = "";
+        let totalPrice = 0;
+        let summaryText = "";
+        
         cart.forEach((item, index) => {
-            total += item.price;
-            html += `<div class="cart-item"><span>${item.name}</span><span>${item.price.toFixed(2)} €</span></div>`;
-            emailText += (index + 1) + ". " + item.name + " (" + item.price.toFixed(2) + "€)\n";
+            totalPrice += item.price;
+            html += `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span style="color: var(--brand-green); font-weight: bold;">${item.price.toFixed(2)} €</span>
+                </div>
+            `;
+            summaryText += (index + 1) + ". " + item.name + " (" + item.price.toFixed(2) + "€) | ";
         });
-        document.getElementById('items').innerHTML = html || "Dein Warenkorb ist leer.";
-        document.getElementById('total').innerText = total.toFixed(2).replace('.', ',') + " €";
-        document.getElementById('order-input').value = emailText;
-        document.getElementById('total-input').value = total.toFixed(2) + " €";
+        
+        itemsContainer.innerHTML = html || "<p style='color:#666;'>Dein Warenkorb ist noch leer...</p>";
+        totalElement.innerText = totalPrice.toFixed(2).replace('.', ',') + " €";
+        
+        // Werte für das Formular setzen
+        document.getElementById('order-input').value = summaryText;
+        document.getElementById('total-input').value = totalPrice.toFixed(2) + " €";
     }
 
+    // Support Formular Absenden
     document.getElementById('support-form').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const data = new FormData(this);
-        await fetch('https://formspree.io/f/xlgpdoak', {
-            method: 'POST',
-            body: data,
-            headers: { 'Accept': 'application/json' }
-        });
-        document.getElementById('support-msg').style.display = 'block';
-        this.reset();
+        const formData = new FormData(this);
+        
+        try {
+            const response = await fetch('https://formspree.io/f/xlgpdoak', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+            
+            if (response.ok) {
+                document.getElementById('support-msg').style.display = 'block';
+                this.reset();
+            }
+        } catch (error) {
+            alert("Fehler beim Senden. Bitte versuche es später erneut.");
+        }
     });
 
-    document.getElementById('order-form').addEventListener('submit', async (e) => {
+    // Bestellung Absenden
+    document.getElementById('order-form').addEventListener('submit', async function(e) {
         e.preventDefault();
-        if(cart.length === 0) return alert("Warenkorb leer!");
-        const data = new FormData(e.target);
-        const response = await fetch('https://formspree.io/f/xlgpdoak', { 
-            method: 'POST', 
-            body: data, 
-            headers: {'Accept': 'application/json'} 
-        });
+        
+        if(cart.length === 0) {
+            alert("Dein Warenkorb ist leer!");
+            return;
+        }
+        
+        const formData = new FormData(this);
+        
+        try {
+            const response = await fetch('https://formspree.io/f/xlgpdoak', { 
+                method: 'POST', 
+                body: formData, 
+                headers: {'Accept': 'application/json'} 
+            });
 
-        if(response.ok) {
-            const sum = cart.reduce((a, b) => a + b.price, 0).toFixed(2);
-            window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${sum}&currency_code=EUR&item_name=RobiTwice-Order`;
+            if(response.ok) {
+                const finalSum = cart.reduce((total, item) => total + item.price, 0).toFixed(2);
+                // Weiterleitung zu PayPal
+                window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${finalSum}&currency_code=EUR&item_name=RobiTwice-Fan-Order`;
+            }
+        } catch (error) {
+            alert("Bestellung konnte nicht verarbeitet werden.");
         }
     });
 </script>
+
 </body>
 </html>
