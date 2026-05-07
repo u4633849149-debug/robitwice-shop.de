@@ -52,7 +52,7 @@
            2. HEADER & NAVIGATION
            ========================================= */
         header {
-            height: 110px;
+            height: 120px; /* Leicht erhöht für den Zähler */
             background: rgba(0,0,0,0.95);
             backdrop-filter: blur(20px);
             display: flex;
@@ -65,12 +65,26 @@
             border-bottom: 2px solid var(--brand-green);
         }
 
+        .logo {
+            text-align: center;
+        }
+
         .logo h1 {
             font-size: 35px;
             letter-spacing: 15px;
             text-transform: uppercase;
             font-weight: 900;
             cursor: pointer;
+        }
+
+        .visitor-badge {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: var(--brand-green);
+            margin-top: -5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--brand-glow);
         }
 
         .nav-btns {
@@ -317,6 +331,7 @@
     
     <div class="logo">
         <h1 onclick="show('home')">robi-twice</h1>
+        <div class="visitor-badge">Visitors: <span id="visitor-counter">Lade...</span></div>
     </div>
     
     <div class="nav-btns">
@@ -450,7 +465,21 @@
     let isPlaying = false;
     let cart = [];
 
+    // FUNKTION FÜR DEN ECHTEN ZÄHLER
+    async function updateVisitorCount() {
+        try {
+            // Dies nutzt die CounterAPI. 'robi-twice-unique-2026' ist dein eindeutiger Schlüssel.
+            const response = await fetch('https://api.counterapi.dev/v1/robi-twice/hits/increment');
+            const data = await response.json();
+            document.getElementById('visitor-counter').innerText = data.count;
+        } catch (error) {
+            console.error("Zähler-Fehler:", error);
+            document.getElementById('visitor-counter').innerText = "Online";
+        }
+    }
+
     window.onload = function() {
+        updateVisitorCount(); // Zähler beim Laden starten
         document.getElementById('vid-left').src = "https://www.youtube.com/embed/" + videoIDs.left + "?mute=1";
         document.getElementById('vid-main').src = "https://www.youtube.com/embed/" + videoIDs.main + "?mute=1";
         document.getElementById('vid-right').src = "https://www.youtube.com/embed/" + videoIDs.right + "?mute=1";
