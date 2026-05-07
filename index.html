@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" sizes="42x42">
     
     <title>ROBI-TWICE | OFFICIAL HUB</title>
@@ -100,7 +99,7 @@
         }
 
         /* =========================================
-           3. AUDIO STEUERUNG (MIT VOLUME)
+           3. AUDIO STEUERUNG
            ========================================= */
         #music-container {
             position: fixed;
@@ -256,15 +255,9 @@
             outline: none;
         }
 
-        .input:focus, .select-input:focus {
-            border-color: var(--brand-green);
-        }
+        .input:focus, .select-input:focus { border-color: var(--brand-green); }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
         .cart-item {
             display: flex;
@@ -287,10 +280,7 @@
             transition: 0.2s;
         }
 
-        .remove-btn:hover {
-            background: var(--remove-red);
-            color: white;
-        }
+        .remove-btn:hover { background: var(--remove-red); color: white; }
 
         footer {
             margin-top: 120px;
@@ -311,7 +301,6 @@
     <source src="musik.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Musik Steuerung -->
 <div id="music-container">
     <div id="music-control" onclick="toggleMusic()">
         <span id="music-icon">🔇</span>
@@ -337,7 +326,6 @@
     </div>
 </header>
 
-<!-- HOME SECTION -->
 <div id="home" class="section" style="display: block;">
     <div class="matrix">
         <div class="v-box"><iframe id="vid-left" allowfullscreen></iframe></div>
@@ -346,7 +334,6 @@
     </div>
 </div>
 
-<!-- STORE SECTION -->
 <div id="shop" class="section">
     <div class="grid">
         <div class="card">
@@ -364,7 +351,7 @@
         <div class="card">
             <div class="img-box"><img src="pullover.png" alt="Pullover"></div>
             <h3>robi-twice pullover</h3>
-            <span class="price">42,00 €</span>
+            <span class="price">39,00 €</span>
             <button class="btn" style="width:100%" onclick="add('robi-twice pullover', 39.00)">In den Warenkorb</button>
         </div>
         <div class="card">
@@ -373,10 +360,15 @@
             <span class="price">29,00 €</span>
             <button class="btn" style="width:100%" onclick="add('robi-twice cap', 29.00)">In den Warenkorb</button>
         </div>
+        <div class="card">
+            <div class="img-box"><img src="pullover2.png" alt="Premium Pullover"></div>
+            <h3>premium pullover</h3>
+            <span class="price">42,00 €</span>
+            <button class="btn" style="width:100%" onclick="add('premium pullover', 42.00)">In den Warenkorb</button>
+        </div>
     </div>
 </div>
 
-<!-- SUPPORT SECTION -->
 <div id="support" class="section">
     <div class="content-box">
         <h2 style="text-align: center; margin-bottom: 30px; font-size: 32px;">Support Kontakt</h2>
@@ -392,7 +384,6 @@
     </div>
 </div>
 
-<!-- CART SECTION -->
 <div id="cart" class="section">
     <div class="content-box">
         <h2 style="margin-bottom: 30px; font-size: 32px;">Dein Warenkorb</h2>
@@ -466,7 +457,6 @@
         bgMusic.volume = 0.5;
     };
 
-    // Musik Steuerung
     function toggleMusic() {
         if (isPlaying) {
             bgMusic.pause();
@@ -478,11 +468,8 @@
         isPlaying = !isPlaying;
     }
 
-    function changeVolume(val) {
-        bgMusic.volume = val;
-    }
+    function changeVolume(val) { bgMusic.volume = val; }
 
-    // Navigation
     function show(sectionId) {
         document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
         document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
@@ -492,7 +479,6 @@
         window.scrollTo(0,0);
     }
 
-    // Warenkorb Logik
     function add(productName, price) {
         cart.push({ name: productName, price: price });
         updateCart();
@@ -529,12 +515,10 @@
         itemsContainer.innerHTML = html || "<p style='color:#666; text-align:center;'>Dein Warenkorb ist noch leer...</p>";
         totalElement.innerText = totalPrice.toFixed(2).replace('.', ',') + " €";
         
-        // Versteckte Felder für Formspree
         document.getElementById('order-input').value = summaryText;
         document.getElementById('total-input').value = totalPrice.toFixed(2) + " €";
     }
 
-    // Support Formular Absenden
     document.getElementById('support-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         const response = await fetch('https://formspree.io/f/xlgpdoak', { 
@@ -548,12 +532,10 @@
         }
     });
 
-    // Bestellung Absenden
     document.getElementById('order-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         if(cart.length === 0) { alert("Dein Warenkorb ist leer!"); return; }
         
-        // 1. Daten an E-Mail senden via Formspree
         const response = await fetch('https://formspree.io/f/xlgpdoak', { 
             method: 'POST', 
             body: new FormData(this), 
@@ -561,7 +543,6 @@
         });
 
         if(response.ok) {
-            // 2. Weiterleitung zu PayPal
             const finalSum = cart.reduce((t, i) => t + i.price, 0).toFixed(2);
             window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=bananielheinrich@gmail.com&amount=${finalSum}&currency_code=EUR&item_name=RobiTwice-Fan-Order`;
         } else {
